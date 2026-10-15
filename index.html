@@ -410,10 +410,10 @@ details[open] summary{margin-bottom:8px}
   <div class="stack">
     <h2>Ten practice calls</h2>
     <p class="intro">These are realistic doctor–patient calls written for this test. The patient speaks different Arabic dialects (Egyptian, Levantine, Palestinian, Iraqi, Gulf, Yemeni, Sudanese) because US patients come from everywhere. Calls 7–9 are insurance, pharmacy, and scheduling: the most common phone calls.</p>
-    <div class="callout ok"><strong>Best way to practice (this is your instant experience)</strong>Ask someone to read the lines aloud (Nour or family). Turn on <b>Partner mode</b> so the text is blurred for you. Listen, take notes, interpret out loud, and record yourself on your phone. Then reveal the model and compare: did you lose a number? A "not"? Did you say "he says"? Do each call twice. Ten calls done twice is real interpreting practice.</div>
+    <div class="callout ok"><strong>Best way to practice (this is your instant experience)</strong>Turn on <b>Listen only</b> so the text is blurred, then press <b>Play</b> on each line to hear it in a real-sounding voice (doctor, nurse, or patient), or ask someone to read it. Listen, take notes, interpret out loud, and record yourself on your phone. Then reveal the model and compare: did you lose a number? A "not"? Did you say "he says"? Do each call twice. Ten calls done twice is real interpreting practice.</div>
     <div class="rp-controls" id="rp-picker"></div>
     <div class="rp-controls">
-      <button class="chip" id="rp-partner" aria-pressed="false">Partner mode (blur text)</button>
+      <button class="chip" id="rp-partner" aria-pressed="false">Listen only (blur text)</button>
       <button class="chip" id="rp-all" aria-pressed="false">Show all answers</button>
     </div>
   </div>
@@ -662,7 +662,7 @@ const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
 const panels=[...document.querySelectorAll("section.panel")];
 const row=$("#tabrow");
 panels.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.tab=id;b.id="tab-"+id;b.setAttribute("aria-controls",p.id);b.onclick=()=>show(id,true);row.appendChild(b)});
-function show(id,user){if(id!=="mock"&&window.speechSynthesis)try{window.speechSynthesis.cancel()}catch(e){}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
+function show(id,user){if(id!=="mock"){try{if(window.__stopAudio)window.__stopAudio();else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(a){e.preventDefault();show(a.dataset.goto,true)}});
 const h=(location.hash||"").slice(1);show(panels.some(p=>p.id==="p-"+h)?h:store.get("tab","plan"));
 
@@ -838,10 +838,10 @@ function renderRP(){
   const modelHtml=lang==="ar"?esc(model):AR(model);
   return `<div class="seg"><div class="who"><span class="tag ${lang==="en"?"en":"arb"}">${lang==="en"?"English → Arabic":"Arabic → English"}</span><b>${esc(who)}</b></div>
   <p class="src ${partner?"hidden-src":""}" ${partner?'title="Partner mode: tap to show"':""} data-unblur>${srcHtml}</p>
-  <div><button class="btn ghost" data-rev="${i}" ${showAll?"hidden":""}>Show model interpretation</button></div>
+  <div class="mk-btns"><button class="btn" data-play="${i}">Play</button><button class="btn ghost" data-rev="${i}" ${showAll?"hidden":""}>Show model interpretation</button></div>
   <div class="model" id="m${i}" ${showAll?"":"hidden"}><span class="label">Model interpretation</span><p>${modelHtml}</p>${tip?`<p class="tip ${crit?"crit":""}">${esc(tip)}</p>`:""}</div></div>`}).join("");
 }
-$("#rp").addEventListener("click",e=>{const b=e.target.closest("[data-rev]");if(b){$("#m"+b.dataset.rev).hidden=false;b.hidden=true;return}const u=e.target.closest("[data-unblur]");if(u)u.classList.remove("hidden-src")});
+$("#rp").addEventListener("click",e=>{const p=e.target.closest("[data-play]");if(p){const s=RP[rpIdx].segs[+p.dataset.play];playLine(s[0],s[1],s[2],rpIdx);return}const b=e.target.closest("[data-rev]");if(b){$("#m"+b.dataset.rev).hidden=false;b.hidden=true;return}const u=e.target.closest("[data-unblur]");if(u)u.classList.remove("hidden-src")});
 renderRP();
 
 /* ---------- numbers ---------- */
@@ -864,8 +864,8 @@ const NUMS=[
  ["ar","آخر دورة جاتلي يوم خمستاشر الشهر اللي فات.","My last period started on the 15th of last month."],
  ["ar","الدكتور قالّي خمسة مللي من الشراب تلات مرات في اليوم.","The doctor told me five milliliters of the syrup three times a day."]
 ];
-$("#nums").innerHTML=NUMS.map((n,i)=>`<div class="seg"><div class="who"><span class="tag ${n[0]==="en"?"en":"arb"}">${n[0]==="en"?"English → Arabic":"Arabic → English"}</span></div><p class="src">${n[0]==="ar"?AR(n[1]):esc(n[1])}</p><div><button class="btn ghost" data-nrev="${i}">Show answer</button></div><div class="model" id="n${i}" hidden><p>${n[0]==="ar"?esc(n[2]):AR(n[2])}</p></div></div>`).join("");
-$("#nums").addEventListener("click",e=>{const b=e.target.closest("[data-nrev]");if(b){$("#n"+b.dataset.nrev).hidden=false;b.hidden=true}});
+$("#nums").innerHTML=NUMS.map((n,i)=>`<div class="seg"><div class="who"><span class="tag ${n[0]==="en"?"en":"arb"}">${n[0]==="en"?"English → Arabic":"Arabic → English"}</span></div><p class="src">${n[0]==="ar"?AR(n[1]):esc(n[1])}</p><div class="mk-btns"><button class="btn" data-nplay="${i}">Play</button><button class="btn ghost" data-nrev="${i}">Show answer</button></div><div class="model" id="n${i}" hidden><p>${n[0]==="ar"?esc(n[2]):AR(n[2])}</p></div></div>`).join("");
+$("#nums").addEventListener("click",e=>{const p=e.target.closest("[data-nplay]");if(p){const n=NUMS[+p.dataset.nplay];playLine("Doctor",n[0],n[1],null);return}const b=e.target.closest("[data-nrev]");if(b){$("#n"+b.dataset.nrev).hidden=false;b.hidden=true}});
 
 /* ---------- terms ---------- */
 const CATS={ins:"Insurance & admin",rx:"Medicines & dosing",drugs:"Drug types",instr:"Doctor instructions",sx:"Symptoms",body:"Body",dx:"Conditions",test:"Tests & results",er:"Emergency & injuries",ob:"Pregnancy & children",mh:"Mental health",sense:"Eyes, ears, teeth, skin",staff:"Hospital & staff",equip:"Equipment",parts:"Word parts"};
@@ -931,25 +931,48 @@ function pickVoice(){
  const ar=tts.getVoices().filter(v=>/^ar/i.test(v.lang));
  const fem=ar.filter(v=>FEMALE_AR.some(n=>v.name.includes(n))||/female|woman/i.test(v.name));
  voiceAr=fem.find(v=>/EG/i.test(v.lang))||fem[0]||ar.find(v=>/EG/i.test(v.lang))||ar[0]||null;
- const sa=$("#fc-say-ar"); if(sa)sa.hidden=!voiceAr;
- const note=$("#voice-note");
- if(note)note.textContent=[voice?`English voice: ${voice.name.replace(/\s*\(.*\)/,"")}`:"",voiceAr?`Arabic voice: ${voiceAr.name.replace(/\s*\(.*\)/,"")}`:"Arabic voice: none on this device (add one in phone settings → Text-to-speech / Spoken Content)"].filter(Boolean).join(" · ");
 }
-function speakAr(text){
+function speakArDevice(text){
  if(!tts)return;
  tts.cancel();
  const u=new SpeechSynthesisUtterance(String(text).replace(/\s*\/\s*/g,"، ").replace(/[“”«»"]/g,""));
  u.lang=voiceAr?voiceAr.lang:"ar-EG"; if(voiceAr)u.voice=voiceAr; u.rate=.9;
  tts.speak(u);
 }
-function speak(text){
+function speakDevice(text){
  if(!tts)return;
  tts.cancel();
  const u=new SpeechSynthesisUtterance(String(text).replace(/\s*\/\s*/g,", ").replace(/[“”«»"]/g,""));
  u.lang="en-US"; if(voice)u.voice=voice; u.rate=.9; u.pitch=1.05;
  tts.speak(u);
 }
-if(tts){pickVoice();tts.addEventListener?.("voiceschanged",pickVoice);$("#fc-say").hidden=false}
+/* recorded human-like voices (Microsoft neural, generated once and packed in audio/*.mp3) */
+const V={emma:"en-US-EmmaNeural",andrew:"en-US-AndrewNeural",salma:"ar-EG-SalmaNeural",shakir:"ar-EG-ShakirNeural"};
+const EN_MALE=/^(Doctor|Pharmacy agent|Pharmacist|Scheduler)/;
+const RP_MALE=[1,2,5,6,8];
+function voiceFor(who,lang,call){return lang==="ar"?((call!=null&&RP_MALE.includes(call))?V.shakir:V.salma):(EN_MALE.test(who||"")?V.andrew:V.emma)}
+const player=new Audio(); player.preload="auto";
+let clipIdx=null,clipIdxP=null,clipUrl=null; const packs={};
+function loadIdx(){if(!clipIdxP)clipIdxP=fetch("audio/index.json").then(r=>r.ok?r.json():{}).catch(()=>({})).then(j=>(clipIdx=j));return clipIdxP}
+function loadPack(p){if(!packs[p])packs[p]=fetch(`audio/${p}.mp3`).then(r=>{if(!r.ok)throw new Error("pack");return r.arrayBuffer()}).catch(e=>{delete packs[p];throw e});return packs[p]}
+async function clipSrc(vn,text){await loadIdx();const e=clipIdx&&clipIdx[vn+"|"+text];if(!e)return null;try{const buf=await loadPack(e[0]);if(clipUrl)URL.revokeObjectURL(clipUrl);clipUrl=URL.createObjectURL(new Blob([buf.slice(e[1],e[1]+e[2])],{type:"audio/mpeg"}));return clipUrl}catch(err){return null}}
+function stopAudio(){try{player.pause()}catch(e){}try{tts&&tts.cancel()}catch(e){}}
+window.__stopAudio=stopAudio;
+/* resolves true when finished, "blocked" if the browser blocked autoplay, false if no recording */
+async function playClip(vn,text){
+ const src=await clipSrc(vn,text); if(!src)return false;
+ stopAudio(); player.src=src;
+ return new Promise(res=>{player.onended=()=>res(true);player.onerror=()=>res(false);player.play().catch(()=>res("blocked"))});
+}
+function unlockAudio(){try{const n=800,b=new ArrayBuffer(44+n*2),d=new DataView(b),w=(o,s)=>[...s].forEach((c,i)=>d.setUint8(o+i,c.charCodeAt(0)));w(0,"RIFF");d.setUint32(4,36+n*2,true);w(8,"WAVE");w(12,"fmt ");d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,8000,true);d.setUint32(28,16000,true);d.setUint16(32,2,true);d.setUint16(34,16,true);w(36,"data");d.setUint32(40,n*2,true);if(!player.src){player.src=URL.createObjectURL(new Blob([b],{type:"audio/wav"}));player.play().catch(()=>{})}}catch(e){}}
+document.addEventListener("pointerdown",unlockAudio,{once:true});
+loadIdx();
+function speak(text){playClip(V.emma,text).then(r=>{if(r===false)speakDevice(text)})}
+function speakAr(text){playClip(V.salma,text).then(r=>{if(r===false)speakArDevice(text)})}
+function playLine(who,lang,text,call){playClip(voiceFor(who,lang,call),text).then(r=>{if(r===false)(lang==="ar"?speakArDevice:speakDevice)(text)})}
+if(tts){pickVoice();tts.addEventListener?.("voiceschanged",pickVoice)}
+$("#fc-say").hidden=false; $("#fc-say-ar").hidden=false;
+$("#voice-note").textContent="Voices: Emma (American English) · Salma (Egyptian Arabic)";
 $("#fc-say").onclick=e=>{e.stopPropagation();if(curTerm)speak(curTerm[1])};
 $("#fc-say-ar").onclick=e=>{e.stopPropagation();if(curTerm)speakAr(curTerm[2])};
 document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b){speak(b.dataset.say);return}const a=e.target.closest("[data-sayar]");if(a)speakAr(a.dataset.sayar)});
@@ -988,7 +1011,7 @@ function renderList(){
  if(mode!=="list")return;
  const q=$("#t-search").value.trim().toLowerCase();
  const rows=T.filter(t=>q?(t[1].toLowerCase().includes(q)||t[2].includes(q)||t[3].toLowerCase().includes(q)):t[0]===cat);
- $("#t-table").innerHTML=`<tr><th>English</th><th style="text-align:right">Arabic</th><th>Notes</th></tr>`+rows.map(t=>`<tr><td>${tts?`<button class="say" data-say="${esc(t[1])}" aria-label="Hear ${esc(t[1])}"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[1])}</td><td class="ar" dir="rtl" lang="ar">${tts?`<button class="say" data-sayar="${esc(t[2])}" aria-label="اسمع"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="transform:scaleX(-1)"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[2])}</td><td class="muted">${esc(t[3])}</td></tr>`).join("")+(rows.length?"":`<tr><td colspan="3" class="muted">No match. Try a shorter word.</td></tr>`);
+ $("#t-table").innerHTML=`<tr><th>English</th><th style="text-align:right">Arabic</th><th>Notes</th></tr>`+rows.map(t=>`<tr><td>${true?`<button class="say" data-say="${esc(t[1])}" aria-label="Hear ${esc(t[1])}"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[1])}</td><td class="ar" dir="rtl" lang="ar">${true?`<button class="say" data-sayar="${esc(t[2])}" aria-label="اسمع"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="transform:scaleX(-1)"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[2])}</td><td class="muted">${esc(t[3])}</td></tr>`).join("")+(rows.length?"":`<tr><td colspan="3" class="muted">No match. Try a shorter word.</td></tr>`);
 }
 $("#t-search").oninput=renderList;
 buildDeck();
@@ -1123,7 +1146,13 @@ const stage=$("#mk-stage"), pick=$("#mk-pick");
 $("#mk-showtext").onclick=e=>{showText=!showText;e.currentTarget.setAttribute("aria-pressed",showText)};
 $("#mk-showtimer").onclick=e=>{showTimer=!showTimer;e.currentTarget.setAttribute("aria-pressed",showTimer)};
 pick.addEventListener("click",e=>{const b=e.target.closest("[data-mk]");if(b)mkWelcome(b.dataset.mk)});
-function sayP(text,lang,token){return new Promise(res=>{
+async function sayP(text,lang,token,who){
+ const r=await playClip(voiceFor(who,lang,null),text);
+ if(r===true)return;
+ if(r==="blocked"){await new Promise(res=>{const scr=$("#mk-scr");const b=document.createElement("button");b.className="btn";b.textContent="Play";b.style.position="relative";(scr||stage).appendChild(b);b.onclick=()=>{b.remove();player.onended=()=>res();player.onerror=()=>res();player.play().catch(()=>res())}});return}
+ return sayDevice(text,lang,token);
+}
+function sayDevice(text,lang,token){return new Promise(res=>{
  const words=String(text).split(/\s+/).length, est=(words/2.2+2)*1000;
  let done=false; const fin=()=>{if(!done){done=true;clearTimeout(to);res()}};
  const to=setTimeout(fin,est+5000);
@@ -1133,18 +1162,19 @@ function sayP(text,lang,token){return new Promise(res=>{
  const parts=String(text).replace(/[“”«»"]/g,"").match(/[^.!?؟]+[.!?؟]*/g)||[String(text)];
  parts.forEach((p,k)=>{const u=new SpeechSynthesisUtterance(p.trim());u.lang=lang==="ar"?voiceAr.lang:"en-US";if(v)u.voice=v;u.rate=.92;if(k===parts.length-1){u.onend=fin;u.onerror=fin}tts.speak(u)});
 })}
-function mkStop(){if(!mk)return;mk.token++;clearInterval(mk.iv);try{tts&&tts.cancel()}catch(e){}if(mk.rec&&mk.rec.state!=="inactive"){mk.discard=true;try{mk.rec.stop()}catch(e){}}if(mk.raf)cancelAnimationFrame(mk.raf)}
+function mkStop(){if(!mk)return;mk.token++;clearInterval(mk.iv);stopAudio();if(mk.rec&&mk.rec.state!=="inactive"){mk.discard=true;try{mk.rec.stop()}catch(e){}}if(mk.raf)cancelAnimationFrame(mk.raf)}
 function mkQuit(){mkStop();if(mk&&mk.stream)mk.stream.getTracks().forEach(t=>t.stop());(mk?.recs||[]).forEach(u=>u&&URL.revokeObjectURL(u));mk=null;stage.hidden=true;pick.hidden=false}
 function head(extra){return `<div class="mk-top"><span class="label">Video Interview · practice</span><button class="btn ghost" id="mk-quit">Exit</button></div>${extra||""}`}
 stage.addEventListener("click",e=>{if(e.target.closest("#mk-quit"))mkQuit()});
 function mkWelcome(key){
  mkQuit(); mk={key,d:MOCK[key],i:0,reps:3,recs:[],token:0,stream:null};
+ loadIdx().then(()=>loadPack(`mock-${key}`)).catch(()=>{});
  pick.hidden=true; stage.hidden=false;
  stage.innerHTML=head(`<h3>${esc(mk.d.title)}</h3><p>Welcome and good luck.</p>
   <div class="mk-screen" id="mk-scr"><div class="mk-who">Intro</div><div class="mk-wave"><i></i><i></i><i></i><i></i><i></i></div><div class="mk-cap">Press Watch Intro</div></div>
   ${showText?`<div class="mk-text">${esc(mk.d.intro)}</div>`:""}
   <div class="mk-btns"><button class="btn" id="mk-intro">Watch Intro</button><button class="btn" id="mk-begin" hidden>Start Interview</button></div>`);
- $("#mk-intro").onclick=async()=>{const t=mk.token;$("#mk-intro").hidden=true;$("#mk-begin").hidden=false;const s=$("#mk-scr");s.classList.add("playing");s.querySelector(".mk-cap").textContent="Playing intro…";await sayP(mk.d.intro,"en",t);if(mk&&mk.token===t){s.classList.remove("playing");s.querySelector(".mk-cap").textContent="Intro finished"}};
+ $("#mk-intro").onclick=async()=>{const t=mk.token;$("#mk-intro").hidden=true;$("#mk-begin").hidden=false;const s=$("#mk-scr");s.classList.add("playing");s.querySelector(".mk-cap").textContent="Playing intro…";await sayP(mk.d.intro,"en",t,"Interviewer");if(mk&&mk.token===t){s.classList.remove("playing");s.querySelector(".mk-cap").textContent="Intro finished"}};
  $("#mk-begin").onclick=()=>{mkStop();mkDevice()};
 }
 async function mkDevice(){
@@ -1167,12 +1197,13 @@ async function mkDevice(){
 }
 async function mkQuestion(){
  if(!mk)return; mkStop(); const t=mk.token; const q=mk.d.qs[mk.i], n=mk.d.qs.length;
- const noVoice=!tts||(q.lang==="ar"&&!voiceAr);
+ const hasClip=!!(clipIdx&&clipIdx[voiceFor(q.who,q.lang,null)+"|"+q.text]);
+ const noVoice=!hasClip&&(!tts||(q.lang==="ar"&&!voiceAr));
  stage.innerHTML=head(`<h3>Question ${mk.i+1} of ${n}</h3>
   <div class="mk-screen playing" id="mk-scr"><div class="mk-who">${esc(q.who)}</div><div class="mk-wave"><i></i><i></i><i></i><i></i><i></i></div><div class="mk-cap">Playing… (no pause)</div></div>
   ${(showText||noVoice)?`<div class="mk-text">${q.lang==="ar"?AR(q.text):esc(q.text)}${noVoice?`<p class="muted">No ${q.lang==="ar"?"Arabic":"English"} voice on this device, so read it silently once. In the real test you will hear it.</p>`:""}</div>`:""}
   <div class="mk-btns" id="mk-btns"></div>`);
- await sayP(q.text,q.lang,t);
+ await sayP(q.text,q.lang,t,q.who);
  if(!mk||mk.token!==t)return;
  const scr=$("#mk-scr"); scr.classList.remove("playing");
  for(const c of [3,2,1]){scr.insertAdjacentHTML("beforeend",`<div class="mk-count" id="mk-cd">Recording starts in<b>${c}</b></div>`);await new Promise(r=>setTimeout(r,1000));if(!mk||mk.token!==t)return;$("#mk-cd")?.remove()}
