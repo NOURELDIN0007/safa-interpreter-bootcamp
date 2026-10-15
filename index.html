@@ -1,0 +1,1224 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}img{max-width:100%}</style></head><body>
+<title>Safa's Interpreting Bootcamp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: one study app — header with key dates, sticky tab rail, one panel per skill. Bilingual blocks: English left, Arabic (RTL) right/below. */
+/* Pink edition: blush paper, rose accent, plum ink, Playfair display for an elegant voice. */
+:root{
+  --bg:#fff6f9; --surface:#ffffff; --ink:#2e1428; --muted:#7d5a70; --line:#f5d3e0;
+  --accent:#e0336f; --accent-ink:#ffffff; --accent-soft:#ffe1ec; --accent-2:#ff8fb3;
+  --hero-a:#ffd6e5; --hero-b:#ffe9d9; --hero-c:#f6dcff;
+  --shadow:0 6px 24px -12px rgba(224,51,111,.35);
+  --ar-bg:#fff0f6; --warn:#b4235f; --warn-soft:#ffe8f1; --danger:#c8102e; --danger-soft:#ffe3e6; --ok:#1f8a54; --ok-soft:#e2f6ea;
+  --f-display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --f-body:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-ar:"IBM Plex Sans Arabic","Noto Sans Arabic","Segoe UI","Tahoma",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+/* Light only, by request: no dark variant. */
+:root{color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:0 64px}
+h1,h2,h3{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0;font-weight:700}
+h1{font-size:clamp(32px,7vw,52px);letter-spacing:-.01em}
+h1 em{font-style:italic;color:var(--accent)}
+h2{font-size:clamp(24px,4.5vw,30px);margin-bottom:6px}
+h2::after{content:"";display:block;width:44px;height:3px;border-radius:3px;margin-top:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+h3{font-size:19px}
+p{margin:0}
+a{color:var(--accent)}
+.ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate;font-size:1.06em;line-height:1.85}
+.mono,.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.label{font:600 12px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:14px}
+.stack-lg{display:flex;flex-direction:column;gap:28px}
+
+/* header */
+header.top{margin-top:16px;padding:28px 22px 22px;display:flex;flex-direction:column;gap:14px;border-radius:24px;background:radial-gradient(120% 140% at 0% 0%,var(--hero-a) 0%,transparent 55%),radial-gradient(120% 140% at 100% 0%,var(--hero-c) 0%,transparent 55%),linear-gradient(180deg,var(--hero-b),var(--bg));border:1px solid var(--line)}
+header.top .intro{color:var(--ink);opacity:.82}
+.dates{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.date{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0;box-shadow:var(--shadow)}
+.date b{font-family:var(--f-display);font-size:19px}
+.date.hot{border-color:var(--accent);background:var(--accent-soft)}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding-inline:16px}
+.tabrow{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding-block:8px}
+.tabrow button{flex:0 0 auto;border:1px solid transparent;background:none;color:var(--muted);font:500 14px/1 var(--f-body);padding:9px 12px;border-radius:999px;cursor:pointer}
+.tabrow button[aria-selected="true"]{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:var(--accent-ink);box-shadow:var(--shadow)}
+.tabrow button:hover:not([aria-selected="true"]){border-color:var(--line);color:var(--ink)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.panel{padding-block:24px 0}
+.intro{max-width:68ch;color:var(--muted)}
+
+/* blocks */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0;box-shadow:var(--shadow)}
+.seg,.fc,ol.rules li,.pair,.tablewrap,details{border-radius:16px!important}
+.seg,.fc,ol.rules li{box-shadow:var(--shadow)}
+.btn{border-radius:999px!important}
+.btn:not(.ghost){background:linear-gradient(135deg,var(--accent),var(--accent-2))!important;border-color:transparent!important}
+.chip[aria-pressed="true"]{background:var(--accent-soft)!important;border-color:var(--accent)!important;color:var(--accent)!important;font-weight:700}
+th{background:var(--accent-soft)!important;color:var(--accent)!important}
+.check input{accent-color:var(--accent)}
+.label{color:var(--accent)!important}
+.callout{border-radius:10px;padding:12px 14px;border:1px solid}
+.callout.warn{background:var(--warn-soft);border-color:var(--warn);color:var(--ink)}
+.callout.danger{background:var(--danger-soft);border-color:var(--danger)}
+.callout.ok{background:var(--ok-soft);border-color:var(--ok)}
+.callout strong{display:block;margin-bottom:2px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+ul.clean{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px}
+
+/* checklist */
+.block{display:flex;flex-direction:column;gap:8px}
+.block-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.check{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;background:var(--surface);border:1px solid var(--line);cursor:pointer}
+.check input{margin-top:5px;accent-color:var(--accent);width:18px;height:18px;flex:0 0 auto}
+.check.done span{color:var(--muted);text-decoration:line-through}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+/* bilingual pair */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.pair > div{padding:12px 14px;min-width:0}
+.pair > div + div{background:var(--ar-bg);border-inline-start:1px solid var(--line)}
+@media (max-width:640px){.pair{grid-template-columns:1fr}.pair > div + div{border-inline-start:0;border-top:1px solid var(--line)}}
+
+/* rules */
+ol.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;counter-reset:r}
+ol.rules li{counter-increment:r;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 14px 52px;position:relative;min-width:0}
+ol.rules li::before{content:counter(r);position:absolute;left:14px;top:12px;font:700 22px/1 var(--f-display);color:var(--accent)}
+ol.rules b{display:block;margin-bottom:2px}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 12px/1.2 var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.ar{text-align:right}
+
+/* role-plays */
+.rp-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:7px 12px;font:500 14px/1 var(--f-body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:9px 14px;font:600 14px/1 var(--f-body);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.seg{display:flex;flex-direction:column;gap:8px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.seg .who{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font:600 11px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;padding:5px 7px;border-radius:5px;background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.tag.en{color:var(--accent);border-color:var(--accent)}
+.tag.arb{color:var(--warn);border-color:var(--warn)}
+.src{font-size:17px}
+.src.hidden-src{filter:blur(6px);user-select:none}
+.model{border-top:1px dashed var(--line);padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.tip{font-size:14px;color:var(--warn);background:var(--warn-soft);border-radius:8px;padding:8px 10px}
+.tip.crit{color:var(--danger);background:var(--danger-soft)}
+.rp-meta{display:flex;flex-direction:column;gap:4px}
+
+/* flashcards */
+.fc-wrap{display:flex;flex-direction:column;gap:12px}
+.fc{min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;text-align:center;padding:24px 18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;cursor:pointer;user-select:none}
+.fc .front{font:600 26px/1.3 var(--f-body)}
+.fc .front.ar{font-family:var(--f-ar);font-size:28px}
+.fc .back{font-size:22px}
+.fc .back.ar{font-size:24px}
+.fc .note{font-size:14px;color:var(--warn)}
+.fc-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.say{border:1px solid var(--line);background:var(--accent-soft);color:var(--accent);border-radius:999px;width:28px;height:28px;display:inline-grid;place-items:center;cursor:pointer;vertical-align:middle;margin-right:4px;padding:0}
+.say:hover{border-color:var(--accent)}
+.search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:inherit}
+
+/* quiz */
+.q{display:flex;flex-direction:column;gap:10px}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:10px 12px;font:inherit;cursor:pointer}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--danger-soft);border-color:var(--danger)}
+.why{font-size:15px;color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:8px}
+/* mock test */
+.mk-card{display:flex;flex-direction:column;gap:6px;text-align:left;padding:18px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(135deg,var(--surface),var(--accent-soft));color:var(--ink);font:inherit;cursor:pointer;box-shadow:var(--shadow)}
+.mk-card b{font:700 19px/1.2 var(--f-display)}
+.mk-card span{color:var(--muted)}
+.mk-card:hover{border-color:var(--accent)}
+.mk-stage{display:flex;flex-direction:column;gap:14px;max-width:720px}
+.mk-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.mk-screen{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:18px;overflow:hidden;background:radial-gradient(120% 120% at 20% 10%,#5b1d3d,#24101d);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px}
+.mk-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.mk-who{font:700 20px/1.2 var(--f-display);position:relative}
+.mk-cap{font-size:14px;opacity:.85;position:relative}
+.mk-wave{display:flex;gap:5px;align-items:center;height:44px;position:relative}
+.mk-wave i{display:block;width:7px;height:10px;border-radius:4px;background:#ff8fb3}
+.mk-screen.playing .mk-wave i{animation:wave 1s ease-in-out infinite}
+.mk-wave i:nth-child(2){animation-delay:.15s!important}.mk-wave i:nth-child(3){animation-delay:.3s!important}.mk-wave i:nth-child(4){animation-delay:.45s!important}.mk-wave i:nth-child(5){animation-delay:.6s!important}
+@keyframes wave{0%,100%{height:10px}50%{height:42px}}
+.mk-count{position:absolute;inset:0;display:grid;place-items:center;background:rgba(20,6,14,.6);font:700 22px/1.3 var(--f-body);z-index:2}
+.mk-count b{display:block;font:700 72px/1 var(--f-display)}
+.mk-rec{position:absolute;top:12px;left:12px;z-index:2;background:#d61f45;color:#fff;font:700 13px/1 var(--f-body);padding:6px 10px;border-radius:999px;letter-spacing:.06em}
+.mk-rec::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin-right:6px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.mk-time{position:absolute;top:12px;right:12px;z-index:2;background:rgba(0,0,0,.45);color:#fff;font:600 13px/1 var(--f-mono);padding:6px 10px;border-radius:999px}
+.mk-meter{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.mk-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+.mk-text{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
+.mk-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.ans-q{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
+.ans-say{background:var(--ok-soft);border:1px solid var(--ok);border-radius:12px;padding:10px 12px}
+.ans-say .label{color:var(--ok)!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="label">Arabic ⇄ English · Medical OPI / VRI · Multilingual Interpreters &amp; Translators</span>
+  <h1>Safa's <em>Interpreting</em> Bootcamp</h1>
+  <p class="intro">Everything you need for the two assessments (English + Arabic→English medical interpreting), in the order you should study it. Tap through the tabs. Your checkmarks and flashcard progress are saved on this phone.</p>
+  <div class="dates">
+    <div class="date hot"><span class="label">Deadline</span><b>24 h from the test email</b><span class="muted">Submit both tests early. Don't wait for the last hour.</span></div>
+    <div class="date"><span class="label">Pre-training</span><b>Fri, Oct 16</b><span class="muted">1-hour session</span></div>
+    <div class="date"><span class="label">Training starts</span><b>Mon, Oct 26</b><span class="muted">2 weeks + 1 week nesting, 9–5 EST</span></div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="tabrow" role="tablist" id="tabrow"></div>
+</nav>
+
+<!-- PLAN -->
+<section class="panel" id="p-plan" data-title="Plan">
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>The 24-hour plan</h2>
+    <p class="intro">Do the blocks in order. The interpreting test checks three things above all: you interpret <b>everything</b>, you get <b>numbers and medical words right</b>, and you behave like a <b>professional</b> (first person, no advice, transparent). This plan trains exactly those.</p>
+    <div class="progress" aria-hidden="true"><i id="planbar"></i></div>
+    <p class="muted" id="plancount"></p>
+  </div>
+  <div class="stack" id="plan"></div>
+
+  <div class="callout ok"><strong>Both tests are recorded video interviews</strong>No live person, no multiple choice. You watch short question videos and answer on camera, up to 3 minutes each. Read the <a href="#tests" data-goto="tests">Tests</a> tab before you start either one.</div>
+ </div>
+</section>
+
+<!-- TESTS -->
+<section class="panel" id="p-tests" data-title="Tests" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>What the two tests look like</h2>
+    <p class="intro">No candidate has posted about these tests online. So we looked at the company's public test website itself (assessment.multilingualint.com, without opening your personal links). Its code shows exactly how the screens work. Marked <b>Confirmed</b> = seen in the website's code. <b>Likely</b> = our best expectation.</p>
+    <div class="callout ok"><strong>The short answer</strong>Both links open the same tool: a <b>one-way recorded video interview</b>. There is <b>no live interviewer</b> and <b>no multiple choice or typing</b>. A video plays a question; when it ends, your camera records your spoken answer. Then you click "Next Question".</div>
+  </div>
+
+  <div class="stack">
+    <h3>Step by step: what you will see (Confirmed)</h3>
+    <ol class="rules">
+      <li><b>Welcome screen</b>"Video Interview", the test name, "Welcome and good luck." Press <b>Watch Intro</b> and listen to the whole intro video; the instructions are in it. Then <b>Start Interview</b> appears.</li>
+      <li><b>Audio &amp; Video test</b>You see yourself on camera, your camera and microphone names, and a sound bar. Click <b>Allow</b> when the browser asks for camera and microphone. Speak and check the bar moves. Press <b>Start</b>.</li>
+      <li><b>Possible room scan ("360 video")</b>If you see <b>Start 360 video</b>: slowly turn the laptop to show the whole room (quiet, private, nobody else), then <b>Stop 360 video</b> and <b>Start questions round</b>. No re-record for this step.</li>
+      <li><b>Question video plays</b>Header: "Question X of N". The video <b>plays by itself with sound</b> and you <b>cannot pause or rewind</b> it. The question is only in the video, not written on screen. Take notes while it plays.</li>
+      <li><b>"Recording starts in 3… 2… 1"</b>Right after the video ends, a 3-second countdown, then a red <b>REC</b> badge. Start speaking as soon as you see REC. There's no extra thinking time.</li>
+      <li><b>Answer, then Next Question</b>Each answer can be up to <b>3 minutes</b>. At 3:00 it <b>stops and submits automatically</b> and moves on. There is no clock on screen, so keep answers well under 3 minutes.</li>
+      <li><b>Repeat (N left)</b>While recording you also see <b>Repeat (N left)</b>. It deletes that answer, <b>plays the question video again from the start</b>, and records again. The number of repeats is set by the company (the website's default is 3 for the whole test).</li>
+      <li><b>Finish</b>"Congrats! You've completed the test successfully. We will get in touch with you soon." Then email Nada that it's done.</li>
+    </ol>
+  </div>
+
+  <div class="stack">
+    <h3>Rules of the tool (Confirmed)</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Question</th><th>Answer</th></tr>
+      <tr><td>Interview, AI interview, or quiz?</td><td>A <b>recorded one-way video interview</b>. Pre-recorded question videos, you answer on camera. Not live, not multiple choice.</td></tr>
+      <tr><td>Camera on?</td><td><b>Yes, video and audio</b> are recorded for every answer. They will see you.</td></tr>
+      <tr><td>Time per answer</td><td>Up to <b>3 minutes</b>, then automatic submit.</td></tr>
+      <tr><td>Thinking time</td><td>Only the <b>3-second countdown</b>.</td></tr>
+      <tr><td>Can I replay the question?</td><td>Only by pressing <b>Repeat</b>, which uses one of your limited repeats and deletes that answer.</td></tr>
+      <tr><td>Total time limit</td><td>None inside the test. The 24 hours in the email is the deadline to finish.</td></tr>
+      <tr><td>Is AI scoring me?</td><td>The website only records and uploads. No AI scoring is built into it. A person (the recruiter or a QA reviewer) most likely watches the videos. <i>Likely.</i></td></tr>
+      <tr><td>Tab switching / notes</td><td>Nothing watches tab switching. Paper notes are fine and expected.</td></tr>
+      <tr><td>What if the page reloads?</td><td>Progress is saved <b>in that browser</b>. Reopen the same link in the same browser to continue. A different browser or device may start over, so don't switch.</td></tr>
+      <tr><td>Can I take it twice?</td><td>No. Once finished, the link only shows the "completed" page.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card stack"><h3>Test 1: English assessment</h3>
+      <p><b>Format (Confirmed):</b> recorded video answers to spoken questions.</p>
+      <p><b>Content (Likely):</b> about 4–8 questions from a recorded interviewer:</p>
+      <ul class="clean">
+        <li>Introduce yourself.</li>
+        <li>Your interpreting / work experience.</li>
+        <li>Why do you want to be an interpreter? Why medical?</li>
+        <li>Your availability and home setup (internet, headset, quiet room).</li>
+        <li>A scenario: a difficult caller, a word you don't understand, staying calm.</li>
+      </ul>
+      <p><b>How to answer:</b> 60–90 seconds each. Look at the camera, not the screen. Smile at the start. Answer in three parts: direct answer, one real example, one closing line. Use the prepared answers in the <a href="#english" data-goto="english">English</a> tab.</p>
+      <p><b>Total time (Likely):</b> 15–30 minutes.</p>
+    </div>
+    <div class="card stack"><h3>Test 2: Medical interpretation</h3>
+      <p><b>Format (Confirmed):</b> same tool. Each question video is something you must interpret, and you record your interpretation.</p>
+      <p><b>Content (Likely):</b> short segments of a doctor–patient conversation. Arabic patient lines → you say them in English; possibly English doctor lines → you say them in Arabic. Possibly a list of medical terms or a short passage. Expect Egyptian or Levantine dialect.</p>
+      <p><b>How to answer:</b></p>
+      <ul class="clean">
+        <li>Notes during the video: numbers, doses, times, negatives.</li>
+        <li>When REC appears, interpret immediately, <b>first person</b> ("My chest hurts", never "she says").</li>
+        <li>Interpret everything: no summary, no explaining.</li>
+        <li>Small slip? Fix it out loud: "Interpreter correction: …" and continue.</li>
+        <li>If the video asks you to introduce yourself as the interpreter first, use your script from the <a href="#scripts" data-goto="scripts">Scripts</a> tab.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn"><strong>Smart use of "Repeat"</strong>Repeat is your only way to hear a segment twice, and you have very few (likely 3 for the whole test). Save them for the interpretation test, for a segment where you <b>missed a number or a whole sentence</b>. Decide fast: press Repeat in the first seconds, not after a long answer. Don't use it for a small slip. Use "Interpreter correction" instead.</div>
+
+  <div class="stack">
+    <h3>Setup checklist (do this before clicking either link)</h3>
+    <div class="grid2">
+      <ul class="clean">
+        <li><b>Laptop or desktop with Chrome</b>, not a phone. One sitting, same browser for the whole test.</li>
+        <li><b>Wired USB headset</b> with the microphone near your mouth. Test it first with a voice memo.</li>
+        <li><b>Ethernet cable</b> if possible. Close other tabs and downloads.</li>
+        <li><b>Charger plugged in.</b></li>
+      </ul>
+      <ul class="clean">
+        <li><b>Quiet, closed room.</b> Tell family not to come in. Phone on silent.</li>
+        <li><b>Light in front of your face</b> (window or lamp), not behind you.</li>
+        <li><b>Plain grey or light wall behind you, white top</b>: the company's own video dress code. It shows you already look like their interpreters.</li>
+        <li><b>Camera at eye level.</b> Paper, pen, and water on the desk.</li>
+      </ul>
+    </div>
+    <div class="callout ok"><strong>Practice the real format tonight</strong>Open your phone camera. Have someone read a line from the <a href="#roleplays" data-goto="roleplays">Role-plays</a> tab. Count "3, 2, 1" and record your interpretation on video, looking at the camera. Watch it back: did you look at the lens, speak clearly, keep numbers right, stay under 3 minutes? Do this 5 times and the real test will feel familiar.</div>
+  </div>
+ </div>
+</section>
+
+<!-- MOCK TEST -->
+<section class="panel" id="p-mock" data-title="Mock Test" hidden>
+ <div class="stack-lg">
+  <div class="stack" id="mk-pick">
+    <h2>Mock test: the real flow</h2>
+    <p class="intro">This copies the screens of the real test website step by step: Watch Intro, the camera check, question videos that can't be paused, the 3-2-1 countdown, REC, up to 3 minutes per answer, and "Repeat (N left)". The questions are our best prediction, read aloud by your phone's voice.</p>
+    <div class="callout warn"><strong>Record yourself</strong>Inside this page the browser usually blocks the camera. So before you start, prop your phone up, open the <b>camera in video mode</b> (or the voice recorder) and keep it recording the whole test. If the page can use your camera (for example, the file opened in Chrome on a laptop), you'll see yourself on the camera-check screen and your answers will be saved for playback at the end.</div>
+    <div class="grid2">
+      <button class="mk-card" data-mk="en"><b>English assessment</b><span>9 questions · about 20 minutes</span></button>
+      <button class="mk-card" data-mk="med"><b>Medical interpretation assessment</b><span>12 questions · about 30 minutes</span></button>
+    </div>
+    <div class="rp-controls">
+      <button class="chip" id="mk-showtext" aria-pressed="false">Show question text (easier)</button>
+      <button class="chip" id="mk-showtimer" aria-pressed="false">Show timer (easier)</button>
+    </div>
+    <p class="muted">The real test shows no text and no timer. Turn these on only for your first practice run.</p>
+  </div>
+  <div id="mk-stage" class="mk-stage" hidden></div>
+ </div>
+</section>
+
+<!-- TEST ANSWERS -->
+<section class="panel" id="p-answers" data-title="Test Answers" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Predicted questions and what to say</h2>
+    <p class="intro">Nobody can see the real questions in advance. These are our predictions, based on how this company's test works and what interpreting companies usually ask. Learn the <b>structure</b> of each answer, not word for word, and say it in your own natural English. Anything in [brackets] you must replace with your own true details.</p>
+    <div class="rp-controls">
+      <button class="chip" data-ans="en" aria-pressed="true">English assessment</button>
+      <button class="chip" data-ans="med" aria-pressed="false">Medical interpretation assessment</button>
+    </div>
+  </div>
+  <div class="stack-lg" id="ans"></div>
+ </div>
+</section>
+
+<!-- RULES -->
+<section class="panel" id="p-rules" data-title="Rules" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>The 12 rules that pass the test</h2>
+    <p class="intro">These come from the US national standards (NCIHC Code of Ethics and Standards of Practice), which every American healthcare interpreting company follows. Raters listen for them.</p>
+  </div>
+  <ol class="rules">
+    <li><b>Interpret everything.</b>No adding, no leaving out, no summarizing. Repeat it even if it's rude, repeated, or seems unimportant.</li>
+    <li><b>Always first person.</b>Doctor: "Do you have a fever?" You: <span class="ar">"هل عندك حرارة؟"</span> Never "He's asking if…". Patient: "My chest hurts", never "She says her chest hurts".</li>
+    <li><b>Keep the tone and level.</b>Formal stays formal, angry stays angry, medical words stay medical. Don't simplify the doctor's words yourself. If the patient doesn't understand, they ask the doctor.</li>
+    <li><b>When you speak for yourself, say "the interpreter".</b>"The interpreter needs a repetition." Then tell the other side what you just asked. This is called transparency.</li>
+    <li><b>Never give advice or your opinion.</b>If the patient asks you "What should I do?", you interpret the question to the doctor. You don't answer it.</li>
+    <li><b>Never lose numbers, negatives, or time.</b>Doses, dates, "not", "only", "for three days". Write numbers down the moment you hear them.</li>
+    <li><b>Don't convert or explain.</b>Don't turn ounces into cups or Celsius into Fahrenheit. Converting is adding.</li>
+    <li><b>Correct yourself right away.</b>"Interpreter correction: the doctor said fifty milligrams, not fifteen."</li>
+    <li><b>Manage the flow politely.</b>If someone talks too long: "Excuse me, the interpreter needs to interpret now." Then continue.</li>
+    <li><b>Confidentiality (HIPAA).</b>Nothing from a call leaves the call. Destroy notes after every call. Never record.</li>
+    <li><b>Stay neutral.</b>No side-chats with the patient. If you know the patient personally, tell the company and step out.</li>
+    <li><b>Safety first.</b>Anything about suicide, abuse, chest pain, or allergy is interpreted <b>immediately and completely</b>, even if the patient says "don't tell the doctor".</li>
+  </ol>
+
+  <div class="stack">
+    <h3>The NCIHC Code of Ethics, 9 principles (memorize the names)</h3>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Principle</th><th>In one line</th></tr>
+      <tr><td class="num">1</td><td>Confidentiality</td><td>Everything stays inside the care team.</td></tr>
+      <tr><td class="num">2</td><td>Accuracy</td><td>Full message and its spirit, nothing added or omitted.</td></tr>
+      <tr><td class="num">3</td><td>Impartiality</td><td>No opinions, no bias, no advice.</td></tr>
+      <tr><td class="num">4</td><td>Respect</td><td>Treat every party with dignity.</td></tr>
+      <tr><td class="num">5</td><td>Cultural awareness</td><td>Know both cultures, including US hospital culture.</td></tr>
+      <tr><td class="num">6</td><td>Role boundaries</td><td>Interpret only. No personal involvement.</td></tr>
+      <tr><td class="num">7</td><td>Professionalism</td><td>On time, prepared, honest about limits.</td></tr>
+      <tr><td class="num">8</td><td>Professional development</td><td>Keep learning terms and skills.</td></tr>
+      <tr><td class="num">9</td><td>Advocacy</td><td>Rare. Only when the patient's safety or dignity is at serious risk and other steps failed.</td></tr>
+    </table></div>
+    <p class="muted">Least-intrusive rule: first just interpret. If needed, clarify a word. If needed, flag a possible cultural misunderstanding. Advocacy is last.</p>
+  </div>
+
+  <div class="stack">
+    <h3>Tricky situations and what to do</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Situation</th><th>What you do</th></tr>
+      <tr><td>Bad audio, can't hear</td><td>"The interpreter cannot hear clearly. Could you please repeat?" Never guess. Tell the other party what you asked.</td></tr>
+      <tr><td>Speaker talks for a long time</td><td>Politely interrupt: "Excuse me, the interpreter needs to interpret now." Interpret, then ask them to pause after short phrases.</td></tr>
+      <tr><td>Unknown medical word</td><td>"The interpreter requests clarification of the term ___." Tell the patient you asked. Drug names stay in English.</td></tr>
+      <tr><td>Patient asks your opinion</td><td>Interpret the question to the doctor. If it's directed at you: "The patient asked the interpreter for an opinion. As the interpreter I can't give advice," then interpret it to the doctor.</td></tr>
+      <tr><td>"Don't tell the doctor…"</td><td>Remind them everything is interpreted, then interpret it, including the "don't tell" part.</td></tr>
+      <tr><td>Family members talk to each other</td><td>Interpret it. Side conversations are part of the session.</td></tr>
+      <tr><td>Patient mentions suicide or self-harm</td><td>Interpret immediately, word for word. Never soften. The clinician decides what happens next.</td></tr>
+      <tr><td>Dialect you don't understand</td><td>Be honest: "The interpreter is having difficulty with the patient's dialect." Ask for repetition or a different interpreter. Never pretend.</td></tr>
+      <tr><td>"I think it's the evil eye" / jinn / fasting</td><td>Interpret it literally ("evil eye"). Only if a misunderstanding is likely: "The interpreter notes there may be a cultural reference; the provider may wish to ask about it."</td></tr>
+      <tr><td>Provider leaves, patient keeps talking to you</td><td>Don't discuss medical things. "I'll interpret that for the doctor when they return."</td></tr>
+      <tr><td>You made a mistake earlier</td><td>"Interpreter correction: …" as soon as you notice.</td></tr>
+    </table></div>
+  </div>
+ </div>
+</section>
+
+<!-- SCRIPTS -->
+<section class="panel" id="p-scripts" data-title="Scripts" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Say these from memory</h2>
+    <p class="intro">Every company has its own opening line and will teach it in training. On the test, a clean, confident version of this standard script shows professionalism. Read each one aloud 5 times.</p>
+  </div>
+  <div class="stack" id="scripts"></div>
+ </div>
+</section>
+
+<!-- ROLEPLAYS -->
+<section class="panel" id="p-roleplays" data-title="Role-plays" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Ten practice calls</h2>
+    <p class="intro">These are realistic doctor–patient calls written for this test. The patient speaks different Arabic dialects (Egyptian, Levantine, Palestinian, Iraqi, Gulf, Yemeni, Sudanese) because US patients come from everywhere. Calls 7–9 are insurance, pharmacy, and scheduling: the most common phone calls.</p>
+    <div class="callout ok"><strong>Best way to practice (this is your instant experience)</strong>Ask someone to read the lines aloud (Nour or family). Turn on <b>Partner mode</b> so the text is blurred for you. Listen, take notes, interpret out loud, and record yourself on your phone. Then reveal the model and compare: did you lose a number? A "not"? Did you say "he says"? Do each call twice. Ten calls done twice is real interpreting practice.</div>
+    <div class="rp-controls" id="rp-picker"></div>
+    <div class="rp-controls">
+      <button class="chip" id="rp-partner" aria-pressed="false">Partner mode (blur text)</button>
+      <button class="chip" id="rp-all" aria-pressed="false">Show all answers</button>
+    </div>
+  </div>
+  <div class="stack" id="rp"></div>
+ </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="panel" id="p-numbers" data-title="Numbers" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Numbers, doses, dates</h2>
+    <p class="intro">Numbers are where most candidates fail. Read each sentence once (or have someone read it), write only the numbers and units on paper, then interpret out loud. Reveal to check.</p>
+    <div class="grid2">
+      <div class="card stack"><h3>Note-taking symbols</h3>
+        <div class="tablewrap"><table>
+          <tr><td class="mono">↑ / ↓</td><td>more, high, increase / less, low</td></tr>
+          <tr><td class="mono">→</td><td>causes, leads to, refer to</td></tr>
+          <tr><td class="mono">Ø</td><td>no, not, none</td></tr>
+          <tr><td class="mono">2x/d</td><td>twice a day (BID)</td></tr>
+          <tr><td class="mono">3x/d</td><td>three times a day (TID)</td></tr>
+          <tr><td class="mono">q6h</td><td>every 6 hours</td></tr>
+          <tr><td class="mono">PRN</td><td>as needed</td></tr>
+          <tr><td class="mono">PO / HS</td><td>by mouth / at bedtime</td></tr>
+          <tr><td class="mono">Hx Sx Dx Tx Rx</td><td>history, symptoms, diagnosis, treatment, medication</td></tr>
+          <tr><td class="mono">d wk mo y</td><td>day, week, month, year</td></tr>
+        </table></div>
+      </div>
+      <div class="card stack"><h3>The traps</h3>
+        <ul class="clean">
+          <li><b>15 vs 50, 13 vs 30, 14 vs 40.</b> On the phone they sound alike. If not 100% sure, ask: "The interpreter requests a repetition of the number."</li>
+          <li><b>Always write the unit with the number:</b> 500 mg, 10 units, 2 puffs.</li>
+          <li><b>Frequency + duration:</b> "twice a day <u>for 10 days</u>." Don't drop the second half.</li>
+          <li><b>Don't convert</b> Celsius↔Fahrenheit, kg↔lb, ounces↔cups.</li>
+          <li><b>Read blood pressure as</b> "148 over 95" / <span class="ar">١٤٨ على ٩٥</span>.</li>
+          <li><b>Money:</b> "$4.15" = four dollars and fifteen cents / <span class="ar">أربعة دولارات وخمسة عشر سنتًا</span>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="stack" id="nums"></div>
+ </div>
+</section>
+
+<!-- TERMS -->
+<section class="panel" id="p-terms" data-title="Terms" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Medical vocabulary</h2>
+    <p class="intro">547 high-frequency terms in 15 groups. Start with <b>Insurance &amp; admin</b> and <b>Medicines</b>: most phone calls are about appointments, refills, and insurance. Notes show dialect words patients actually say (E = Egyptian, L = Levantine, I = Iraqi, G = Gulf, M = Moroccan).</p>
+    <div class="rp-controls" id="t-cats"></div>
+    <div class="rp-controls">
+      <button class="chip" id="t-mode-cards" aria-pressed="true">Flashcards</button>
+      <button class="chip" id="t-mode-list" aria-pressed="false">Full list</button>
+      <button class="chip" id="t-dir" aria-pressed="false">Direction: English → Arabic</button>
+    </div>
+  </div>
+  <div id="t-cards" class="fc-wrap">
+    <p class="muted" id="fc-count"></p>
+    <div class="fc" id="fc" role="button" tabindex="0" aria-label="Flashcard, tap to reveal"></div>
+    <div class="fc-bar">
+      <button class="btn" id="fc-say" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>Hear in English</button>
+      <button class="btn" id="fc-say-ar" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg><span lang="ar" style="font-family:var(--f-ar)">اسمع بالعربي</span></button>
+      <button class="btn ghost" id="fc-again">Again</button>
+      <button class="btn" id="fc-know">I know it</button>
+      <button class="btn ghost" id="fc-shuffle">Shuffle</button>
+      <button class="btn ghost" id="fc-reset">Reset known</button>
+    </div>
+    <p class="muted" id="voice-note" style="text-align:center"></p>
+  </div>
+  <div id="t-list" class="stack" hidden>
+    <input class="search" id="t-search" type="search" placeholder="Search English or Arabic…" aria-label="Search terms">
+    <div class="tablewrap"><table id="t-table"></table></div>
+  </div>
+ </div>
+</section>
+
+<!-- QUIZ -->
+<section class="panel" id="p-quiz" data-title="Quiz 1" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>What would you do?</h2>
+    <p class="intro">Scenario questions like the ones raters and trainers ask. Do it until you get all of them right without thinking.</p>
+    <div class="rp-controls"><p class="muted" id="qscore"></p><button class="btn ghost" id="qreset">Start again</button></div>
+  </div>
+  <div class="stack-lg" id="quiz"></div>
+ </div>
+</section>
+
+<!-- QUIZ 2 -->
+<section class="panel" id="p-quiz2" data-title="Quiz 2" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Words, dialects, numbers</h2>
+    <p class="intro">Terminology, dialect traps, numbers, and doctor instructions. These are the small things that cost points on the recorded test.</p>
+    <div class="rp-controls"><p class="muted" id="q2score"></p><button class="btn ghost" id="q2reset">Start again</button></div>
+  </div>
+  <div class="stack-lg" id="quiz2"></div>
+ </div>
+</section>
+
+<!-- ENGLISH -->
+<section class="panel" id="p-english" data-title="English" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>English assessment</h2>
+    <p class="intro">Clear and correct beats fast and fancy. Speak at a steady pace, use simple full sentences, pause silently instead of saying "umm", and pronounce word endings ("-ed", "-s").</p>
+  </div>
+
+  <div class="stack">
+    <h3>Prepared answers (60–90 seconds each)</h3>
+    <p class="muted">Practice these aloud and record them. Change the wording so it sounds like you.</p>
+    <details open><summary>Tell us about yourself</summary>
+      <p>"My name is Safa Mohamed Ahmed, and I'm from Alexandria, Egypt. I graduated from the Faculty of Law at Alexandria University, English Section, in 2025, and I'm now completing a diploma in Public Law. Studying law in English trained me to be precise with language, to handle sensitive information confidentially, and to stay neutral. Arabic is my native language, and I've been interpreting between Arabic and English for people around me. I want to build that into a professional career in medical interpreting, where accuracy really matters."</p>
+    </details>
+    <details><summary>Why do you want to be a medical interpreter?</summary>
+      <p>"Because language should never be the reason a patient doesn't get the right care. When a patient can't explain their symptoms or understand their medication, mistakes happen. My legal background taught me how much every word matters, and I'd like to use that precision to help patients and doctors understand each other completely."</p>
+    </details>
+    <details><summary>Tell us about your interpreting experience</summary>
+      <div class="stack">
+        <div class="callout warn"><strong>Keep this answer true</strong>Only describe situations that really happened. Training, QA call reviews, and the ALTA test will show your real level within days. A real example plus "I've been training intensively" is stronger than invented details you'd have to defend later.</div>
+        <p>"Most of my interpreting so far has been informal: helping family members and other people communicate in English, for example <i>[a real example: a clinic visit, a pharmacy, a phone call with a company, a foreign visitor]</i>. That taught me to listen carefully, keep the full meaning, and stay calm. To prepare for medical work, I've been studying medical terminology in both languages, the NCIHC code of ethics and standards of practice, and practicing doctor–patient role-plays, recording myself and checking my accuracy."</p>
+      </div>
+    </details>
+    <details><summary>Describe a difficult situation and how you handled it (STAR)</summary>
+      <p><b>S</b>ituation: what was happening. <b>T</b>ask: what you had to do. <b>A</b>ction: what you did, step by step. <b>R</b>esult: how it ended and what you learned. Pick a real moment from university, an exam, a stressful family situation, or interpreting for someone. End with what you learned: "I learned to stay calm and ask for clarification instead of guessing."</p>
+    </details>
+    <details><summary>What would you do if you didn't understand a word during a call?</summary>
+      <p>"I would never guess. I would say, 'The interpreter requests clarification,' ask the speaker to explain or repeat, and then tell the other party what I asked, so everything stays transparent."</p>
+    </details>
+    <details><summary>How do you handle stress and long shifts?</summary>
+      <p>"I prepare my workspace before the shift, stay focused on one call at a time, and take my scheduled breaks properly. During a hard call I slow down, take notes, and follow the protocol. After the call, I let it go and get ready for the next one."</p>
+    </details>
+  </div>
+
+  <div class="stack">
+    <h3>Grammar mistakes Arabic speakers often make</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Wrong</th><th>Right</th></tr>
+      <tr><td>I study law since 2021.</td><td>I <b>have studied</b> / <b>have been studying</b> law since 2021.</td></tr>
+      <tr><td>He take the medicine every day.</td><td>He take<b>s</b> the medicine every day.</td></tr>
+      <tr><td>Doctor said patient has fever.</td><td><b>The</b> doctor said <b>the</b> patient has <b>a</b> fever.</td></tr>
+      <tr><td>Can you explain me?</td><td>Can you explain <b>it to</b> me?</td></tr>
+      <tr><td>We discussed about the problem.</td><td>We discussed the problem.</td></tr>
+      <tr><td>I am agree.</td><td>I agree.</td></tr>
+      <tr><td>She is married with an engineer.</td><td>She is married <b>to</b> an engineer.</td></tr>
+      <tr><td>It depends of the situation.</td><td>It depends <b>on</b> the situation.</td></tr>
+      <tr><td>I have 25 years.</td><td>I <b>am</b> 25 years old.</td></tr>
+      <tr><td>The informations / advices</td><td>The information / advice (no "s")</td></tr>
+    </table></div>
+    <p class="muted">Pronunciation: p ≠ b (<i>pill / bill</i>, <i>pain / bain</i>), v ≠ f (<i>vein / fine</i>). These matter in medical words.</p>
+  </div>
+ </div>
+</section>
+
+<!-- SAFETY -->
+<section class="panel" id="p-safety" data-title="Safety" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Before the AnyDesk check</h2>
+    <p class="intro">The company is real: Multilingual Interpreters and Translators LLC, Winter Haven, Florida, with staff in Egypt, founded 2017. Its domain has existed since 2020, and the test site is really theirs. No scam reports were found. Nada's signature (Talent Acquisition Supervisor, nada.ahmed@multilingualint.com, Orlando address, "A Lingtopia Group Company") matches the company's own website, which is a good sign. Tap her name in Gmail once to confirm the real sender address ends in <b>@multilingualint.com</b>. But "an IT person on WhatsApp asks for AnyDesk" is also the exact method fake-job scammers use, sometimes by copying a real company's name. Protect yourself either way.</p>
+  </div>
+  <div class="callout danger"><strong>Never, for any reason</strong>Pay anything (equipment, training, ALTA test, "processing fee"). Open your bank, PayPal, Payoneer, Wise, or email app while AnyDesk is connected. Send a photo of your ID or card over WhatsApp before you have a signed contract. Accept a "test payment" or "refund" into your account. Let them install any other program.</div>
+  <div class="grid2">
+    <div class="card stack"><h3>Before</h3>
+      <ul class="clean">
+        <li>When the IT person messages on WhatsApp, reply to Nada's email (it's on the company domain) and ask: "Is +__ your IT specialist?" Wait for her yes before connecting.</li>
+        <li>Download AnyDesk yourself from anydesk.com only. Never from a link they send.</li>
+        <li>Log out of banking, PayPal, Payoneer, Wise, and email in the browser. Close everything else.</li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>During</h3>
+      <ul class="clean">
+        <li>Stay in front of the screen and watch every click.</li>
+        <li>They should only check: Task Manager / system info (CPU, RAM), speed test, camera, headset, ethernet.</li>
+        <li>If they open anything else, close AnyDesk immediately.</li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>After</h3>
+      <ul class="clean">
+        <li>Close or uninstall AnyDesk. Make sure "unattended access" is off and no password is saved in it.</li>
+        <li>If anything felt wrong: unplug the internet and change your passwords from your phone.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="stack">
+    <h3>Tech requirements (from the email)</h3>
+    <div class="tablewrap"><table>
+      <tr><td>Camera</td><td>1080p (Full HD)</td></tr>
+      <tr><td>Headset</td><td>USB only (not Bluetooth, not 3.5 mm jack)</td></tr>
+      <tr><td>Internet</td><td>Download 20 Mbps, upload 15 Mbps, latency ≤ 100 ms, <b>ethernet cable required</b></td></tr>
+      <tr><td>Computer</td><td>Windows 10+ or Mac, Intel i5 8th gen or Ryzen 5, 12 GB RAM minimum</td></tr>
+      <tr><td>Video setup</td><td>Silent, well-lit room, grey background, white clothing</td></tr>
+    </table></div>
+    <p class="muted">Check before the IT call: run a speed test at speedtest.net over the cable; on Windows press Ctrl+Shift+Esc → Performance to see CPU and RAM.</p>
+  </div>
+ </div>
+</section>
+
+<!-- LINKS -->
+<section class="panel" id="p-links" data-title="Links" hidden>
+ <div class="stack-lg">
+  <div class="stack"><h2>Free resources</h2><p class="intro">Use these after the test too: training and the ALTA exam come next.</p></div>
+  <div class="grid2">
+    <div class="card stack"><h3>Glossaries (English–Arabic)</h3>
+      <ul class="clean">
+        <li><a href="https://cchicertification.org/uploads/004-ARA-CCHI-mini-glossary-ACA-Insurance.pdf" target="_blank" rel="noopener">CCHI Arabic insurance glossary</a></li>
+        <li><a href="https://cchicertification.org/uploads/001-ARA-CCHI-mini-glossary-Cardiovascular-v2.pdf" target="_blank" rel="noopener">CCHI Arabic cardiovascular glossary</a></li>
+        <li><a href="https://cchicertification.org/uploads/002-ARA-CCHI-mini_glossary-ENT-ear.pdf" target="_blank" rel="noopener">CCHI Arabic ear (ENT) glossary</a></li>
+        <li><a href="https://medlineplus.gov/languages/arabic.html" target="_blank" rel="noopener">MedlinePlus health info in Arabic</a> (bilingual PDFs)</li>
+        <li><a href="https://umd.emro.who.int/WHODictionary/Home/AboutUs" target="_blank" rel="noopener">WHO Unified Medical Dictionary</a></li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>Ethics and standards</h3>
+      <ul class="clean">
+        <li><a href="https://www.ncihc.org/ncihc-national-code-of-ethics" target="_blank" rel="noopener">NCIHC National Code of Ethics</a></li>
+        <li><a href="https://www.ncihc.org/assets/media/ncihc%20national%20standards%20of%20practice.pdf" target="_blank" rel="noopener">NCIHC Standards of Practice (PDF)</a></li>
+        <li><a href="https://www.imiaweb.org/code/" target="_blank" rel="noopener">IMIA Code of Ethics</a></li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>Practice videos (interpret aloud)</h3>
+      <ul class="clean">
+        <li><a href="https://www.youtube.com/watch?v=9om2tedf9oo" target="_blank" rel="noopener">Chest pain doctor–patient dialogue</a></li>
+        <li><a href="https://www.youtube.com/playlist?list=PL_eFC6jL_o3O0gyRIpiUcVUWlZ1wFU0gm" target="_blank" rel="noopener">UCL doctor-visit playlist</a></li>
+        <li><a href="https://www.youtube.com/playlist?list=PLt1PbUmmpClcTCCIVO9wd-Q4tQOVvqujU" target="_blank" rel="noopener">Medical interpreting practice playlist</a> (use the English turns)</li>
+        <li><a href="https://medicalinterpreterblog.com/audio-recordings-for-consecutive-note-taking-practice/" target="_blank" rel="noopener">Audio for note-taking practice</a></li>
+      </ul>
+      <p class="muted">Method: pause after 1–2 sentences, interpret into Arabic aloud, record, compare.</p>
+    </div>
+    <div class="card stack"><h3>About the ALTA test (coming later)</h3>
+      <p>Phone or online, about 20 dialogues in 30 minutes, segments up to 35–50 words, paper notes allowed, up to 2 repeats. Scored 1–12; medical jobs often want 10. <a href="https://altalang.com/language-testing/interpretation-practice-test" target="_blank" rel="noopener">ALTA practice test page</a></p>
+    </div>
+  </div>
+ </div>
+</section>
+</div>
+
+<script>
+(function(){
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
+
+/* ---------- tabs ---------- */
+const panels=[...document.querySelectorAll("section.panel")];
+const row=$("#tabrow");
+panels.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.tab=id;b.id="tab-"+id;b.setAttribute("aria-controls",p.id);b.onclick=()=>show(id,true);row.appendChild(b)});
+function show(id,user){if(id!=="mock"&&window.speechSynthesis)try{window.speechSynthesis.cancel()}catch(e){}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(a){e.preventDefault();show(a.dataset.goto,true)}});
+const h=(location.hash||"").slice(1);show(panels.some(p=>p.id==="p-"+h)?h:store.get("tab","plan"));
+
+/* ---------- plan ---------- */
+const PLAN=[
+ ["Tonight · block 1 (≈2 h)","Rules, scripts, quiz",[
+  "Read the Rules tab twice. Say the 12 rules out loud from memory.",
+  "Read every script in the Scripts tab aloud 5 times (English and Arabic).",
+  "Do Quiz 1 until you get every question right.",
+  "Reply to Nada (or email info@multilingualint.com) to confirm the WhatsApp IT number is really theirs."]],
+ ["Tonight · block 2 (≈1.5 h)","The words phone calls use most",[
+  "Terms → Insurance & admin: flashcards both directions.",
+  "Terms → Medicines & dosing: flashcards both directions.",
+  "Numbers tab: do the whole list once with paper and pen."]],
+ ["Sleep","Your memory saves the new words while you sleep",[
+  "Sleep at least 6–7 hours. A tired brain loses numbers."]],
+ ["Tomorrow · block 3 (≈2.5 h)","Body, symptoms, conditions, tests",[
+  "Terms → Body, Symptoms, Conditions (flashcards, then list).",
+  "Terms → Tests & procedures, Pregnancy & children, Mental health.",
+  "Review every card you marked “Again”.",
+  "Terms → Doctor instructions, Emergency, Hospital & staff.",
+  "Do Quiz 2 until you get every question right."]],
+ ["Tomorrow · block 4 (≈2 h)","Real practice = real experience",[
+  "Role-plays 1–3 with a partner reading, Partner mode on, recording yourself.",
+  "Role-plays 4–6 the same way.",
+  "Listen to your recordings: count lost numbers, “he says”, “umm”. Redo the worst call.",
+  "Numbers tab again, faster.",
+  "Role-plays 7–10 (insurance, pharmacy, scheduling, discharge) the same way.",
+  "Mock Test tab: run both mock tests once, recording yourself on your phone. Compare with the Test Answers tab."]],
+ ["Tomorrow · block 5 (≈1 h)","English test",[
+  "Practice the prepared answers in the English tab aloud, record once.",
+  "Check the grammar table.",
+  "Take the English test in a quiet room with the headset."]],
+ ["Tomorrow · block 6 (≈1 h)","Interpretation test",[
+  "Test headset + mic with a voice memo. Paper, pen, water ready.",
+  "Take the interpretation test. First person, write every number, “Interpreter correction” if needed.",
+  "Email Nada: both assessments are done."]],
+ ["After the tests","Before the AnyDesk call and the Oct 16 pre-training",[
+  "Read the Safety tab before the AnyDesk session.",
+  "Check the tech requirements: ethernet, USB headset, 1080p camera, grey background, white top.",
+  "Keep doing 30 flashcards and one role-play a day until training starts."]]
+];
+const done=store.get("plan",{});
+function renderPlan(){
+ let total=0,n=0;
+ $("#plan").innerHTML=PLAN.map((b,bi)=>`<div class="block"><div class="block-head"><h3>${esc(b[0])}</h3><span class="muted">${esc(b[1])}</span></div>${b[2].map((t,ti)=>{const id=`c${bi}_${ti}`;total++;if(done[id])n++;return `<label class="check ${done[id]?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${done[id]?"checked":""}><span>${esc(t)}</span></label>`}).join("")}</div>`).join("");
+ $("#planbar").style.width=(100*n/total)+"%";$("#plancount").textContent=`${n} of ${total} steps done`;
+}
+renderPlan();
+$("#plan").addEventListener("change",e=>{if(e.target.type==="checkbox"){done[e.target.id]=e.target.checked;store.set("plan",done);renderPlan()}});
+
+/* ---------- scripts ---------- */
+const SCRIPTS=[
+ ["Opening, to the provider","Hello, this is your Arabic interpreter Safa, ID number [your ID]. Before we begin: everything said will be interpreted and kept confidential. Please speak directly to the patient in the first person and pause after short phrases.",null],
+ ["Opening, to the patient",null,"مرحبًا، معك المترجمة صفا، رقمي التعريفي [...]. سأترجم كل ما يُقال في هذه المكالمة، وكل شيء سرّي. من فضلك تحدّث مع الطبيب مباشرة، وتوقّف بعد كل جملة أو جملتين حتى أتمكن من الترجمة."],
+ ["Asking for a repetition","The interpreter requests a repetition, please.","المترجمة تطلب الإعادة من فضلك."],
+ ["Asking for clarification","The interpreter requests clarification of the term “___”.","المترجمة تطلب توضيح كلمة «___» من فضلك."],
+ ["Asking someone to pause","Excuse me, the interpreter needs to interpret now. Please pause after a few sentences.","عفوًا، المترجمة تحتاج أن تترجم الآن. من فضلك توقف بعد كل جملتين."],
+ ["Bad audio","The interpreter cannot hear clearly. Could you please move closer to the phone, or take it off speaker?","المترجمة لا تسمع بوضوح. هل يمكنك الاقتراب من الهاتف أو إلغاء مكبّر الصوت؟"],
+ ["Telling the other side what you asked","For transparency: the interpreter just asked the patient to repeat the dosage.","للتوضيح: المترجمة طلبت من الطبيب إعادة الجرعة."],
+ ["Correcting yourself","Interpreter correction: the patient said fifty milligrams, not fifteen.","تصحيح من المترجمة: الطبيب قال خمسين ملليغرام، وليس خمسة عشر."],
+ ["“Don't tell the doctor”","As the interpreter, I must interpret everything that is said.","كمترجمة، يجب أن أترجم كل ما يُقال."],
+ ["When asked for an opinion","As the interpreter, I can't give advice, but I'll interpret your question to the doctor.","كمترجمة لا أستطيع أن أعطي رأيًا أو نصيحة، لكني سأترجم سؤالك للطبيب."],
+ ["Dialect difficulty","The interpreter would like to inform both parties that she is having difficulty with the patient's dialect.","المترجمة تودّ أن تُعلم الطرفين أنها تجد صعوبة في فهم لهجة المريض. هل يمكنك التحدث ببطء أو بكلمات أخرى؟"],
+ ["Closing","Is there anything else I can interpret for you today? Thank you, this was Arabic interpreter Safa, ID [your ID].","هل هناك أي شيء آخر؟ شكرًا لك، كانت معك المترجمة صفا."]
+];
+$("#scripts").innerHTML=SCRIPTS.map(s=>`<div class="stack" style="gap:6px"><span class="label">${esc(s[0])}</span><div class="pair">${s[1]?`<div>${esc(s[1])}</div>`:""}${s[2]?`<div>${AR(s[2])}</div>`:""}</div></div>`).join("").replace(/<div class="pair"><div>([^]*?)<\/div><\/div>/g,(m)=>m);
+document.querySelectorAll("#scripts .pair").forEach(p=>{if(p.children.length===1)p.style.gridTemplateColumns="1fr"});
+
+/* ---------- role-plays ---------- */
+// seg: [speaker, lang('en'|'ar'), source, model, tip, critical?]
+const RP=[
+ {t:"1 · Pharmacy refill & prior authorization",ctx:"Phone (OPI). Pharmacy agent and an Egyptian patient. Very typical call.",segs:[
+  ["Pharmacy agent","en","Thank you for calling Brightway Pharmacy, this is Mark. Can I get the patient's full name and date of birth?","شكرًا لاتصالك بصيدلية برايتواي، معك مارك. هل يمكنني الحصول على الاسم الكامل للمريض وتاريخ الميلاد؟","Names of companies and people stay as they are."],
+  ["Patient","ar","أيوه، اسمي سامية عبد الرحمن، مواليد ٣ مارس ١٩٦٨.","Yes, my name is Samia Abdelrahman, born March 3rd, 1968.","Say the date clearly: month, day, year."],
+  ["Pharmacy agent","en","Thank you. I see a refill request for metformin 500 milligrams. Unfortunately, your insurance needs a prior authorization before we can fill the higher dose your doctor prescribed.","شكرًا. أرى طلب إعادة صرف لدواء ميتفورمين ٥٠٠ ملليغرام. للأسف، تأمينك يحتاج إلى موافقة مسبقة قبل أن نتمكن من صرف الجرعة الأعلى التي وصفها طبيبك.","Prior authorization = موافقة مسبقة. Keep “unfortunately” and “higher dose”."],
+  ["Patient","ar","يعني إيه موافقة مسبقة؟ أنا بقالي خمس سنين باخد الدوا ده ومفيش أي مشكلة. وبعدين أنا خلاص فاضل معايا حبايتين بس.","What does prior authorization mean? I've been taking this medication for five years and there's never been a problem. And besides, I only have two pills left.","“بقالي” = I've been … for. Don't lose “only”."],
+  ["Pharmacy agent","en","It means your doctor's office has to send the insurance company a form explaining why you need it. It usually takes three to five business days. In the meantime, I can give you a five-day emergency supply of your current dose, and your copay would be $4.15.","يعني ذلك أن عيادة طبيبك يجب أن ترسل إلى شركة التأمين نموذجًا يوضح لماذا تحتاجين هذا الدواء. عادةً يستغرق ذلك من ثلاثة إلى خمسة أيام عمل. وفي هذه الأثناء، يمكنني أن أعطيكِ كمية طارئة تكفي خمسة أيام من جرعتك الحالية، والمبلغ المستحق عليكِ سيكون أربعة دولارات وخمسة عشر سنتًا.","Long segment. Note: 3–5 business days · 5-day supply · $4.15 (fifteen, not fifty)."],
+  ["Patient (to her son)","ar","طب استنى... يا أحمد، ما تقولش للدكتور إني بنسى جرعة الليل ساعات.","Okay, wait… Ahmed, don't tell the doctor that I sometimes forget the night dose.","Interpret it. Side conversations are interpreted too. You may start with “(To her son:)”.",1],
+  ["Pharmacy agent","en","Okay. Would you like the emergency supply? It'll be ready for pickup after 2 p.m.","حسنًا. هل تريدين الكمية الطارئة؟ ستكون جاهزة للاستلام بعد الساعة الثانية ظهرًا.",""],
+  ["Patient","ar","أيوه لو سمحت. وممكن تبعتوا للدكتور النهارده عشان ما اتأخرش؟","Yes, please. And could you send it to the doctor today so I don't get delayed?",""]
+ ]},
+ {t:"2 · Chest pain in the emergency room",ctx:"Video (VRI). ER doctor and a 58-year-old Levantine (Syrian/Lebanese) patient.",segs:[
+  ["Doctor","en","Hi, I'm Dr. Patel, the emergency physician. Can you tell me what brought you in today?","مرحبًا، أنا الدكتور باتيل، طبيب الطوارئ. هل يمكنك أن تخبرني ما الذي أتى بك اليوم؟",""],
+  ["Patient","ar","من الصبح وأنا حاسس بوجع بصدري، متل شي تقيل قاعد عليه، وعم ينزل على إيدي الشمال.","Since this morning I've been feeling pain in my chest, like something heavy sitting on it, and it's going down my left arm.","“إيدي” can mean hand or arm; pain that travels = arm. “الشمال” = left."],
+  ["Doctor","en","On a scale from zero to ten, ten being the worst pain you can imagine, how bad is it right now?","على مقياس من صفر إلى عشرة، حيث عشرة هي أسوأ ألم يمكنك تخيّله، ما شدة الألم الآن؟","Pain scale questions come in almost every call."],
+  ["Patient","ar","هلّق تقريبًا سبعة. بس الصبح كان عشرة، وعرقت كتير وحسيت بدوخة.","Right now about a seven. But this morning it was a ten, and I sweated a lot and felt dizzy.","Two numbers, two times. “هلّق” = now (Levantine)."],
+  ["Doctor","en","Do you have any history of high blood pressure, diabetes, or heart problems? And do you smoke?","هل لديك تاريخ مرضي مع ارتفاع ضغط الدم، أو السكري، أو مشاكل في القلب؟ وهل تدخّن؟",""],
+  ["Patient","ar","عندي ضغط وكولسترول، وباخد حبة أسبرين كل يوم. والدخان... بدخن علبة باليوم من تلاتين سنة.","I have high blood pressure and cholesterol, and I take an aspirin every day. And smoking… I smoke a pack a day, for thirty years.","“عندي ضغط” = high blood pressure. Thirty, not thirteen."],
+  ["Doctor","en","Okay. We're going to do an EKG right now and draw some blood to check your heart enzymes. If those show a heart attack, you may need a procedure called a cardiac catheterization.","حسنًا. سنُجري لك الآن تخطيطًا للقلب، وسنسحب عيّنة دم لفحص إنزيمات القلب. إذا أظهرت النتائج أنها نوبة قلبية، فقد تحتاج إلى إجراء يُسمّى قسطرة القلب.","EKG = تخطيط القلب · catheterization = قسطرة."],
+  ["Patient","ar","يا دكتور، قلّي بصراحة، أنا رح موت؟ ... (to you) إنتي شو رأيك؟","Doctor, tell me honestly, am I going to die? … (The patient asked the interpreter: “What do you think?”)","Interpret the question to the doctor. Do not answer it. Be transparent that the patient asked you.",1]
+ ]},
+ {t:"3 · Diabetes follow-up (numbers!)",ctx:"Phone (OPI). Clinic nurse and an Iraqi patient.",segs:[
+  ["Nurse","en","Your A1C came back at 9.2 percent. Last time, in March, it was 7.8, so it's going up.","نتيجة السكر التراكمي جاءت ٩٫٢ بالمئة. في المرة السابقة، في شهر مارس، كانت ٧٫٨، أي أنها في ارتفاع.","A1C = السكر التراكمي. Write 9.2 and 7.8 immediately."],
+  ["Patient","ar","والله دكتورة، صارلي شهرين ما دا آخذ الحبوب منتظم، لأن تسوّيلي إسهال ووجع بطن.","Honestly, doctor, for the past two months I haven't been taking the pills regularly, because they give me diarrhea and stomach pain.","Iraqi: “صارلي” = it's been · “دا” = I am (doing) · “تسوّيلي” = they cause me."],
+  ["Nurse","en","Thank you for telling me. Dr. Lee wants to switch you to the extended-release metformin, 1,000 milligrams once a day with dinner. It's gentler on the stomach.","شكرًا لأنك أخبرتني. الدكتور لي يريد أن يغيّر دواءك إلى الميتفورمين ممتد المفعول، ألف ملليغرام مرة واحدة يوميًا مع العشاء. هذا النوع ألطف على المعدة.","Extended-release = ممتد المفعول."],
+  ["Nurse","en","He also wants to start you on insulin glargine, 10 units at bedtime. Check your sugar every morning before breakfast and write it down.","ويريد أيضًا أن يبدأ معك إنسولين غلارجين، عشر وحدات قبل النوم. افحص السكر كل صباح قبل الفطور وسجّل القراءة.","Units = وحدات. Bedtime = قبل النوم."],
+  ["Patient","ar","إبر؟ لا والله أخاف من الإبر. وإذا نزل السكر عليّ بالليل شسوّي؟","Injections? No, honestly, I'm scared of needles. And if my sugar drops at night, what do I do?","“إبر” = injections/needles (Iraqi, Levantine, Gulf). “شسوّي” = what do I do."],
+  ["Nurse","en","If it's below 70, or you feel shaky, sweaty, or confused, drink four ounces of juice and recheck in 15 minutes.","إذا كان أقل من ٧٠، أو شعرت برجفة أو تعرّق أو تشوّش، اشرب أربع أونصات من العصير وأعد الفحص بعد ١٥ دقيقة.","Do NOT add “about half a cup”. Converting units is adding. If the patient doesn't understand, they will ask.",1],
+  ["Patient","ar","يعني أربع أونصات قدّ شكد؟","So four ounces is how much?","Iraqi “شكد” = how much. Interpret the question. The nurse answers, not you."]
+ ]},
+ {t:"4 · Pregnancy check-up",ctx:"Video (VRI). Midwife and a Gulf-Arabic-speaking patient at 28 weeks.",segs:[
+  ["Midwife","en","Congratulations, you're 28 weeks today. Any bleeding, leaking fluid, or cramping?","مبروك، أنتِ اليوم في الأسبوع الثامن والعشرين. هل يوجد أي نزيف، أو نزول سوائل، أو تقلّصات؟",""],
+  ["Patient","ar","لا الحمد لله، بس رجولي منتفخة وايد آخر أسبوع، وراسي يعورني.","No, thank God, but my legs have been really swollen this last week, and I have a headache.","Gulf: “وايد” = a lot · “يعورني” = hurts me. “رجل” can be leg or foot. If it matters, ask for clarification."],
+  ["Midwife","en","Your blood pressure is 148 over 95, which is high for you. Swelling and headaches together can be signs of preeclampsia.","ضغط دمك ١٤٨ على ٩٥، وهذا مرتفع بالنسبة لكِ. التورّم والصداع معًا قد يكونان من علامات تسمّم الحمل.","Preeclampsia = تسمّم الحمل (medical: مقدّمات الارتعاج)."],
+  ["Midwife","en","I'd like you to do a 24-hour urine collection and come back on Thursday. If you get a severe headache, blurry vision, or pain under your right ribs, go straight to Labor and Delivery.","أريدكِ أن تجمعي البول لمدة ٢٤ ساعة وتعودي يوم الخميس. إذا أصابكِ صداع شديد، أو تشوّش في الرؤية، أو ألم تحت الضلوع اليمنى، اذهبي فورًا إلى قسم الولادة.","Three warning signs: keep all three, in order."],
+  ["Patient","ar","زوجي يقول ما نروح المستشفى إلا إذا هو موجود، وهو يشتغل لين الليل.","My husband says we don't go to the hospital unless he's there, and he works until night.","Interpret faithfully. No judgment, no explaining the culture. The midwife handles it."],
+  ["Midwife","en","I understand. This can be an emergency for you and the baby, so please call 911 if he isn't available. Can you repeat back to me the three warning signs?","أفهم ذلك. قد تكون هذه حالة طارئة لكِ وللجنين، لذلك من فضلكِ اتصلي بـ ٩١١ إذا لم يكن متاحًا. هل يمكنكِ أن تعيدي لي العلامات التحذيرية الثلاث؟","“Teach-back”: the patient answers. Don't help her remember.",1]
+ ]},
+ {t:"5 · Child with fever (nurse line)",ctx:"Phone (OPI). Triage nurse and an Egyptian mother.",segs:[
+  ["Nurse","en","Nurse line, this is Jenny. How old is your child, and what's going on?","خط التمريض، معكِ جيني. كم عمر طفلكِ، وما المشكلة؟",""],
+  ["Mother","ar","بنتي عندها سنتين ونص، سخنة من امبارح بالليل، الحرارة وصلت تسعة وتلاتين ونص، ومش عايزة تاكل خالص.","My daughter is two and a half. She's had a fever since last night, her temperature reached 39.5, and she doesn't want to eat at all.","Say “39.5” exactly. Don't convert to Fahrenheit. If the nurse is confused, the interpreter may note the mother is likely using Celsius.",1],
+  ["Nurse","en","Is she drinking? How many wet diapers in the last 12 hours?","هل تشرب؟ كم حفاضة مبلولة في آخر ١٢ ساعة؟",""],
+  ["Mother","ar","بتشرب شوية مية وعصير. غيّرتلها حفاضتين بس من الصبح. وادّيتها نص لبوسة سيتال الضهر.","She's drinking a little water and juice. I've changed only two diapers since this morning. And I gave her half a Cetal suppository at noon.","Brand names stay as said (Cetal). لبوس = suppository. Keep “only two” and “half”."],
+  ["Nurse","en","Okay. Fewer than three wet diapers in 12 hours can mean dehydration. I'd like her seen at urgent care within the next two hours. Do you have a way to get there?","حسنًا. أقل من ثلاث حفاضات مبلولة في ١٢ ساعة قد يعني جفافًا. أريد أن يكشف عليها أحد في عيادة الرعاية العاجلة خلال الساعتين القادمتين. هل لديكِ وسيلة للذهاب إلى هناك؟","Urgent care = الرعاية العاجلة (not the ER)."],
+  ["Mother","ar","أيوه، جوزي هيوصّلنا. هو أنا ممكن أدّيها بنادول بدل اللبوس؟","Yes, my husband will drive us. Can I give her Panadol instead of the suppository?",""]
+ ]},
+ {t:"6 · Mental health screening (hard)",ctx:"Video (VRI). Behavioral health clinician and an Egyptian patient. Tests the “interpret everything” rule.",segs:[
+  ["Clinician","en","Over the last two weeks, how often have you been bothered by feeling down, depressed, or hopeless?","خلال الأسبوعين الماضيين، كم مرة انزعجتَ من الشعور بالحزن أو الاكتئاب أو فقدان الأمل؟","Screening questions are read word for word. Keep the three feelings."],
+  ["Patient","ar","تقريبًا كل يوم. من ساعة ما فقدت شغلي ما عادش ليّا نفس لأي حاجة، ونومي بايظ.","Almost every day. Ever since I lost my job, I don't feel like doing anything anymore, and my sleep is ruined.",""],
+  ["Clinician","en","Have you had thoughts that you would be better off dead, or of hurting yourself in some way?","هل راودتك أفكار بأنه من الأفضل لو كنتَ ميتًا، أو أفكار بإيذاء نفسك بأي طريقة؟","Never soften this question. Say it exactly."],
+  ["Patient","ar","...ساعات بقول لنفسي لو ربنا ياخدني أرتاح. بس ما تقوليلوش كده، هيحطّوني في مستشفى المجانين.","…Sometimes I tell myself, if God took me, I'd be at peace. But don't tell him that, they'll put me in the madhouse.","CRITICAL. Interpret everything immediately, including “don't tell him” and the word “madhouse”. Never hide a suicide statement.",1],
+  ["Clinician","en","Thank you for being honest with me. Do you have a plan, or any way to hurt yourself at home?","شكرًا لصراحتك معي. هل لديك خطة، أو أي وسيلة لإيذاء نفسك في البيت؟",""],
+  ["Patient","ar","لا لا، مفيش حاجة كده. أنا بس تعبان.","No, no, nothing like that. I'm just worn out.","“تعبان” can mean tired, exhausted, or unwell. Choose by context; if unclear, ask."]
+ ]},
+ {t:"7 · Insurance claim denied (Yemeni)",ctx:"Phone (OPI). Health-insurance representative and a Yemeni father. Insurance calls are very common.",segs:[
+  ["Insurance rep","en","Thank you for calling Horizon Health Plan, my name is Lisa. For security, can you verify the member's date of birth and the address on file?","شكرًا لاتصالك بخطة هورايزن الصحية، اسمي ليزا. لأسباب أمنية، هل يمكنك تأكيد تاريخ ميلاد العضو والعنوان المسجّل لدينا؟","Member = العضو (the insured person). “On file” = المسجّل لدينا."],
+  ["Patient","ar","مواليد عشرين واحد، ألف وتسعمية وتسعين. والعنوان ذلحين تغيّر، سكنّا في شقة ثانية من شهرين.","Born January 20th, 1990. And the address has changed now; we moved to another apartment two months ago.","Date trap: Arabic says day then month («عشرين واحد» = 20/1). In English say “January 20th”. Yemeni ذلحين = now.",1],
+  ["Insurance rep","en","Okay, I'll update that after the call. How can I help you today?","حسنًا، سأحدّث العنوان بعد المكالمة. كيف يمكنني مساعدتك اليوم؟",""],
+  ["Patient","ar","أشتي أعرف ليش رفضتوا فاتورة الطوارئ حق ابني. قالوا لي لازم أدفع ألف ومئتين دولار، وأنا ما بش معي زلط.","I want to know why you denied my son's emergency room bill. They told me I have to pay one thousand two hundred dollars, and I don't have money.","Yemeni: أشتي = I want · حق = of / belonging to · ما بش = there isn't · زلط = money."],
+  ["Insurance rep","en","I see the claim. It was denied because the hospital was out-of-network and there was no referral from his primary care provider. You have the right to file an appeal within 180 days.","أرى المطالبة. تم رفضها لأن المستشفى خارج الشبكة، ولم تكن هناك إحالة من طبيب الرعاية الأولية الخاص به. لديك الحق في تقديم استئناف خلال ١٨٠ يومًا.","Claim = مطالبة · out-of-network = خارج الشبكة · referral = إحالة · appeal = استئناف / تظلّم."],
+  ["Patient","ar","بس كانت حالة طارئة! الولد كان ما يقدر يتنفس، أيش أسوي؟ أنتظر الدكتور حقه؟","But it was an emergency! The boy couldn't breathe. What was I supposed to do, wait for his doctor?","Keep the anger and the rhetorical question. Don't calm it down."],
+  ["Insurance rep","en","I understand. For true emergencies, out-of-network ER visits are usually covered at the in-network rate. I'll send the claim for reprocessing, and you should get a letter within 30 days. Your reference number is 4-7-7-1-9.","أتفهّم ذلك. في حالات الطوارئ الحقيقية، تُغطّى زيارات الطوارئ خارج الشبكة عادةً بسعر داخل الشبكة. سأرسل المطالبة لإعادة المعالجة، ويُفترض أن تصلك رسالة خلال ٣٠ يومًا. رقمك المرجعي هو ٤-٧-٧-١-٩.","Reference numbers: write them down and read them digit by digit, exactly."],
+  ["Patient","ar","طيب، تقولي الرقم مرة ثانية؟ أربعة سبعة سبعة واحد تسعة، صح؟","Okay, can you tell me the number again? Four, seven, seven, one, nine, right?","Interpret the question. The rep confirms, not you."]
+ ]},
+ {t:"8 · New blood pressure pill (Sudanese)",ctx:"Phone (OPI). Pharmacist counseling a Sudanese woman on a new medication.",segs:[
+  ["Pharmacist","en","Hi, I'm the pharmacist, Dr. Nguyen. You have a new prescription for lisinopril 10 milligrams for your blood pressure. Have you taken it before?","مرحبًا، أنا الصيدلي، الدكتور نغوين. لديكِ وصفة جديدة لدواء ليزينوبريل ١٠ ملليغرام لضغط الدم. هل تناولتِه من قبل؟","Drug names stay in English: lisinopril."],
+  ["Patient","ar","لا، دي أول مرة. أنا داير أعرف الدوا ده بشربو كيف، قبل الأكل ولا بعدو؟","No, this is the first time. I want to know how I take this medicine: before eating or after?","Sudanese and Gulf speakers say «أشرب الدواء» even for pills. It means “take”, not “drink”. داير = I want.",1],
+  ["Pharmacist","en","Take one tablet once a day, with or without food, at the same time every day. Don't stop taking it even if you feel fine.","خذي قرصًا واحدًا مرة واحدة يوميًا، مع الأكل أو بدونه، في نفس الوقت كل يوم. لا تتوقفي عن تناوله حتى لو شعرتِ أنكِ بخير.","Keep “don't stop… even if”. Negatives are where mistakes hide."],
+  ["Pharmacist","en","Some people get a dry cough. Call your doctor if you get swelling of the lips, tongue, or face, or trouble breathing. That's an emergency.","بعض الناس يُصابون بسعال جاف. اتصلي بطبيبكِ إذا أصابكِ تورّم في الشفتين أو اللسان أو الوجه، أو صعوبة في التنفس. هذه حالة طارئة.","Three body parts plus breathing: keep all four."],
+  ["Patient","ar","يا دكتور، أنا بشرب شاي كركدي كتير عشان الضغط، ممكن أشربو مع الحبوب دي؟ وكمان بقيت ما باكل ملح خالص.","Doctor, I drink a lot of hibiscus tea for my blood pressure. Can I drink it with these pills? And also, I've stopped eating salt completely.","Herbal remedies matter (كركدي = hibiscus). Interpret them fully; never judge or advise."],
+  ["Pharmacist","en","Good question. Hibiscus can lower blood pressure too, so tell your doctor how much you drink. And please avoid salt substitutes that contain potassium while you're on this medicine.","سؤال جيد. الكركديه أيضًا قد يخفض ضغط الدم، لذلك أخبري طبيبكِ بالكمية التي تشربينها. ومن فضلكِ تجنّبي بدائل الملح التي تحتوي على البوتاسيوم طالما تتناولين هذا الدواء.","Salt substitute = بديل الملح."],
+  ["Patient","ar","هسي فهمت. يعني ما أشتري ملح الريجيم ده؟","Now I understand. So I shouldn't buy that diet salt?","Sudanese هسي = now."]
+ ]},
+ {t:"9 · Booking with a specialist (dates!)",ctx:"Phone (OPI). Clinic scheduler and an Egyptian patient. Scheduling calls are the most common OPI calls.",segs:[
+  ["Scheduler","en","Good morning, Riverside Family Clinic, this is Tom. How can I help you?","صباح الخير، عيادة ريفرسايد للعائلة، معك توم. كيف يمكنني مساعدتك؟",""],
+  ["Patient","ar","صباح الخير. أنا عايز أحجز ميعاد مع دكتور العظام، الدكتور بتاعي قالّي محتاج تحويل عشان ركبتي.","Good morning. I want to book an appointment with the orthopedic doctor. My doctor told me I need a referral for my knee.","دكتور العظام = orthopedic doctor · تحويل = referral."],
+  ["Scheduler","en","Let me check. Yes, Dr. Smith sent the referral on October 2nd. The first available appointment with orthopedics is Wednesday, November 4th at 8:15 a.m., or Friday, November 13th at 3:30 p.m.","دعني أتحقّق. نعم، الدكتور سميث أرسل الإحالة في ٢ أكتوبر. أول موعد متاح في قسم العظام هو يوم الأربعاء ٤ نوفمبر الساعة الثامنة والربع صباحًا، أو يوم الجمعة ١٣ نوفمبر الساعة الثالثة والنصف عصرًا.","Three dates, two times. Write: 2 Oct · Wed 4 Nov 8:15 am · Fri 13 Nov 3:30 pm.",1],
+  ["Patient","ar","الأربع الصبح بدري عندي شغل. الجمعة تلاتة ونص كويس. هي فين العيادة دي بالظبط؟","Wednesday early in the morning I have work. Friday at three thirty is good. Where exactly is this clinic?",""],
+  ["Scheduler","en","It's at our main campus, 1200 Oak Street, second floor, suite 210. Please bring your insurance card and a photo ID, and arrive 20 minutes early to fill out paperwork. If you need to cancel, call at least 24 hours before, or there's a $25 no-show fee.","إنها في المقر الرئيسي، ١٢٠٠ شارع أوك، الطابق الثاني، الجناح ٢١٠. من فضلك أحضر بطاقة التأمين وبطاقة هوية بصورة، واحضر قبل الموعد بعشرين دقيقة لملء الأوراق. إذا احتجت إلى الإلغاء، اتصل قبل ٢٤ ساعة على الأقل، وإلا ستُدفع رسوم عدم حضور قدرها ٢٥ دولارًا.","Long segment: address, floor, suite, 2 documents, 20 min, 24 h, $25. Notes!"],
+  ["Patient","ar","تمام. ممكن تبعتولي رسالة بالميعاد على الموبايل؟ عشان أنا بنسى.","Okay. Can you send me a text message with the appointment on my phone? Because I forget.",""]
+ ]},
+ {t:"10 · Going home after surgery (Palestinian)",ctx:"Video (VRI). Nurse giving discharge instructions to a Palestinian woman after gallbladder surgery.",segs:[
+  ["Nurse","en","You're going home today after your gallbladder surgery. You have three small incisions closed with surgical glue. Don't soak in a bath or swim for two weeks, but you can shower starting tomorrow.","ستعودين إلى البيت اليوم بعد عملية المرارة. لديكِ ثلاثة جروح صغيرة مغلقة بلاصق جراحي. لا تجلسي في حوض الاستحمام ولا تسبحي لمدة أسبوعين، لكن يمكنكِ الاستحمام بالدش ابتداءً من الغد.","Incision = جرح / شق جراحي. Two rules: no bath or swimming for 2 weeks; shower from tomorrow."],
+  ["Patient","ar","طيب والأكل؟ بقدر آكل إشي عادي ولا لازم أظل على الشوربة؟","Okay, and food? Can I eat something normal, or do I have to stay on soup?","Palestinian / Jordanian: إشي = something · بقدر = can I."],
+  ["Nurse","en","Start with light, low-fat foods for the first week. Avoid fried and greasy food. For pain, take oxycodone 5 milligrams every 4 to 6 hours only if needed, and acetaminophen 500 milligrams every 6 hours. Don't drive while taking oxycodone.","ابدئي بأطعمة خفيفة قليلة الدهون في الأسبوع الأول. تجنّبي الأطعمة المقلية والدسمة. للألم، خذي أوكسيكودون ٥ ملليغرام كل ٤ إلى ٦ ساعات فقط عند اللزوم، وأسيتامينوفين ٥٠٠ ملليغرام كل ٦ ساعات. لا تقودي السيارة أثناء تناول الأوكسيكودون.","Two drugs, two doses, two intervals, plus “only if needed”. The hardest segment type on tests.",1],
+  ["Patient","ar","الأوكسي هاد مش بيعمل إدمان؟ أخوي صار معه هيك.","Isn't this oxy addictive? That happened to my brother.","Interpret the worry exactly. Don't reassure her yourself."],
+  ["Nurse","en","That's an important question. We're giving you only 10 tablets, and most people only need them for a few days. Call us or come to the ER if you have a fever over 101, yellow skin or eyes, or pain that gets worse instead of better.","هذا سؤال مهم. سنعطيكِ ١٠ أقراص فقط، ومعظم الناس يحتاجونها لبضعة أيام فقط. اتصلي بنا أو تعالي إلى الطوارئ إذا أصابتكِ حرارة أعلى من ١٠١، أو اصفرار في الجلد أو العينين، أو ألم يزداد بدلًا من أن يتحسّن.","Say “101” as spoken. Don't convert Fahrenheit to Celsius."],
+  ["Patient","ar","تمام، فهمت. بدّي حدا يكتبلي هالإشيات بالعربي إذا في.","Okay, I understand. I'd like someone to write these things down for me in Arabic, if possible.","Interpret the request. Don't promise anything yourself; the nurse decides (they may have Arabic discharge papers)."]
+ ]}
+];
+let rpIdx=store.get("rp",0), partner=false, showAll=false;
+const picker=$("#rp-picker");
+picker.innerHTML=RP.map((r,i)=>`<button class="chip" data-rp="${i}" aria-pressed="${i===rpIdx}">${esc(r.t.split(" · ")[0])}. ${esc(r.t.split(" · ")[1])}</button>`).join("");
+picker.onclick=e=>{const b=e.target.closest("[data-rp]");if(!b)return;rpIdx=+b.dataset.rp;store.set("rp",rpIdx);picker.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));renderRP()};
+$("#rp-partner").onclick=e=>{partner=!partner;e.currentTarget.setAttribute("aria-pressed",partner);renderRP()};
+$("#rp-all").onclick=e=>{showAll=!showAll;e.currentTarget.setAttribute("aria-pressed",showAll);renderRP()};
+function renderRP(){
+ const r=RP[rpIdx];
+ $("#rp").innerHTML=`<div class="rp-meta"><h3>${esc(r.t)}</h3><p class="muted">${esc(r.ctx)}</p></div>`+r.segs.map((s,i)=>{
+  const [who,lang,src,model,tip,crit]=s;
+  const srcHtml=lang==="ar"?AR(src):esc(src);
+  const modelHtml=lang==="ar"?esc(model):AR(model);
+  return `<div class="seg"><div class="who"><span class="tag ${lang==="en"?"en":"arb"}">${lang==="en"?"English → Arabic":"Arabic → English"}</span><b>${esc(who)}</b></div>
+  <p class="src ${partner?"hidden-src":""}" ${partner?'title="Partner mode: tap to show"':""} data-unblur>${srcHtml}</p>
+  <div><button class="btn ghost" data-rev="${i}" ${showAll?"hidden":""}>Show model interpretation</button></div>
+  <div class="model" id="m${i}" ${showAll?"":"hidden"}><span class="label">Model interpretation</span><p>${modelHtml}</p>${tip?`<p class="tip ${crit?"crit":""}">${esc(tip)}</p>`:""}</div></div>`}).join("");
+}
+$("#rp").addEventListener("click",e=>{const b=e.target.closest("[data-rev]");if(b){$("#m"+b.dataset.rev).hidden=false;b.hidden=true;return}const u=e.target.closest("[data-unblur]");if(u)u.classList.remove("hidden-src")});
+renderRP();
+
+/* ---------- numbers ---------- */
+const NUMS=[
+ ["en","Take 2 tablets by mouth every 6 hours as needed for pain. No more than 8 tablets in 24 hours.","خذ قرصين عن طريق الفم كل ست ساعات عند اللزوم للألم. لا تتجاوز ثمانية أقراص خلال ٢٤ ساعة."],
+ ["en","Amoxicillin 875 milligrams twice a day for 10 days. Finish all of it, even if you feel better.","أموكسيسيلين ٨٧٥ ملليغرام مرتين يوميًا لمدة عشرة أيام. أكمل الكمية كلها حتى لو شعرت بتحسّن."],
+ ["en","Your appointment is on Tuesday, November 17th, at 10:45 a.m. Please arrive 15 minutes early.","موعدك يوم الثلاثاء ١٧ نوفمبر، الساعة العاشرة وخمس وأربعين دقيقة صباحًا. من فضلك احضر قبل الموعد بخمس عشرة دقيقة."],
+ ["en","Your copay is $35, and you've met $1,250 of your $3,000 deductible.","المبلغ المستحق عليك هو ٣٥ دولارًا، وقد دفعت ١٢٥٠ دولارًا من المبلغ المقتطع البالغ ٣٠٠٠ دولار."],
+ ["en","Your blood pressure today is 162 over 98.","ضغط دمك اليوم ١٦٢ على ٩٨."],
+ ["en","Use the inhaler, 2 puffs every 4 to 6 hours as needed for shortness of breath.","استخدم البخاخ، بختين كل ٤ إلى ٦ ساعات عند اللزوم لضيق التنفس."],
+ ["en","Don't eat or drink anything after midnight before your colonoscopy on the 13th.","لا تأكل ولا تشرب أي شيء بعد منتصف الليل قبل منظار القولون يوم ١٣."],
+ ["en","Insulin: 14 units before breakfast and 8 units before dinner.","الإنسولين: ١٤ وحدة قبل الفطور و٨ وحدات قبل العشاء."],
+ ["en","Your potassium is 3.1, which is low. Take 20 milliequivalents once a day for 5 days.","البوتاسيوم عندك ٣٫١، وهذا منخفض. خذ ٢٠ ملي مكافئ مرة واحدة يوميًا لمدة ٥ أيام."],
+ ["en","The baby weighs 7 pounds 4 ounces.","وزن الطفل ٧ أرطال و٤ أونصات."],
+ ["en","Your temperature is 101.3 degrees Fahrenheit.","حرارتك ١٠١٫٣ درجة فهرنهايت."],
+ ["en","Call us back within 48 hours if the swelling doesn't go down.","اتصل بنا مرة أخرى خلال ٤٨ ساعة إذا لم يخفّ التورّم."],
+ ["ar","باخد نص حباية الصبح وحباية كاملة بالليل.","I take half a pill in the morning and a whole pill at night."],
+ ["ar","الوجع بقاله أسبوعين ونص، وبيزيد بعد الأكل بنص ساعة.","The pain has been going on for two and a half weeks, and it gets worse half an hour after eating."],
+ ["ar","ضغطي كان ميّة وتسعين على ميّة وعشرة.","My blood pressure was 190 over 110."],
+ ["ar","آخر دورة جاتلي يوم خمستاشر الشهر اللي فات.","My last period started on the 15th of last month."],
+ ["ar","الدكتور قالّي خمسة مللي من الشراب تلات مرات في اليوم.","The doctor told me five milliliters of the syrup three times a day."]
+];
+$("#nums").innerHTML=NUMS.map((n,i)=>`<div class="seg"><div class="who"><span class="tag ${n[0]==="en"?"en":"arb"}">${n[0]==="en"?"English → Arabic":"Arabic → English"}</span></div><p class="src">${n[0]==="ar"?AR(n[1]):esc(n[1])}</p><div><button class="btn ghost" data-nrev="${i}">Show answer</button></div><div class="model" id="n${i}" hidden><p>${n[0]==="ar"?esc(n[2]):AR(n[2])}</p></div></div>`).join("");
+$("#nums").addEventListener("click",e=>{const b=e.target.closest("[data-nrev]");if(b){$("#n"+b.dataset.nrev).hidden=false;b.hidden=true}});
+
+/* ---------- terms ---------- */
+const CATS={ins:"Insurance & admin",rx:"Medicines & dosing",drugs:"Drug types",instr:"Doctor instructions",sx:"Symptoms",body:"Body",dx:"Conditions",test:"Tests & results",er:"Emergency & injuries",ob:"Pregnancy & children",mh:"Mental health",sense:"Eyes, ears, teeth, skin",staff:"Hospital & staff",equip:"Equipment",parts:"Word parts"};
+const T=[
+// ins
+["ins","health insurance","التأمين الصحي",""],["ins","premium","قسط التأمين",""],["ins","copay","المبلغ المستحق مع التأمين / الدفعة المشتركة","CCHI glossary"],["ins","deductible","المبلغ المقتطع","Amount you pay before insurance starts paying"],["ins","coinsurance","التأمين المشترك / النسبة المستحقة",""],["ins","out-of-pocket cost","التكاليف التي تدفعها من جيبك",""],["ins","Medicaid / Medicare","ميديكيد / ميديكير","Keep the names"],["ins","covered / not covered","مُغطّى / غير مُغطّى",""],["ins","in-network / out-of-network","داخل الشبكة / خارج الشبكة",""],["ins","pre-existing condition","حالة صحية موجودة مسبقًا",""],["ins","primary care provider (PCP)","طبيب الرعاية الأولية",""],["ins","specialist","طبيب أخصائي",""],["ins","prior authorization","الموافقة المسبقة",""],["ins","referral","إحالة","E: تحويل"],["ins","claim","مطالبة",""],["ins","bill / balance due","فاتورة / المبلغ المتبقي",""],["ins","appointment","موعد","E: ميعاد"],["ins","reschedule / cancel","تغيير الموعد / إلغاء الموعد",""],["ins","no-show","عدم الحضور للموعد",""],["ins","date of birth","تاريخ الميلاد","E: مواليد"],["ins","member ID / insurance card","رقم العضوية / بطاقة التأمين",""],["ins","emergency room (ER)","قسم الطوارئ",""],["ins","urgent care","عيادة الرعاية العاجلة","Not the ER"],["ins","admitted (to hospital)","دخول المستشفى","E: اتحجز في المستشفى"],["ins","discharge","الخروج من المستشفى",""],["ins","follow-up","متابعة",""],["ins","consent form","نموذج الموافقة",""],["ins","medical records","السجل الطبي / الملف الطبي",""],["ins","business days","أيام عمل",""],["ins","please hold","من فضلك انتظر على الخط",""],
+// rx
+["rx","prescription","وصفة طبية","E: روشتة"],["rx","refill","إعادة صرف الدواء",""],["rx","pharmacy / pharmacist","صيدلية / صيدلي",""],["rx","over the counter (OTC)","بدون وصفة طبية",""],["rx","dose","جرعة",""],["rx","milligram (mg)","ملليغرام","Colloquial: مللي"],["rx","milliliter (mL)","ملليلتر","Colloquial: مللي too, so check which one"],["rx","once a day","مرة واحدة يوميًا",""],["rx","twice a day (BID)","مرتين يوميًا",""],["rx","three times a day (TID)","ثلاث مرات يوميًا",""],["rx","every 6 hours","كل ست ساعات",""],["rx","as needed (PRN)","عند اللزوم / عند الحاجة",""],["rx","by mouth","عن طريق الفم",""],["rx","on an empty stomach","على معدة فارغة","Colloquial: على الريق"],["rx","with food","مع الأكل",""],["rx","at bedtime","قبل النوم",""],["rx","tablet","قرص",""],["rx","pill","حبّة","E: برشامة · M: كاشي"],["rx","capsule","كبسولة",""],["rx","syrup","شراب",""],["rx","drops","نقط / قطرة",""],["rx","ointment / cream","مرهم / كريم",""],["rx","suppository","تحميلة","E: لبوس"],["rx","inhaler","بخاخ",""],["rx","puffs","بخّات",""],["rx","nebulizer","جهاز البخار / جهاز الرذاذ","E: جلسة بخار (?)"],["rx","injection / shot","حقنة","L / I / G: إبرة"],["rx","IV fluids","محلول وريدي","E: محلول"],["rx","units (insulin)","وحدات",""],["rx","side effects","آثار جانبية",""],["rx","allergic reaction","رد فعل تحسّسي",""],["rx","antibiotic","مضاد حيوي",""],["rx","painkiller","مسكّن",""],["rx","blood thinner","مميّع للدم","E: دوا سيولة"],["rx","extended-release","ممتد المفعول",""],["rx","generic (drug)","الدواء البديل / المثيل","(?) check with your trainer"],["rx","overdose","جرعة زائدة",""],["rx","expired","منتهي الصلاحية",""],
+// sx
+["sx","pain","ألم","Colloquial: وجع"],["sx","sharp / dull pain","ألم حاد / ألم مكتوم",""],["sx","burning","حرقان",""],["sx","throbbing","نابض","Colloquial: بيزن / بينبض"],["sx","cramps","مغص / تقلّصات",""],["sx","headache","صداع","L / I: وجع راس"],["sx","migraine","صداع نصفي","Also: الشقيقة"],["sx","fever","حُمّى / حرارة","E: سخونية · M: السخانة"],["sx","chills","قشعريرة / رعشة برد",""],["sx","sweating","تعرّق",""],["sx","cough","سعال","Colloquial: كحّة"],["sx","wheezing","صفير / أزيز في الصدر",""],["sx","shortness of breath","ضيق التنفس","Colloquial: نَفَسي ضيّق"],["sx","chest pain","ألم في الصدر",""],["sx","palpitations","خفقان","E: قلبي بيدق جامد"],["sx","nausea","غثيان","E: نفسي غامّة · L: لعيان نفس"],["sx","vomiting","قيء","E: ترجيع · L: استفراغ · I: زواع"],["sx","diarrhea","إسهال",""],["sx","constipation","إمساك",""],["sx","heartburn","حرقة المعدة","E / L: حموضة"],["sx","bloating","انتفاخ",""],["sx","dizziness","دوخة",""],["sx","fainting","إغماء","E: أُغمي عليّ / وقعت من طولي"],["sx","fatigue / tiredness","تعب / إرهاق","Pitfall: E عيّان = sick, M عيّان = tired"],["sx","swelling","تورّم / انتفاخ","Pitfall: ورم also means tumor; “رجلي وارمة” = my leg is swollen"],["sx","numbness","خَدَر","E: تنميل"],["sx","tingling","وخز / تنميل",""],["sx","itching","حكّة","E: هَرْش"],["sx","rash","طفح جلدي",""],["sx","bleeding","نزيف",""],["sx","bruise","كدمة",""],["sx","blurred vision","تشوّش الرؤية","E: زغللة"],["sx","burning urination","حرقان في البول",""],["sx","frequent urination","كثرة التبوّل",""],["sx","loss of appetite","فقدان الشهية","E: ماليش نفس للأكل"],["sx","weight loss","نقص الوزن",""],["sx","runny nose","سيلان الأنف","E: رشح"],["sx","sore throat","التهاب الحلق","E: زوري واجعني"],["sx","insomnia","أرق",""],["sx","tremor / shaking","رعشة",""],
+// body
+["body","throat","حَلْق","E: زَوْر"],["body","chest","صدر",""],["body","abdomen / belly","بطن",""],["body","stomach (organ)","معدة","Patients often say بطن for both"],["body","lower back","أسفل الظهر",""],["body","shoulder / elbow / wrist","كتف / كوع / رسغ",""],["body","hip / pelvis","ورك / حوض",""],["body","knee / ankle","ركبة / كاحل",""],["body","leg / foot","ساق / قدم","Colloquial رجل = leg OR foot"],["body","rib","ضلع",""],["body","lungs","الرئتان",""],["body","liver","الكبد",""],["body","kidney / kidneys","كُلية / كُلى","I / G: كلوة"],["body","gallbladder","المرارة",""],["body","appendix","الزائدة الدودية",""],["body","intestines / bowels","الأمعاء",""],["body","colon","القولون",""],["body","bladder","المثانة",""],["body","prostate","البروستاتا",""],["body","uterus / womb","الرحم",""],["body","ovaries","المبيضان",""],["body","thyroid","الغدة الدرقية",""],["body","brain","الدماغ","E: المخ"],["body","spine","العمود الفقري",""],["body","artery / vein","شريان / وريد",""],["body","valve (heart)","صمّام",""],["body","joint / muscle / bone","مفصل / عضلة / عظمة",""],["body","gums","اللثة",""],
+// dx
+["dx","diabetes","مرض السكري","E: السكر · I: الشكر"],["dx","high blood pressure","ارتفاع ضغط الدم","Lay: “عندي ضغط”"],["dx","low blood pressure","انخفاض ضغط الدم","Lay: “الضغط واطي”"],["dx","high cholesterol","ارتفاع الكوليسترول",""],["dx","asthma","الربو","E: حساسية صدر"],["dx","COPD","مرض الانسداد الرئوي المزمن",""],["dx","pneumonia","التهاب رئوي",""],["dx","bronchitis","التهاب الشُّعب الهوائية",""],["dx","cold","زكام / نزلة برد","E: دور برد"],["dx","flu","إنفلونزا",""],["dx","heart attack","نوبة قلبية / جلطة في القلب","Pitfall: جلطة alone can mean heart attack OR stroke"],["dx","stroke","سكتة دماغية","Lay: جلطة في المخ"],["dx","heart failure","قصور القلب / فشل القلب",""],["dx","atrial fibrillation (AFib)","رجفان أذيني",""],["dx","blood clot","جلطة دموية / خثرة",""],["dx","angina","ذبحة صدرية",""],["dx","kidney failure","فشل كلوي",""],["dx","kidney stones","حصوات الكلى","E: حصوة"],["dx","dialysis","غسيل الكلى",""],["dx","urinary tract infection (UTI)","التهاب المسالك البولية",""],["dx","anemia","فقر الدم","E: أنيميا"],["dx","hepatitis C","التهاب الكبد الوبائي سي","E: فيروس سي"],["dx","hypothyroidism","قصور الغدة الدرقية / خمول الغدة",""],["dx","arthritis","التهاب المفاصل",""],["dx","osteoporosis","هشاشة العظام",""],["dx","cancer","سرطان","Euphemisms: E المرض الوحش · L/G المرض الخبيث. Interpret as “cancer”"],["dx","tumor","ورم",""],["dx","benign / malignant","حميد / خبيث",""],["dx","seizure","نوبة تشنّج",""],["dx","epilepsy","صرع",""],["dx","fracture","كسر",""],["dx","sprain","التواء","E: ملخ"],["dx","concussion","ارتجاج في المخ",""],["dx","infection","عدوى / التهاب","Arabic التهاب = infection or inflammation"],["dx","acid reflux","ارتجاع المريء",""],["dx","ulcer","قرحة",""],["dx","hernia","فتق",""],["dx","gallstones","حصوات المرارة",""],["dx","appendicitis","التهاب الزائدة الدودية",""],["dx","obesity","السمنة",""],
+// test
+["test","blood test","تحليل دم",""],["test","urine test / sample","تحليل بول / عيّنة بول",""],["test","stool test","تحليل براز",""],["test","CBC (complete blood count)","صورة دم كاملة","MSA: تعداد الدم الكامل"],["test","A1C","السكر التراكمي",""],["test","vital signs","العلامات الحيوية",""],["test","pulse","النبض",""],["test","X-ray","أشعة سينية","Colloquial: أشعة"],["test","CT scan","أشعة مقطعية",""],["test","MRI","رنين مغناطيسي",""],["test","ultrasound","موجات فوق صوتية","E: سونار · L: إيكو"],["test","EKG / ECG","تخطيط القلب","E: رسم قلب"],["test","echocardiogram","إيكو على القلب",""],["test","biopsy","خزعة","E: عيّنة"],["test","colonoscopy","منظار القولون",""],["test","endoscopy","منظار المعدة",""],["test","mammogram","أشعة الثدي / ماموغرام",""],["test","Pap smear","مسحة عنق الرحم",""],["test","surgery","عملية جراحية",""],["test","anesthesia","تخدير","E: بنج"],["test","stitches","غُرَز","L: قُطَب"],["test","cast","جبس",""],["test","chemotherapy","علاج كيميائي","E: كيماوي"],["test","radiation therapy","علاج إشعاعي",""],["test","cardiac catheterization","قسطرة القلب",""],["test","physical exam","فحص سريري","E: كشف"],["test","fasting (before a test)","صيام (بدون أكل ولا شرب)",""],
+// ob
+["ob","pregnant / pregnancy","حامل / حمل",""],["ob","due date","موعد الولادة المتوقع",""],["ob","prenatal care","متابعة الحمل",""],["ob","contractions","انقباضات","E: طَلْق"],["ob","labor","مخاض / ولادة",""],["ob","water broke","نزول ماء الرأس / تمزّق الكيس","E: نزلت الميّة"],["ob","C-section","ولادة قيصرية","E: قيصري"],["ob","vaginal delivery","ولادة طبيعية",""],["ob","miscarriage","إجهاض تلقائي","Colloquial: سقط. Don't say just إجهاض"],["ob","abortion","إجهاض متعمّد",""],["ob","preeclampsia","تسمّم الحمل / مقدمات الارتعاج",""],["ob","gestational diabetes","سكري الحمل",""],["ob","menstrual period","الدورة الشهرية","L / G: العادة"],["ob","last menstrual period","تاريخ آخر دورة",""],["ob","spotting","نزول قطرات دم / تنقيط",""],["ob","breastfeeding","رضاعة طبيعية",""],["ob","formula","حليب صناعي","E: لبن صناعي"],["ob","newborn","حديث الولادة / مولود",""],["ob","vaccines","تطعيمات / لقاحات",""],["ob","well-child visit","فحص دوري للطفل",""],["ob","ear infection","التهاب الأذن",""],["ob","jaundice","يرقان","E: صفرا"],["ob","dehydration","جفاف",""],["ob","diaper","حفاضة","E: بامبرز"],["ob","diaper rash","التهاب الحفاض","E: تسلّخات"],["ob","teething","التسنين",""],["ob","developmental milestones","مراحل النمو",""],
+// mh
+["mh","depression","اكتئاب",""],["mh","anxiety","قلق",""],["mh","panic attack","نوبة هلع",""],["mh","suicidal thoughts","أفكار انتحارية",""],["mh","self-harm","إيذاء النفس",""],["mh","hopeless","فاقد الأمل",""],["mh","hallucinations","هلاوس",""],["mh","PTSD","اضطراب ما بعد الصدمة",""],["mh","bipolar disorder","الاضطراب ثنائي القطب",""],["mh","schizophrenia","الفصام",""],["mh","mood swings","تقلّبات مزاجية",""],["mh","therapy / counseling","علاج نفسي / إرشاد نفسي",""],["mh","psychiatrist","طبيب نفسي",""],["mh","substance use","تعاطي المخدرات / المواد",""],
+// parts
+["parts","-itis","التهاب","appendicitis = التهاب الزائدة"],["parts","-ectomy","استئصال","cholecystectomy = استئصال المرارة"],["parts","-otomy","شَقّ / فتح جراحي",""],["parts","-ostomy","فَغْر (patients: فتحة)","colostomy"],["parts","-scopy","تنظير / منظار",""],["parts","-plasty","رأب / ترميم",""],["parts","-algia","ألم",""],["parts","-emia","في الدم","anemia, hyperglycemia"],["parts","-megaly","تضخّم","cardiomegaly = تضخّم القلب"],["parts","hyper- / hypo-","فرط، ارتفاع / نقص، انخفاض","hypertension / hypoglycemia"],["parts","tachy- / brady-","تسرّع / بطء","tachycardia = تسرّع القلب"],["parts","dys-","خلل / عُسر","dysphagia = عسر البلع"],["parts","cardio-","قلبي",""],["parts","gastro-","معدي",""],["parts","hepato-","كبدي",""],["parts","nephro- / renal","كلوي",""],["parts","neuro-","عصبي",""],["parts","pulmo- / pneumo-","رئوي",""],["parts","derm-","جلدي",""],["parts","osteo-","عظمي",""],
+["parts","-ology / -ologist","علم / أخصائي","cardiology = طب القلب"],["parts","-gram / -graphy","صورة / تصوير","mammogram"],["parts","peri- / endo-","حول / داخل","pericardium, endoscopy"],["parts","poly- / oligo-","كثرة / قلة","polyuria = كثرة التبول"],["parts","-penia","نقص","neutropenia"],["parts","-rrhea","سيلان / نزول","diarrhea"],["parts","hemat- / hemo-","دم / دموي",""],["parts","myo-","عضلي",""],["parts","arthro-","مفصلي",""],["parts","ophthalm-","عيني",""],
+// --- added set 2 ---
+// instructions
+["instr","take a deep breath","خذ نفسًا عميقًا","E: خد نفس عميق"],["instr","hold your breath","احبس نفسك",""],["instr","breathe out","أخرج النفس",""],["instr","breathe normally","تنفّس بشكل طبيعي",""],["instr","open your mouth / say “ah”","افتح فمك / قل «آه»",""],["instr","stick out your tongue","أخرج لسانك","E: طلّع لسانك"],["instr","swallow","ابلع",""],["instr","cough for me","اسعل من فضلك","E: اكحّ"],["instr","lie down on your back","استلقِ على ظهرك","E: نام على ضهرك"],["instr","lie on your side / stomach","استلقِ على جنبك / على بطنك",""],["instr","sit up","اجلس / اعتدل",""],["instr","stand up","قف","E: قوم اقف"],["instr","roll up your sleeve","ارفع كمّك","E: شمّر كمّك"],["instr","make a fist","اقبض يدك",""],["instr","squeeze my fingers","اضغط على أصابعي",""],["instr","follow my finger with your eyes","تابع إصبعي بعينيك",""],["instr","relax your arm","أرخِ ذراعك",""],["instr","you will feel a little pinch","ستشعر بوخزة بسيطة",""],["instr","does it hurt when I press here?","هل يؤلمك عندما أضغط هنا؟",""],["instr","point to where it hurts","أشر إلى مكان الألم",""],["instr","on a scale of 0 to 10","على مقياس من صفر إلى عشرة",""],["instr","nothing to eat or drink after midnight","لا أكل ولا شرب بعد منتصف الليل",""],["instr","undress from the waist up","اخلع ملابسك من الوسط إلى الأعلى",""],["instr","put on the gown","البس رداء المستشفى","E: الجاون"],["instr","sign here","وقّع هنا",""],["instr","are you allergic to any medications?","هل عندك حساسية من أي أدوية؟",""],["instr","when did it start?","متى بدأ ذلك؟","E: من إمتى؟"],["instr","how long does it last?","كم يستمر؟","E: بيفضل قد إيه؟"],["instr","does anything make it better or worse?","هل هناك شيء يخففه أو يزيده؟",""],["instr","can you repeat back what you will do?","هل يمكنك أن تعيد لي ما ستفعله؟","Teach-back. Let the patient answer."],
+// emergency
+["er","emergency","حالة طارئة",""],["er","ambulance","سيارة إسعاف","E: الإسعاف"],["er","unconscious","فاقد الوعي",""],["er","not breathing","لا يتنفس",""],["er","choking","اختناق","E: اتشرق / اتزنق"],["er","CPR","الإنعاش القلبي الرئوي",""],["er","burn","حرق",""],["er","cut / laceration","جرح",""],["er","deep wound","جرح عميق",""],["er","dislocation","خلع","E: خلع في الكتف"],["er","fall","سقوط","E: وقعت"],["er","car accident","حادث سيارة","E: حادثة عربية"],["er","head injury","إصابة في الرأس",""],["er","poisoning","تسمّم",""],["er","dog bite","عضّة كلب",""],["er","bee sting / insect bite","لسعة نحلة / لدغة حشرة",""],["er","severe allergic reaction (anaphylaxis)","صدمة تحسّسية",""],["er","EpiPen","قلم الإبينفرين (إيبي بن)","Keep the name EpiPen"],["er","heavy bleeding","نزيف شديد",""],["er","shock","صدمة",""],["er","heat stroke","ضربة شمس / ضربة حرارة",""],["er","triage","فرز الحالات",""],["er","domestic violence","عنف أسري",""],["er","sexual assault","اعتداء جنسي",""],["er","suicide attempt","محاولة انتحار",""],
+// staff & places
+["staff","nurse","ممرض / ممرضة",""],["staff","nurse practitioner (NP)","ممرضة ممارسة","(?) keep “NP” if unsure"],["staff","physician assistant (PA)","مساعد طبيب",""],["staff","attending physician","الطبيب المسؤول / المعالج",""],["staff","resident (doctor)","طبيب مقيم",""],["staff","surgeon","جرّاح",""],["staff","anesthesiologist","طبيب التخدير","E: دكتور البنج"],["staff","pediatrician","طبيب أطفال",""],["staff","OB-GYN","طبيب نساء وتوليد",""],["staff","cardiologist","طبيب قلب",""],["staff","dermatologist","طبيب جلدية",""],["staff","social worker","أخصائي اجتماعي",""],["staff","case manager","منسّق الرعاية / مدير الحالة",""],["staff","front desk / receptionist","موظف الاستقبال",""],["staff","ICU","العناية المركزة",""],["staff","operating room","غرفة العمليات",""],["staff","waiting room","غرفة الانتظار",""],["staff","outpatient clinic","العيادة الخارجية",""],["staff","inpatient","مريض مقيم بالمستشفى",""],["staff","nursing home","دار رعاية المسنين",""],["staff","hospice","رعاية المرضى في المرحلة الأخيرة",""],["staff","palliative care","الرعاية التلطيفية",""],["staff","home health aide","مساعد رعاية منزلية",""],["staff","physical therapy","علاج طبيعي",""],["staff","occupational therapy","علاج وظيفي",""],["staff","telehealth visit","زيارة طبية عن بُعد","E: كشف أونلاين"],["staff","rehab","إعادة تأهيل",""],
+// equipment
+["equip","wheelchair","كرسي متحرك",""],["equip","crutches","عكازات",""],["equip","walker","مشّاية",""],["equip","cane","عصا",""],["equip","glucometer","جهاز قياس السكر",""],["equip","test strips","شرائط قياس السكر",""],["equip","lancet","إبرة وخز الإصبع",""],["equip","thermometer","ميزان حرارة","E: ترمومتر"],["equip","blood pressure cuff","جهاز قياس الضغط",""],["equip","oxygen tank","أسطوانة أكسجين",""],["equip","nasal cannula","أنبوب الأكسجين الأنفي",""],["equip","CPAP machine","جهاز سي باب للتنفس أثناء النوم",""],["equip","urinary catheter","قسطرة بولية",""],["equip","IV line","خط وريدي","E: كانيولا"],["equip","syringe","حقنة","E: سرنجة"],["equip","bandage","ضمادة","E: شاش / رباط"],["equip","splint","جبيرة",""],["equip","brace","دعامة",""],["equip","hearing aid","سماعة أذن طبية",""],["equip","pacemaker","منظّم ضربات القلب",""],["equip","stent","دعامة","E: دعامة / شبكة"],["equip","dentures","طقم أسنان",""],["equip","pill organizer","علبة تنظيم الأدوية",""],
+// eyes ears teeth skin
+["sense","eye drops","قطرة عين",""],["sense","cataract","المياه البيضاء","MSA: الساد"],["sense","glaucoma","المياه الزرقاء","MSA: الزَّرَق"],["sense","pink eye","التهاب الملتحمة","E: رمد"],["sense","earwax","شمع الأذن",""],["sense","ringing in the ears","طنين في الأذن",""],["sense","hearing loss","ضعف السمع",""],["sense","sinus infection","التهاب الجيوب الأنفية",""],["sense","tonsils","اللوزتان","E: اللوز"],["sense","nosebleed","نزيف من الأنف","MSA: رُعاف"],["sense","toothache","ألم في الأسنان","E: ضرسي واجعني"],["sense","cavity","تسوّس",""],["sense","root canal","علاج عصب",""],["sense","filling","حشو",""],["sense","wisdom tooth","ضرس العقل",""],["sense","acne","حبّ الشباب",""],["sense","eczema","إكزيما",""],["sense","mole","شامة / خال",""],["sense","blister","فقاعة",""],["sense","hives","شرى (طفح تحسّسي)",""],["sense","lice","قمل",""],["sense","scar","ندبة","E: أثر جرح"],["sense","wound infection","التهاب الجرح",""],
+// drug types
+["drugs","statin (cholesterol pill)","دواء الكوليسترول (ستاتين)",""],["drugs","blood pressure medicine","دواء الضغط",""],["drugs","diuretic (water pill)","مدرّ للبول",""],["drugs","antidepressant","مضاد للاكتئاب",""],["drugs","antihistamine","مضاد للهيستامين (دواء حساسية)",""],["drugs","steroid","كورتيزون / ستيرويد",""],["drugs","antacid","مضاد للحموضة",""],["drugs","laxative","ملين",""],["drugs","anti-nausea medicine","دواء ضد الغثيان",""],["drugs","sleeping pill","منوّم",""],["drugs","birth control pills","حبوب منع الحمل",""],["drugs","vitamins / supplements","فيتامينات / مكمّلات غذائية",""],["drugs","iron pills","حبوب حديد",""],["drugs","opioid / narcotic painkiller","مسكّن أفيوني / مخدّر",""],["drugs","flu shot","تطعيم الإنفلونزا",""],["drugs","booster dose","جرعة منشّطة",""],["drugs","tetanus shot","حقنة التيتانوس",""],["drugs","antiviral","مضاد للفيروسات",""],["drugs","antifungal","مضاد للفطريات",""],["drugs","herbal remedy","علاج بالأعشاب","E: وصفة بلدي"],["drugs","chemotherapy pill","دواء كيماوي عن طريق الفم",""],
+// more body
+["body","forehead","الجبهة",""],["body","jaw","الفك",""],["body","collarbone","الترقوة",""],["body","armpit","الإبط",""],["body","groin","أصل الفخذ",""],["body","thigh","الفخذ",""],["body","calf","ربلة الساق","E: سمانة الرجل"],["body","heel","الكعب",""],["body","toe","إصبع القدم",""],["body","nail","ظفر","E: ضفر"],["body","pancreas","البنكرياس",""],["body","spleen","الطحال",""],["body","esophagus","المريء",""],["body","rectum","المستقيم",""],["body","testicles","الخصيتان",""],["body","breast","الثدي",""],["body","tailbone","عظمة العصعص",""],
+// more symptoms
+["sx","earache","ألم في الأذن","E: ودني بتوجعني"],["sx","stiff neck","تيبّس الرقبة",""],["sx","joint pain","ألم في المفاصل",""],["sx","confusion","تشوّش / ارتباك","E: لخبطة"],["sx","memory loss","فقدان الذاكرة",""],["sx","weakness","ضعف / وهن",""],["sx","hoarse voice","بحّة في الصوت",""],["sx","difficulty swallowing","صعوبة في البلع",""],["sx","black stool","براز أسود",""],["sx","blood in the stool","دم في البراز",""],["sx","discharge","إفرازات",""],["sx","hot flashes","هبّات ساخنة",""],["sx","night sweats","تعرّق ليلي",""],["sx","excessive thirst","عطش شديد",""],["sx","cold sweat","عرق بارد",""],["sx","chest tightness","ضيق في الصدر",""],["sx","muscle spasm","تشنّج عضلي","E: شدّ عضلي"],["sx","loss of balance","فقدان التوازن",""],["sx","slurred speech","تلعثم / ثقل في الكلام",""],["sx","facial drooping","ارتخاء في الوجه",""],
+// more conditions
+["dx","gout","النقرس",""],["dx","kidney infection","التهاب الكلى",""],["dx","sickle cell anemia","الأنيميا المنجلية",""],["dx","thalassemia","الثلاسيميا",""],["dx","irritable bowel syndrome (IBS)","القولون العصبي",""],["dx","gastritis","التهاب المعدة",""],["dx","H. pylori","جرثومة المعدة",""],["dx","fatty liver","الكبد الدهني",""],["dx","cirrhosis","تليّف الكبد",""],["dx","sleep apnea","انقطاع النفس أثناء النوم",""],["dx","dementia / Alzheimer's","الخرف / الزهايمر",""],["dx","Parkinson's disease","مرض باركنسون","Lay: الشلل الرعاش"],["dx","multiple sclerosis (MS)","التصلّب المتعدد",""],["dx","autism","التوحّد",""],["dx","ADHD","اضطراب فرط الحركة ونقص الانتباه",""],["dx","COVID-19","كوفيد-١٩ / كورونا",""],["dx","tuberculosis (TB)","السل",""],["dx","chickenpox","الجديري المائي","E: جديري"],["dx","measles","الحصبة",""],["dx","strep throat","التهاب الحلق البكتيري",""],["dx","sepsis","تسمّم الدم / الإنتان",""],["dx","low blood sugar","هبوط السكر",""],["dx","high blood sugar","ارتفاع السكر",""],["dx","varicose veins","الدوالي",""],["dx","hemorrhoids","البواسير",""],["dx","PCOS","تكيّس المبايض",""],["dx","infertility","العقم / تأخر الإنجاب",""],["dx","enlarged prostate","تضخّم البروستاتا",""],["dx","shingles","الحزام الناري",""],["dx","pneumonia vaccine","تطعيم الالتهاب الرئوي",""],
+// more tests & results
+["test","lab results","نتائج التحاليل",""],["test","normal / abnormal","طبيعي / غير طبيعي",""],["test","positive / negative (test)","إيجابي / سلبي","Pitfall: negative usually = not found (good)"],["test","fasting blood sugar","سكر صائم",""],["test","cholesterol panel","تحليل الدهون",""],["test","liver function test","وظائف الكبد",""],["test","kidney function test","وظائف الكلى",""],["test","thyroid test (TSH)","تحليل الغدة الدرقية",""],["test","pregnancy test","اختبار الحمل",""],["test","urine culture","مزرعة بول",""],["test","stress test","اختبار الجهد على القلب",""],["test","bone density scan","قياس كثافة العظام",""],["test","Holter monitor","جهاز هولتر (تخطيط قلب ٢٤ ساعة)",""],["test","swab","مسحة",""],["test","vaccination record","سجل التطعيمات",""],["test","blood draw","سحب دم",""],["test","contrast dye","صبغة",""],
+// more OB / peds
+["ob","placenta","المشيمة","E: الخلاص"],["ob","umbilical cord","الحبل السري",""],["ob","epidural","تخدير نصفي / إبرة الظهر","E: إبرة الضهر"],["ob","induction of labor","تحريض الولادة","E: طلق صناعي"],["ob","postpartum","بعد الولادة","E: فترة النفاس"],["ob","postpartum depression","اكتئاب ما بعد الولادة",""],["ob","IUD","اللولب",""],["ob","ovulation","التبويض",""],["ob","colic","مغص الرضّع",""],["ob","croup","الخانوق",""],["ob","soft spot (fontanelle)","اليافوخ",""],["ob","circumcision","ختان","E: طهارة"],["ob","car seat","كرسي الطفل في السيارة",""],["ob","premature baby","طفل مبتسر / خديج","E: مولود بدري / حضّانة"],["ob","incubator / NICU","حضّانة / عناية مركزة لحديثي الولادة",""],
+// more insurance & admin
+["ins","Social Security number","رقم الضمان الاجتماعي",""],["ins","address / zip code","العنوان / الرمز البريدي",""],["ins","emergency contact","جهة اتصال للطوارئ",""],["ins","primary language","اللغة الأساسية",""],["ins","payment plan","خطة تقسيط",""],["ins","financial assistance","مساعدة مالية",""],["ins","patient portal","بوابة المرضى",""],["ins","voicemail","بريد صوتي",""],["ins","transfer the call","تحويل المكالمة",""],["ins","release of information form","نموذج الإذن بالإفصاح عن المعلومات",""],["ins","power of attorney","توكيل رسمي",""],["ins","legal guardian","وصي قانوني",""],["ins","advance directive","وصية طبية مسبقة",""],["ins","DNR (do not resuscitate)","أمر عدم الإنعاش",""],["ins","sliding scale fee","رسوم حسب الدخل",""],
+// more mental health
+["mh","stress","ضغط نفسي",""],["mh","grief","حزن على فقدان شخص",""],["mh","trauma","صدمة نفسية",""],["mh","eating disorder","اضطراب الأكل",""],["mh","OCD","الوسواس القهري",""],["mh","addiction","إدمان",""],["mh","withdrawal symptoms","أعراض الانسحاب",""],["mh","crisis line","خط الأزمات",""],["mh","safety plan","خطة أمان",""],["mh","isolation / loneliness","عزلة / وحدة",""]
+];
+/* text-to-speech: female US-English voice from the device */
+const tts=("speechSynthesis" in window)?window.speechSynthesis:null;
+let voice=null, voiceAr=null, curTerm=null;
+const FEMALE_AR=["Salma","Hoda","Zariyah","Laila","Layla","Mariam","Amina","Fatima","Sana","Rana","Hala","Amany","Noura"];
+const FEMALE=["Samantha","Ava","Allison","Susan","Victoria","Zoe","Nicky","Joelle","Microsoft Aria","Microsoft Jenny","Microsoft Michelle","Microsoft Ana","Microsoft Emma","Microsoft Zira","Google US English"];
+function pickVoice(){
+ if(!tts)return;
+ const us=tts.getVoices().filter(v=>/^en[-_]US/i.test(v.lang));
+ voice=null;
+ for(const n of FEMALE){const m=us.find(v=>v.name.includes(n));if(m){voice=m;break}}
+ if(!voice)voice=us.find(v=>/female|woman/i.test(v.name))||us[0]||null;
+ const ar=tts.getVoices().filter(v=>/^ar/i.test(v.lang));
+ const fem=ar.filter(v=>FEMALE_AR.some(n=>v.name.includes(n))||/female|woman/i.test(v.name));
+ voiceAr=fem.find(v=>/EG/i.test(v.lang))||fem[0]||ar.find(v=>/EG/i.test(v.lang))||ar[0]||null;
+ const sa=$("#fc-say-ar"); if(sa)sa.hidden=!voiceAr;
+ const note=$("#voice-note");
+ if(note)note.textContent=[voice?`English voice: ${voice.name.replace(/\s*\(.*\)/,"")}`:"",voiceAr?`Arabic voice: ${voiceAr.name.replace(/\s*\(.*\)/,"")}`:"Arabic voice: none on this device (add one in phone settings → Text-to-speech / Spoken Content)"].filter(Boolean).join(" · ");
+}
+function speakAr(text){
+ if(!tts)return;
+ tts.cancel();
+ const u=new SpeechSynthesisUtterance(String(text).replace(/\s*\/\s*/g,"، ").replace(/[“”«»"]/g,""));
+ u.lang=voiceAr?voiceAr.lang:"ar-EG"; if(voiceAr)u.voice=voiceAr; u.rate=.9;
+ tts.speak(u);
+}
+function speak(text){
+ if(!tts)return;
+ tts.cancel();
+ const u=new SpeechSynthesisUtterance(String(text).replace(/\s*\/\s*/g,", ").replace(/[“”«»"]/g,""));
+ u.lang="en-US"; if(voice)u.voice=voice; u.rate=.9; u.pitch=1.05;
+ tts.speak(u);
+}
+if(tts){pickVoice();tts.addEventListener?.("voiceschanged",pickVoice);$("#fc-say").hidden=false}
+$("#fc-say").onclick=e=>{e.stopPropagation();if(curTerm)speak(curTerm[1])};
+$("#fc-say-ar").onclick=e=>{e.stopPropagation();if(curTerm)speakAr(curTerm[2])};
+document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b){speak(b.dataset.say);return}const a=e.target.closest("[data-sayar]");if(a)speakAr(a.dataset.sayar)});
+let cat=store.get("tcat","ins"), dirAr=store.get("tdir",false), mode="cards", known=new Set(store.get("known",[])), deck=[], pos=0, revealed=false;
+const catsEl=$("#t-cats");
+function catCount(k){return T.filter(t=>t[0]===k).length}
+catsEl.innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="chip" data-cat="${k}" aria-pressed="${k===cat}">${esc(v)} <span class="muted">${catCount(k)}</span></button>`).join("");
+catsEl.onclick=e=>{const b=e.target.closest("[data-cat]");if(!b)return;cat=b.dataset.cat;store.set("tcat",cat);catsEl.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));buildDeck();renderList()};
+const key=t=>t[0]+"|"+t[1];
+function buildDeck(){deck=T.filter(t=>t[0]===cat&&!known.has(key(t)));pos=0;revealed=false;renderCard()}
+function renderCard(){
+ curTerm=null;
+ const total=catCount(cat), k=T.filter(t=>t[0]===cat&&known.has(key(t))).length;
+ $("#fc-count").textContent=`${CATS[cat]}: ${k} of ${total} known · ${deck.length} left in this deck. Tap the card to flip.`;
+ const fc=$("#fc");
+ if(!deck.length){fc.innerHTML=`<p class="front">All done here.</p><p class="muted">Pick another category, or “Reset known” to go again.</p>`;return}
+ const t=deck[pos%deck.length];
+ curTerm=t;
+ const front=dirAr?`<p class="front ar" dir="rtl" lang="ar">${esc(t[2])}</p>`:`<p class="front">${esc(t[1])}</p>`;
+ const back=dirAr?`<p class="back">${esc(t[1])}</p>`:`<p class="back ar" dir="rtl" lang="ar">${esc(t[2])}</p>`;
+ fc.innerHTML=front+(revealed?back+(t[3]?`<p class="note">${esc(t[3])}</p>`:""):`<p class="muted">Say it out loud, then tap</p>`);
+}
+$("#fc").onclick=()=>{revealed=!revealed;renderCard()};
+$("#fc").onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();revealed=!revealed;renderCard()}};
+$("#fc-know").onclick=()=>{if(!deck.length)return;const t=deck.splice(pos%deck.length,1)[0];known.add(key(t));store.set("known",[...known]);if(deck.length)pos=pos%deck.length;revealed=false;renderCard()};
+$("#fc-again").onclick=()=>{if(!deck.length)return;pos=(pos+1)%deck.length;revealed=false;renderCard()};
+$("#fc-shuffle").onclick=()=>{for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}pos=0;revealed=false;renderCard()};
+$("#fc-reset").onclick=()=>{T.filter(t=>t[0]===cat).forEach(t=>known.delete(key(t)));store.set("known",[...known]);buildDeck()};
+const dirBtn=$("#t-dir");
+function setDirLabel(){dirBtn.textContent="Direction: "+(dirAr?"Arabic → English":"English → Arabic");dirBtn.setAttribute("aria-pressed",dirAr)}
+dirBtn.onclick=()=>{dirAr=!dirAr;store.set("tdir",dirAr);setDirLabel();revealed=false;renderCard()};
+setDirLabel();
+function setMode(m){mode=m;$("#t-cards").hidden=m!=="cards";$("#t-list").hidden=m!=="list";$("#t-mode-cards").setAttribute("aria-pressed",m==="cards");$("#t-mode-list").setAttribute("aria-pressed",m==="list");renderList()}
+$("#t-mode-cards").onclick=()=>setMode("cards");$("#t-mode-list").onclick=()=>setMode("list");
+function renderList(){
+ if(mode!=="list")return;
+ const q=$("#t-search").value.trim().toLowerCase();
+ const rows=T.filter(t=>q?(t[1].toLowerCase().includes(q)||t[2].includes(q)||t[3].toLowerCase().includes(q)):t[0]===cat);
+ $("#t-table").innerHTML=`<tr><th>English</th><th style="text-align:right">Arabic</th><th>Notes</th></tr>`+rows.map(t=>`<tr><td>${tts?`<button class="say" data-say="${esc(t[1])}" aria-label="Hear ${esc(t[1])}"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[1])}</td><td class="ar" dir="rtl" lang="ar">${tts?`<button class="say" data-sayar="${esc(t[2])}" aria-label="اسمع"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="transform:scaleX(-1)"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button> `:""}${esc(t[2])}</td><td class="muted">${esc(t[3])}</td></tr>`).join("")+(rows.length?"":`<tr><td colspan="3" class="muted">No match. Try a shorter word.</td></tr>`);
+}
+$("#t-search").oninput=renderList;
+buildDeck();
+
+/* ---------- quiz ---------- */
+const Q=[
+ ["The doctor says “cholelithiasis” and you don't know the word. What do you do?",["Say “a stomach problem” so the call keeps moving","Say: “The interpreter requests clarification of the term,” then tell the patient what you asked","Skip it, the patient won't notice","Repeat the English word and continue"],1,"Never guess, never skip. Ask transparently and inform the other party (Standard 6)."],
+ ["The patient asks you: “Honestly, would you have this surgery?”",["Give your honest opinion kindly","Say you'd ask your family first","Don't answer; interpret the question to the doctor (and be transparent that it was asked to you)","Ignore it"],2,"Impartiality: interpreters never advise. The doctor answers medical questions."],
+ ["The patient says: “Don't tell the doctor I drink alcohol.”",["Keep it secret: confidentiality","Remind them everything is interpreted, then interpret it","Interpret only the part about alcohol","Advise the patient to tell the doctor"],1,"Everything said in the session is interpreted, including “don't tell”. Confidentiality protects the patient from outsiders, not from their own doctor."],
+ ["Two turns ago you said “15 mg”, but the doctor said “50 mg”.",["Leave it; going back confuses everyone","Correct it immediately: “Interpreter correction: …”","Tell the patient privately after the call","Wait until the end of the call"],1,"Errors are corrected as soon as you notice (Standard 5). With doses this is a safety issue."],
+ ["The patient talks for over a minute without stopping.",["Summarize the main points","Politely interrupt: the interpreter needs to interpret now; then ask for shorter phrases","Wait and interpret what you remember","Ask the doctor to give up"],1,"Managing the flow (Standard 4) keeps you accurate. Summarizing loses information."],
+ ["The doctor, frustrated, says: “This is the third missed appointment. It's ridiculous.”",["Soften it to keep the peace","Leave out “ridiculous”","Interpret it fully, with the same tone","Tell the doctor to be polite"],2,"Keep register and tone. Changing it is a form of omission."],
+ ["You realize the patient is your neighbor.",["Continue; you'll keep it confidential","Disclose the conflict and ask to be replaced, following company policy","Hang up","Say hello and continue"],1,"Impartiality and confidentiality: disclose conflicts of interest."],
+ ["The call ends. What do you do with your notes?",["Keep them in case the patient calls back","Take a photo for QA","Destroy them","Give them to your supervisor"],2,"HIPAA: notes contain protected health information. Destroy them after each call."],
+ ["The patient says “I think it's the evil eye.”",["Translate as “I think it's stress”","Explain to the doctor what evil eye means in Arab culture","Interpret it literally: “I think it's the evil eye”","Skip it, it's not medical"],2,"Interpret first. Only flag a cultural issue if a real misunderstanding is likely, and let the provider ask."],
+ ["The patient's Moroccan dialect is very hard for you.",["Pretend to understand and do your best guess","Tell both parties transparently, ask for repetition or slower speech, and request another interpreter if needed","Ask the patient to speak English","End the call"],1,"Professional honesty about limits (Standard 21). Guessing endangers the patient."],
+ ["Which is correct first-person interpreting of the patient's “عندي وجع في ضهري”?",["“She says she has back pain.”","“The patient has back pain.”","“I have pain in my back.”","“Back pain.”"],2,"Always speak as the speaker: “I have pain in my back.”"],
+ ["The nurse says “drink 4 ounces of juice”. The patient might not know ounces.",["Convert it to “half a cup”","Interpret “4 ounces” exactly; the patient can ask","Say “a little juice”","Add the conversion in brackets"],1,"Converting is adding. Interpret exactly; the provider explains if asked."]
+];
+const Q2=[
+ ["How do you say “prior authorization” in Arabic?",["الإحالة","الموافقة المسبقة","المطالبة","المبلغ المقتطع"],1,"Prior authorization = الموافقة المسبقة. Referral = إحالة, claim = مطالبة, deductible = المبلغ المقتطع."],
+ ["An Egyptian patient says «عندي سخونية من امبارح». You say:",["I've had heartburn since yesterday.","I've had a fever since yesterday.","I've felt hot since yesterday because of the weather.","I've had a rash since yesterday."],1,"Egyptian سخونية = fever. Heartburn is حموضة."],
+ ["A Levantine patient says «عم استفرغ كل شي باكله». You say:",["I'm coughing after everything I eat.","I'm vomiting everything I eat.","I feel dizzy after I eat.","I can't eat anything."],1,"Levantine استفراغ = vomiting. Egyptian says ترجيع, Iraqi زواع."],
+ ["The suffix “-ectomy” (as in appendectomy) means:",["التهاب (inflammation)","تنظير (looking inside)","استئصال (surgical removal)","تضخّم (enlargement)"],2,"-ectomy = استئصال. -itis = التهاب, -scopy = تنظير, -megaly = تضخّم."],
+ ["A patient says «جاتلي جلطة السنة اللي فاتت». What is the safest rendering?",["I had a stroke last year.","I had a heart attack last year.","I had a clot last year, and if the meaning matters, ask: the interpreter requests clarification (heart, brain, or leg?)","Skip the word"],2,"جلطة can mean heart attack, stroke, or a blood clot. Render “clot” and clarify transparently if needed."],
+ ["Egyptian «الروشتة» means:",["The bill","The prescription","The appointment card","The X-ray"],1,"روشتة = prescription (وصفة طبية)."],
+ ["“Take as needed (PRN)” in Arabic:",["مرتين يوميًا","قبل النوم","عند اللزوم","على الريق"],2,"PRN = عند اللزوم / عند الحاجة."],
+ ["What is a “deductible”?",["The fixed fee you pay at every visit","The amount you pay yourself before insurance starts paying","A discount from the pharmacy","A refund from insurance"],1,"Deductible = المبلغ المقتطع. The fixed visit fee is the copay."],
+ ["A Gulf patient says «راسي يعورني وايد». You say:",["My head hurts a lot.","My head is spinning.","I have a lot on my mind.","My eye hurts a lot."],0,"Gulf: يعورني = hurts me, وايد = a lot."],
+ ["An Iraqi patient asks «الدوا شكد لازم آخذ؟». You say:",["Which medicine should I take?","How much of the medicine do I need to take?","When should I take the medicine?","Why do I have to take the medicine?"],1,"Iraqi شكد = how much."],
+ ["A Moroccan patient says «أنا عيّانة بزاف». The best rendering is:",["I'm very sick.","I'm very tired.","I'm very hungry.","I'm very worried."],1,"Pitfall: in Morocco عيّان = tired; in Egypt عيّان = sick."],
+ ["«رجلي وارمة» means:",["I have a tumor in my leg.","My leg is swollen.","My leg is broken.","My leg is numb."],1,"وارم = swollen. Don't confuse it with ورم = tumor."],
+ ["“Miscarriage” in Arabic is best said as:",["إجهاض","إجهاض تلقائي","ولادة مبكرة","إجهاض متعمّد"],1,"Plain إجهاض is ambiguous and can sound like abortion. Use إجهاض تلقائي (or colloquial سقط)."],
+ ["“Urgent care” is:",["قسم الطوارئ","العناية المركزة","عيادة الرعاية العاجلة","غرفة العمليات"],2,"Urgent care is a walk-in clinic, not the ER (قسم الطوارئ) and not ICU (العناية المركزة)."],
+ ["The doctor says “one tablet every 8 hours.” You say:",["قرص واحد ثلاث مرات يوميًا","قرص واحد كل ٨ ساعات","قرصين كل ٨ ساعات","قرص واحد كل ١٨ ساعة"],1,"Interpret exactly. “Every 8 hours” and “three times a day” are not the same instruction."],
+ ["A patient says «ضغطي كان مية وخمستاشر». The number is:",["150","105","115","1,500"],2,"خمستاشر = 15, so مية وخمستاشر = 115."],
+ ["On the phone you can't tell if the nurse said “fifteen” or “fifty” milligrams. You:",["Pick the more common dose","Say “fifteen or fifty”","Ask: “The interpreter requests a repetition of the number,” and tell the patient","Skip the number"],2,"Never guess a dose. Ask transparently."],
+ ["The doctor says “Make a fist.” You say:",["افتح يدك","اقبض يدك","ارفع يدك","حرّك أصابعك"],1,"Make a fist = اقبض يدك. Used before blood draws."],
+ ["The doctor says “Take a deep breath and hold it.” You say:",["خذ نفسًا عميقًا واحبسه","تنفّس بسرعة","أخرج النفس كله","لا تتنفس"],0,"Breathing instructions come in every exam: خذ نفسًا عميقًا واحبسه."],
+ ["The doctor asks you: “Can you just explain to her what an MRI is?” You:",["Explain it yourself, briefly","Say the interpreter's role is to interpret, and you'll interpret the doctor's explanation","Refuse and stay silent","Tell the patient to search online"],1,"Explaining medical content yourself is outside your role. Interpret the provider's explanation."],
+ ["The patient says “The doctor gave me Lipitor.” In Arabic you say:",["الدكتور أعطاني دواء الكوليسترول","الدكتور أعطاني ليبيتور","الدكتور أعطاني حبوب","الدكتور أعطاني مسكّن"],1,"Keep brand and drug names as spoken. Explaining what it is would be adding."],
+ ["The nurse asks “How are you feeling today?” and the patient answers only «الحمد لله». You say:",["“I feel great.”","“Thank God.”","“Fine, but I'm still in pain.”","Nothing; it's just a greeting"],1,"Interpret literally: “Thank God.” It may not mean the patient feels well; the nurse can follow up."],
+ ["A lab result is “negative” for infection. That means:",["The patient has the infection","No infection was found","The result is bad","The test failed"],1,"Pitfall: in medicine negative usually means good (not found). سلبي = not found."],
+ ["“Epidural” in an Egyptian delivery room is commonly called:",["إبرة الضهر","حقنة الطلق","البنج الكلي","المحلول"],0,"Epidural = إبرة الظهر / تخدير نصفي (E: إبرة الضهر). Induction is طلق صناعي."]
+];
+function makeQuiz(Qs,boxSel,scoreSel,resetSel){
+ let ans={},right=0;
+ const box=$(boxSel);
+ function draw(){ans={};right=0;box.innerHTML=Qs.map((q,i)=>`<div class="q" data-q="${i}"><h3>${i+1}. ${esc(q[0])}</h3><div class="opts">${q[1].map((o,j)=>`<button class="opt" data-o="${j}">${/[؀-ۿ]/.test(o)&&!/[a-zA-Z]/.test(o)?AR(o):esc(o)}</button>`).join("")}</div><p class="why" hidden>${esc(q[3])}</p></div>`).join("");score()}
+ function score(){$(scoreSel).textContent=`Score: ${right} / ${Qs.length} (answered ${Object.keys(ans).length})`}
+ box.addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b)return;const qb=b.closest(".q"),i=+qb.dataset.q;if(ans[i]!=null)return;const j=+b.dataset.o;ans[i]=j;if(j===Qs[i][2])right++;qb.querySelectorAll(".opt").forEach(o=>{const k=+o.dataset.o;if(k===Qs[i][2])o.classList.add("right");else if(k===j)o.classList.add("wrong")});qb.querySelector(".why").hidden=false;score()});
+ $(resetSel).onclick=()=>{draw();box.scrollIntoView({block:"start"})};
+ draw();
+}
+makeQuiz(Q,"#quiz","#qscore","#qreset");
+makeQuiz(Q2,"#quiz2","#q2score","#q2reset");
+
+/* ---------- mock test data (shared with Test Answers) ---------- */
+const MOCK={
+ en:{title:"English Assessment",
+  intro:"Welcome to the English assessment. You will hear a series of questions. After each question, the camera will start recording. Answer clearly and completely in English. You can take up to three minutes for each answer. Good luck.",
+  qs:[
+   {who:"Interviewer",lang:"en",text:"Hello and welcome. Please introduce yourself. Tell us your name, where you are from, and your educational background.",
+    model:"Hello, my name is Safa Mohamed Ahmed, and I'm from Alexandria, Egypt. I graduated from the Faculty of Law at Alexandria University, English Section, in 2025, and I'm now completing a diploma in Public Law. Arabic is my native language, and I studied law entirely in English, so I'm comfortable working in both languages every day. Law trained me to be precise with words, to handle sensitive information confidentially, and to stay neutral. I'm now building a career in medical interpreting, where those skills matter most.",
+    tip:"Smile, look at the camera, 45–60 seconds. Don't read from paper."},
+   {who:"Interviewer",lang:"en",text:"Tell us about your interpreting or translation experience.",
+    model:"Most of my interpreting experience has been in real, everyday situations: helping [family members / neighbors / people around me] communicate in English, for example [a real example: at a clinic, a pharmacy, a phone call with a company]. That taught me to listen carefully, keep the full meaning, and stay calm when people are stressed. To prepare for medical work, I have been studying medical terminology in Arabic and English, the NCIHC code of ethics and standards of practice, and practicing doctor–patient role-plays, recording myself and checking my accuracy.",
+    tip:"Only real examples. If you mentioned a period of experience before, describe what you actually did during it. Keep it consistent."},
+   {who:"Interviewer",lang:"en",text:"Why do you want to work as a medical interpreter?",
+    model:"Because language should never be the reason a patient doesn't get the right care. When a patient can't explain their symptoms or understand their medication, mistakes happen. My legal background taught me how much every single word matters, and I want to use that precision to help patients and doctors understand each other completely. It's meaningful work, and I want to grow in it professionally.",
+    tip:"Connect your law degree to accuracy and confidentiality."},
+   {who:"Interviewer",lang:"en",text:"What do you think are the most important qualities of a good medical interpreter?",
+    model:"First, accuracy: interpreting everything, with nothing added or left out, especially numbers, doses, and negatives. Second, confidentiality: everything in a call stays in the call, according to HIPAA. Third, impartiality: the interpreter never gives advice or opinions. And finally, cultural and dialect awareness, because patients may speak Egyptian, Levantine, Gulf, Iraqi, or other dialects, and the interpreter has to understand all of them and stay professional and calm.",
+    tip:"Four points, in order. Use the words accuracy, confidentiality, impartiality."},
+   {who:"Interviewer",lang:"en",text:"During a call, a doctor uses a medical term that you don't know. What would you do?",
+    model:"I would never guess. I would say, “The interpreter requests clarification of the term,” and ask the doctor to explain or rephrase it. Then I would tell the patient what I asked, so both sides know everything that was said. After that, I would interpret the explanation accurately. Later, I would add the term to my glossary so I'm ready next time.",
+    tip:"Key words: never guess, clarification, transparency."},
+   {who:"Interviewer",lang:"en",text:"A patient asks you for your personal opinion about their treatment. How would you handle this?",
+    model:"I would politely explain that, as the interpreter, I can't give advice or personal opinions. Then I would interpret the patient's question to the doctor, so the doctor can answer it. My role is to make sure both sides understand each other completely, not to make medical decisions or influence the patient.",
+    tip:"Key words: impartiality, interpret the question to the provider."},
+   {who:"Interviewer",lang:"en",text:"This position is full-time, Monday to Friday, from 9 a.m. to 6 p.m. Eastern Time. Please describe your availability and your home office setup.",
+    model:"I'm fully available Monday to Friday, 9 a.m. to 6 p.m. Eastern Time, which is about 4 p.m. to 1 a.m. in Egypt, and I'm comfortable with those hours. I work from a quiet, private room. My computer has [processor, e.g. an Intel Core i5] and [amount] of RAM, I use a USB headset and a [1080p] camera, and I'm connected by Ethernet cable with about [X] Mbps download and [Y] Mbps upload. I can also set up a grey background and wear white for video calls.",
+    tip:"Say only what you really have. Run a speed test before the test so you know your numbers."},
+   {who:"Interviewer",lang:"en",text:"Tell us about a time when you had to stay calm in a stressful situation.",
+    model:"[Situation:] During [a real moment: a final exam, a presentation in English, a family emergency, interpreting for someone], [what was happening]. [Task:] I had to [what you needed to do]. [Action:] I took a breath, focused on one step at a time, and [what you did]. I asked questions instead of guessing. [Result:] In the end, [the result], and I learned that staying calm and organized helps me do my best work under pressure, which is exactly what interpreters need on difficult calls.",
+    tip:"Use the STAR order: Situation, Task, Action, Result. 60–90 seconds. Real story only."},
+   {who:"Interviewer",lang:"en",text:"Listen to this short voicemail, then summarize it in your own words. Hello, this is a message from Riverside Clinic. Flu shots are now available for all patients over six months old. You can walk in Monday to Friday between 8 a.m. and 4 p.m., or book an appointment online. Please bring your insurance card. If you have a fever today, please wait until you feel better before coming in.",
+    model:"The message is from Riverside Clinic. It says flu shots are now available for all patients older than six months. Patients can walk in Monday to Friday from 8 a.m. to 4 p.m., or book an appointment online. They should bring their insurance card. And anyone who has a fever should wait until they feel better before coming in.",
+    tip:"Listening test: note the numbers (6 months, 8 to 4, Monday–Friday) and the 3 instructions."}
+  ]},
+ med:{title:"Arabic Medical Interpretation Assessment",
+  intro:"Welcome to the Arabic medical interpretation assessment. You will hear a conversation between a doctor and a patient at an urgent care clinic. After each part, interpret it into the other language: English into Arabic, and Arabic into English. Speak in the first person, interpret everything, and do not add or leave out any information. You have three repeats for the whole test. Good luck.",
+  qs:[
+   {who:"Instructions",lang:"en",text:"Before the session begins, please introduce yourself to the provider and the patient as the interpreter, exactly as you would at the start of a real call.",
+    model:"(To the provider) Hello, this is your Arabic interpreter Safa, ID number [your ID]. Everything said will be interpreted and kept confidential. Please speak directly to the patient and pause after short phrases.  (To the patient) مرحبًا، معك المترجمة صفا، رقمي التعريفي [...]. سأترجم كل ما يُقال، وكل شيء سرّي. من فضلكِ تحدّثي مع الطبيب مباشرة وتوقّفي بعد كل جملة أو جملتين.",
+    tip:"Calm and confident. Both languages."},
+   {who:"Doctor",lang:"en",text:"Good afternoon, I'm Dr. Miller. What brings you in today?",
+    model:"مساء الخير، أنا الدكتور ميلر. ما الذي أتى بكِ اليوم؟",tip:"Short and natural."},
+   {who:"Patient",lang:"ar",text:"بقالي يومين عندي وجع جامد في بطني من الجنب اليمين، وسخونية، ورجّعت مرتين النهارده الصبح.",
+    model:"For the past two days I've had severe pain in my stomach on the right side, and a fever, and I vomited twice this morning.",tip:"Four facts: 2 days · right side · fever (سخونية) · vomited (رجّعت) twice this morning."},
+   {who:"Doctor",lang:"en",text:"When did the pain start exactly, and does it move anywhere? On a scale from zero to ten, how strong is it?",
+    model:"متى بدأ الألم بالضبط، وهل ينتقل إلى أي مكان؟ على مقياس من صفر إلى عشرة، ما شدّته؟",tip:"Three questions in one segment. Keep all three."},
+   {who:"Patient",lang:"ar",text:"بدأ حوالين السرة امبارح الضهر، وبعدين نزل تحت على اليمين. دلوقتي تقريبًا تمانية من عشرة، وبيزيد لما بمشي أو بكح.",
+    model:"It started around my belly button yesterday at noon, and then it moved down to the right. Right now it's about an eight out of ten, and it gets worse when I walk or cough.",tip:"السرة = belly button · الضهر = noon (not “back” here!) · بكح = cough."},
+   {who:"Doctor",lang:"en",text:"Are you allergic to any medications? And have you had any surgeries before?",
+    model:"هل عندكِ حساسية من أي أدوية؟ وهل أجريتِ أي عمليات جراحية من قبل؟",tip:""},
+   {who:"Patient",lang:"ar",text:"عندي حساسية من البنسلين، بيطلعلي طفح. وعملت عملية مرارة من خمس سنين.",
+    model:"I'm allergic to penicillin; I get a rash. And I had gallbladder surgery five years ago.",tip:"Allergy = safety information. Never drop it. مرارة = gallbladder."},
+   {who:"Doctor",lang:"en",text:"Your symptoms could be appendicitis. I'm going to order blood work and a CT scan of your abdomen with contrast. Please don't eat or drink anything until we have the results.",
+    model:"قد تكون أعراضكِ التهابًا في الزائدة الدودية. سأطلب تحاليل دم وأشعة مقطعية على البطن بالصبغة. من فضلكِ لا تأكلي ولا تشربي أي شيء حتى تظهر النتائج.",tip:"Appendicitis = التهاب الزائدة · CT scan = أشعة مقطعية · contrast = صبغة."},
+   {who:"Patient",lang:"ar",text:"يعني ممكن أعمل عملية؟ طب أنا لازم أكلم جوزي الأول. ومش عايزة حد يقول لأهلي.",
+    model:"So I might need surgery? Well, I have to call my husband first. And I don't want anyone to tell my family.",tip:"Interpret the wish about family exactly. Don't comment."},
+   {who:"Doctor",lang:"en",text:"If it is appendicitis, you will need surgery today, usually a laparoscopic appendectomy. The surgeon will explain everything, and you'll sign a consent form. For the pain, I'm giving you morphine, four milligrams, through the IV now.",
+    model:"إذا كان التهابًا في الزائدة، فستحتاجين إلى عملية اليوم، وعادةً تكون استئصال الزائدة بالمنظار. الجرّاح سيشرح لكِ كل شيء، وستوقّعين على نموذج الموافقة. وللألم، سأعطيكِ مورفين، ٤ ملليغرام، عن طريق الوريد الآن.",tip:"Hardest segment: appendectomy = استئصال الزائدة · laparoscopic = بالمنظار · consent form · morphine 4 mg IV."},
+   {who:"Instructions",lang:"en",text:"Please interpret the following terms into Arabic. High blood pressure. Prescription refill. Shortness of breath. Side effects. Follow-up appointment. Emergency room.",
+    model:"ارتفاع ضغط الدم، إعادة صرف الوصفة، ضيق التنفس، الآثار الجانبية، موعد المتابعة، قسم الطوارئ.",tip:"Terms list: write all six as you hear them, then say them in order."},
+   {who:"Instructions",lang:"ar",text:"من فضلك ترجم الكلمات التالية إلى الإنجليزية: السكر التراكمي، ضيق التنفس، حرقان في البول، إمساك، دوخة، الموافقة المسبقة.",
+    model:"A1C (hemoglobin A1C), shortness of breath, burning urination, constipation, dizziness, prior authorization.",tip:"Same method: write, then say all six in order."}
+  ]}
+};
+const EXTRA_EN=[
+ ["What do you know about our company?","Multilingual Interpreters and Translators is a US language services company based in Florida, part of the Lingtopia Group. You provide phone, video, and sign language interpreting, mainly for medical and legal clients, with interpreters working remotely, including from Egypt. I like that the work directly helps patients get safe care."],
+ ["What does confidentiality mean to you? What is HIPAA?","HIPAA is the US law that protects patients' health information. For an interpreter it means nothing from a call leaves the call: no names, dates of birth, or medical details. I work alone in a private room, never record calls, and destroy my notes after every call."],
+ ["What would you do if the patient said something about hurting themselves?","I would interpret it immediately and completely, without softening anything, even if the patient asked me not to tell the doctor. The provider decides what to do next. If the provider was not on the line, I would follow the company's emergency procedure."],
+ ["How do you handle numbers and medication doses?","I write every number as soon as I hear it, with the unit, frequency, and duration, for example 500 milligrams twice a day for 10 days. If I'm not completely sure, for example fifteen or fifty, I ask for a repetition instead of guessing."],
+ ["Do you have any questions for us?","Yes, thank you. Could you tell me more about the client-specific training and what a typical day of calls looks like? And how is quality feedback given to new interpreters?"]
+];
+
+/* ---------- mock test engine ---------- */
+let mk=null, showText=false, showTimer=false;
+const stage=$("#mk-stage"), pick=$("#mk-pick");
+$("#mk-showtext").onclick=e=>{showText=!showText;e.currentTarget.setAttribute("aria-pressed",showText)};
+$("#mk-showtimer").onclick=e=>{showTimer=!showTimer;e.currentTarget.setAttribute("aria-pressed",showTimer)};
+pick.addEventListener("click",e=>{const b=e.target.closest("[data-mk]");if(b)mkWelcome(b.dataset.mk)});
+function sayP(text,lang,token){return new Promise(res=>{
+ const words=String(text).split(/\s+/).length, est=(words/2.2+2)*1000;
+ let done=false; const fin=()=>{if(!done){done=true;clearTimeout(to);res()}};
+ const to=setTimeout(fin,est+5000);
+ const v=lang==="ar"?voiceAr:voice;
+ if(!tts||(lang==="ar"&&!voiceAr)){clearTimeout(to);setTimeout(fin,est);return}
+ tts.cancel();
+ const parts=String(text).replace(/[“”«»"]/g,"").match(/[^.!?؟]+[.!?؟]*/g)||[String(text)];
+ parts.forEach((p,k)=>{const u=new SpeechSynthesisUtterance(p.trim());u.lang=lang==="ar"?voiceAr.lang:"en-US";if(v)u.voice=v;u.rate=.92;if(k===parts.length-1){u.onend=fin;u.onerror=fin}tts.speak(u)});
+})}
+function mkStop(){if(!mk)return;mk.token++;clearInterval(mk.iv);try{tts&&tts.cancel()}catch(e){}if(mk.rec&&mk.rec.state!=="inactive"){mk.discard=true;try{mk.rec.stop()}catch(e){}}if(mk.raf)cancelAnimationFrame(mk.raf)}
+function mkQuit(){mkStop();if(mk&&mk.stream)mk.stream.getTracks().forEach(t=>t.stop());(mk?.recs||[]).forEach(u=>u&&URL.revokeObjectURL(u));mk=null;stage.hidden=true;pick.hidden=false}
+function head(extra){return `<div class="mk-top"><span class="label">Video Interview · practice</span><button class="btn ghost" id="mk-quit">Exit</button></div>${extra||""}`}
+stage.addEventListener("click",e=>{if(e.target.closest("#mk-quit"))mkQuit()});
+function mkWelcome(key){
+ mkQuit(); mk={key,d:MOCK[key],i:0,reps:3,recs:[],token:0,stream:null};
+ pick.hidden=true; stage.hidden=false;
+ stage.innerHTML=head(`<h3>${esc(mk.d.title)}</h3><p>Welcome and good luck.</p>
+  <div class="mk-screen" id="mk-scr"><div class="mk-who">Intro</div><div class="mk-wave"><i></i><i></i><i></i><i></i><i></i></div><div class="mk-cap">Press Watch Intro</div></div>
+  ${showText?`<div class="mk-text">${esc(mk.d.intro)}</div>`:""}
+  <div class="mk-btns"><button class="btn" id="mk-intro">Watch Intro</button><button class="btn" id="mk-begin" hidden>Start Interview</button></div>`);
+ $("#mk-intro").onclick=async()=>{const t=mk.token;$("#mk-intro").hidden=true;$("#mk-begin").hidden=false;const s=$("#mk-scr");s.classList.add("playing");s.querySelector(".mk-cap").textContent="Playing intro…";await sayP(mk.d.intro,"en",t);if(mk&&mk.token===t){s.classList.remove("playing");s.querySelector(".mk-cap").textContent="Intro finished"}};
+ $("#mk-begin").onclick=()=>{mkStop();mkDevice()};
+}
+async function mkDevice(){
+ stage.innerHTML=head(`<h3>Audio &amp; Video test</h3><div class="mk-screen" id="mk-scr"><div class="mk-cap">Checking camera and microphone…</div></div><div class="mk-meter"><i id="mk-lvl"></i></div><p id="mk-devmsg" class="muted"></p><div class="mk-btns"><button class="btn" id="mk-go">Start</button></div>`);
+ $("#mk-go").onclick=()=>{if(mk.raf)cancelAnimationFrame(mk.raf);mkQuestion()};
+ const msg=$("#mk-devmsg");
+ try{
+  if(!navigator.mediaDevices?.getUserMedia)throw 0;
+  const s=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+  if(!mk){s.getTracks().forEach(t=>t.stop());return}
+  mk.stream=s;
+  const v=document.createElement("video");v.muted=true;v.playsInline=true;v.autoplay=true;v.srcObject=s;$("#mk-scr").innerHTML="";$("#mk-scr").appendChild(v);
+  const vt=s.getVideoTracks()[0],at=s.getAudioTracks()[0];
+  msg.textContent=`Camera: ${vt?.label||"camera"} · Microphone: ${at?.label||"microphone"}. Ensure that camera and audio permissions are enabled, and also make sure to take the interview in a quiet place.`;
+  try{const ac=new (window.AudioContext||window.webkitAudioContext)();const an=ac.createAnalyser();an.fftSize=256;ac.createMediaStreamSource(s).connect(an);const buf=new Uint8Array(an.frequencyBinCount);const loop=()=>{an.getByteFrequencyData(buf);const avg=buf.reduce((a,b)=>a+b,0)/buf.length;const l=$("#mk-lvl");if(l)l.style.width=Math.min(100,avg*1.6)+"%";if(mk)mk.raf=requestAnimationFrame(loop)};loop()}catch(e){}
+ }catch(e){
+  $("#mk-scr").innerHTML=`<div class="mk-who">Camera not available here</div><div class="mk-cap">Practice mode: record yourself with your phone's camera</div>`;
+  msg.innerHTML="In the real test you'll see yourself here and must click <b>Allow</b> for camera and microphone. Now: start your phone recording, then press Start.";
+ }
+}
+async function mkQuestion(){
+ if(!mk)return; mkStop(); const t=mk.token; const q=mk.d.qs[mk.i], n=mk.d.qs.length;
+ const noVoice=!tts||(q.lang==="ar"&&!voiceAr);
+ stage.innerHTML=head(`<h3>Question ${mk.i+1} of ${n}</h3>
+  <div class="mk-screen playing" id="mk-scr"><div class="mk-who">${esc(q.who)}</div><div class="mk-wave"><i></i><i></i><i></i><i></i><i></i></div><div class="mk-cap">Playing… (no pause)</div></div>
+  ${(showText||noVoice)?`<div class="mk-text">${q.lang==="ar"?AR(q.text):esc(q.text)}${noVoice?`<p class="muted">No ${q.lang==="ar"?"Arabic":"English"} voice on this device, so read it silently once. In the real test you will hear it.</p>`:""}</div>`:""}
+  <div class="mk-btns" id="mk-btns"></div>`);
+ await sayP(q.text,q.lang,t);
+ if(!mk||mk.token!==t)return;
+ const scr=$("#mk-scr"); scr.classList.remove("playing");
+ for(const c of [3,2,1]){scr.insertAdjacentHTML("beforeend",`<div class="mk-count" id="mk-cd">Recording starts in<b>${c}</b></div>`);await new Promise(r=>setTimeout(r,1000));if(!mk||mk.token!==t)return;$("#mk-cd")?.remove()}
+ mkRecord(t);
+}
+function mkRecord(t){
+ const scr=$("#mk-scr"); scr.innerHTML="";
+ if(mk.stream){const v=document.createElement("video");v.muted=true;v.playsInline=true;v.autoplay=true;v.srcObject=mk.stream;scr.appendChild(v)}
+ else scr.insertAdjacentHTML("beforeend",`<div class="mk-who">Speak now</div><div class="mk-cap">Your phone is recording you</div>`);
+ scr.insertAdjacentHTML("beforeend",`<div class="mk-rec">REC</div>${showTimer?`<div class="mk-time" id="mk-t">0:00</div>`:""}`);
+ mk.chunks=[];mk.discard=false;mk.rec=null;
+ if(mk.stream&&window.MediaRecorder){try{const r=new MediaRecorder(mk.stream);r.ondataavailable=e=>{if(e.data.size)mk&&mk.chunks.push(e.data)};const idx=mk.i;r.onstop=()=>{if(!mk||mk.discard)return;const b=new Blob(mk.chunks,{type:r.mimeType||"video/webm"});mk.recs[idx]=URL.createObjectURL(b)};r.start();mk.rec=r}catch(e){}}
+ const btns=$("#mk-btns");
+ btns.innerHTML=`<button class="btn" id="mk-next">${mk.i+1<mk.d.qs.length?"Next Question":"Finish"}</button><button class="btn ghost" id="mk-rep" ${mk.reps?"":"disabled"}>Repeat (${mk.reps} left)</button>`;
+ let sec=0; mk.iv=setInterval(()=>{sec++;const el=$("#mk-t");if(el)el.textContent=`${Math.floor(sec/60)}:${String(sec%60).padStart(2,"0")}`;if(sec>=180)mkNext()},1000);
+ $("#mk-next").onclick=mkNext;
+ $("#mk-rep").onclick=()=>{if(!mk.reps)return;mk.reps--;clearInterval(mk.iv);if(mk.rec&&mk.rec.state!=="inactive"){mk.discard=true;mk.rec.stop()}mkQuestion()};
+}
+function mkNext(){
+ if(!mk)return; clearInterval(mk.iv);
+ if(mk.rec&&mk.rec.state!=="inactive"){mk.discard=false;mk.rec.stop()}
+ mk.i++;
+ if(mk.i<mk.d.qs.length)setTimeout(mkQuestion,300); else setTimeout(mkDone,500);
+}
+function mkDone(){
+ if(!mk)return; mkStop(); if(mk.stream)mk.stream.getTracks().forEach(t=>t.stop()); mk.stream=null;
+ stage.innerHTML=head(`<div class="callout ok"><strong>Congrats! You've completed the test successfully.</strong>We will get in touch with you soon. (Practice: now stop your phone recording and compare with the model answers below.)</div>
+  <div class="stack">${mk.d.qs.map((q,i)=>`<div class="ans-q"><span class="label">Question ${i+1} · ${esc(q.who)}</span><p>${q.lang==="ar"?AR(q.text):esc(q.text)}</p>${mk.recs[i]?`<video controls playsinline src="${mk.recs[i]}" style="width:100%;border-radius:12px"></video>`:""}<div class="ans-say"><span class="label">Model answer</span><p>${fmtModel(q)}</p></div>${q.tip?`<p class="tip">${esc(q.tip)}</p>`:""}</div>`).join("")}</div>
+  <div class="mk-btns"><button class="btn" id="mk-again">Try again</button></div>`);
+ $("#mk-again").onclick=()=>{const k=mk.key;mkWelcome(k)};
+}
+function fmtModel(q){const m=q.model;if(/[؀-ۿ]/.test(m)&&!/[a-zA-Z]/.test(m))return AR(m);if(/[؀-ۿ]/.test(m)){const i=m.search(/[؀-ۿ]/);const cut=m.lastIndexOf("(",i);const k=cut>0?cut:i;return esc(m.slice(0,k))+"<br>"+esc(m.slice(k,m.indexOf(")",k)+1))+" "+AR(m.slice(m.indexOf(")",k)+1).trim())}return esc(m)}
+
+/* ---------- test answers tab ---------- */
+let ansKey="en";
+function renderAns(){
+ const d=MOCK[ansKey];
+ let h=`<div class="callout ok"><strong>${esc(d.title)}: format</strong>${ansKey==="en"?"Recorded video answers to spoken questions. About 60–90 seconds per answer, looking at the camera. Structure: direct answer → one real example → one closing line.":"Recorded video. You hear each part of the conversation, then interpret it out loud. Notes during the video, start at REC, first person, everything, “Interpreter correction” for slips."}</div>`;
+ h+=d.qs.map((q,i)=>`<div class="ans-q"><span class="label">Predicted question ${i+1} · ${esc(q.who)}</span><p><b>${q.lang==="ar"?AR(q.text):esc(q.text)}</b></p><div class="ans-say"><span class="label">${ansKey==="en"?"What to say":"Model interpretation"}</span><p>${fmtModel(q)}</p></div>${q.tip?`<p class="tip">${esc(q.tip)}</p>`:""}</div>`).join("");
+ if(ansKey==="en")h+=`<h3>Other questions they might ask</h3>`+EXTRA_EN.map(x=>`<div class="ans-q"><p><b>${esc(x[0])}</b></p><div class="ans-say"><span class="label">What to say</span><p>${esc(x[1])}</p></div></div>`).join("");
+ else h+=`<div class="callout warn"><strong>Other things the interpretation test may include</strong>Interpreting in the other direction only (all patient lines), a longer segment with several numbers (doses, dates, times), a phone-style insurance or pharmacy call, or a list of terms. Practice all of these in the Role-plays, Numbers, and Terms tabs.</div>`;
+ $("#ans").innerHTML=h;
+}
+document.querySelectorAll("[data-ans]").forEach(b=>b.onclick=()=>{ansKey=b.dataset.ans;document.querySelectorAll("[data-ans]").forEach(c=>c.setAttribute("aria-pressed",c===b));renderAns()});
+renderAns();
+})();
+</script>
+
+</body></html>
