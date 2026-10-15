@@ -182,7 +182,7 @@ details[open] summary{margin-bottom:8px}
   <h1>Safa's <em>Interpreting</em> Bootcamp</h1>
   <p class="intro">Everything you need for the two assessments (English + Arabic→English medical interpreting), in the order you should study it. Tap through the tabs. Your checkmarks and flashcard progress are saved on this phone.</p>
   <div class="dates">
-    <div class="date hot"><span class="label">Deadline</span><b>24 h from the test email</b><span class="muted">Submit both tests early. Don't wait for the last hour.</span></div>
+    <div class="date hot"><span class="label">Today</span><b>Study 12 pm → tests 7–8 pm</b><span class="muted">Follow the Plan tab hour by hour.</span></div>
     <div class="date"><span class="label">Pre-training</span><b>Fri, Oct 16</b><span class="muted">1-hour session</span></div>
     <div class="date"><span class="label">Training starts</span><b>Mon, Oct 26</b><span class="muted">2 weeks + 1 week nesting, 9–5 EST</span></div>
   </div>
@@ -196,8 +196,8 @@ details[open] summary{margin-bottom:8px}
 <section class="panel" id="p-plan" data-title="Plan">
  <div class="stack-lg">
   <div class="stack">
-    <h2>The 24-hour plan</h2>
-    <p class="intro">Do the blocks in order. The interpreting test checks three things above all: you interpret <b>everything</b>, you get <b>numbers and medical words right</b>, and you behave like a <b>professional</b> (first person, no advice, transparent). This plan trains exactly those.</p>
+    <h2>Today's plan: 12 pm to 8 pm</h2>
+    <p class="intro">Start at 12 pm and follow the times. The real tests are at 7–8 pm. The interpreting test checks three things above all: you interpret <b>everything</b>, you get <b>numbers and medical words right</b>, and you behave like a <b>professional</b> (first person, no advice, transparent). This plan trains exactly those.</p>
     <div class="progress" aria-hidden="true"><i id="planbar"></i></div>
     <p class="muted" id="plancount"></p>
   </div>
@@ -668,51 +668,57 @@ const h=(location.hash||"").slice(1);show(panels.some(p=>p.id==="p-"+h)?h:store.
 
 /* ---------- plan ---------- */
 const PLAN=[
- ["Tonight · block 1 (≈2 h)","Rules, scripts, quiz",[
-  "Read the Rules tab twice. Say the 12 rules out loud from memory.",
-  "Read every script in the Scripts tab aloud 5 times (English and Arabic).",
-  "Do Quiz 1 until you get every question right.",
-  "Reply to Nada (or email info@multilingualint.com) to confirm the WhatsApp IT number is really theirs."]],
- ["Tonight · block 2 (≈1.5 h)","The words phone calls use most",[
-  "Terms → Insurance & admin: flashcards both directions.",
-  "Terms → Medicines & dosing: flashcards both directions.",
-  "Numbers tab: do the whole list once with paper and pen."]],
- ["Sleep","Your memory saves the new words while you sleep",[
-  "Sleep at least 6–7 hours. A tired brain loses numbers."]],
- ["Tomorrow · block 3 (≈2.5 h)","Body, symptoms, conditions, tests",[
-  "Terms → Body, Symptoms, Conditions (flashcards, then list).",
-  "Terms → Tests & procedures, Pregnancy & children, Mental health.",
-  "Review every card you marked “Again”.",
-  "Terms → Doctor instructions, Emergency, Hospital & staff.",
-  "Do Quiz 2 until you get every question right."]],
- ["Tomorrow · block 4 (≈2 h)","Real practice = real experience",[
-  "Role-plays 1–3 with a partner reading, Partner mode on, recording yourself.",
-  "Role-plays 4–6 the same way.",
-  "Listen to your recordings: count lost numbers, “he says”, “umm”. Redo the worst call.",
-  "Numbers tab again, faster.",
-  "Role-plays 7–10 (insurance, pharmacy, scheduling, discharge) the same way.",
-  "Mock Test tab: run both mock tests once, recording yourself on your phone. Compare with the Test Answers tab."]],
- ["Tomorrow · block 5 (≈1 h)","English test",[
-  "Practice the prepared answers in the English tab aloud, record once.",
-  "Check the grammar table.",
-  "Take the English test in a quiet room with the headset."]],
- ["Tomorrow · block 6 (≈1 h)","Interpretation test",[
-  "Test headset + mic with a voice memo. Paper, pen, water ready.",
-  "Take the interpretation test. First person, write every number, “Interpreter correction” if needed.",
+ ["12:00 – 12:45","Rules, scripts, Quiz 1",[
+  "Read the Tests tab first (5 min) so you know exactly how tonight works.",
+  "Rules tab: read it once, then say the 12 rules out loud from memory.",
+  "Scripts tab: read the opening and closing lines aloud 5 times (English and Arabic).",
+  "Quiz 1 until you get every question right."]],
+ ["12:45 – 1:30","Your English answers",[
+  "Test Answers tab → English: fill every [bracket] with your own true details.",
+  "Say each answer out loud twice, looking at your phone camera. 60–90 seconds each.",
+  "Run a speed test (speedtest.net) so you know your real internet numbers for the setup question."]],
+ ["1:30 – 2:30","The words calls use most",[
+  "Terms → Insurance & admin: flashcards, press “Hear in English” on each.",
+  "Terms → Medicines & dosing, then Doctor instructions.",
+  "Numbers tab: press Play on each drill, write the numbers, interpret out loud."]],
+ ["2:30 – 2:45","Break",[
+  "Eat something, drink water, rest your eyes away from the screen."]],
+ ["2:45 – 4:45","Practice calls (this is your real experience)",[
+  "Role-plays 1–5: turn on “Listen only”, press Play on each line, take notes, interpret out loud, record yourself.",
+  "Role-plays 6–10 the same way.",
+  "Listen back to one recording: count lost numbers, “he says / she says”, and “umm”. Redo that call.",
+  "Quiz 2 until you get every question right."]],
+ ["4:45 – 5:15","Break",[
+  "Real break. A tired brain loses numbers."]],
+ ["5:15 – 6:15","Full mock tests",[
+  "Mock Test → English assessment, start to finish, no text, no timer, recording yourself.",
+  "Mock Test → Medical interpretation assessment, the same way. Use Repeat only for a missed number.",
+  "Compare with the Test Answers tab and fix your weakest answer."]],
+ ["6:15 – 6:45","Last review",[
+  "Flashcards marked “Again” in Insurance, Medicines, Symptoms.",
+  "Read the cheat sheet once: number traps and dialect traps.",
+  "Say your interpreter opening line one last time."]],
+ ["6:45 – 7:00","Set up the room",[
+  "Laptop with Chrome, charger plugged in, USB headset tested with a voice memo, internet cable if you have one.",
+  "Quiet closed room, phone on silent, family knows not to come in.",
+  "Light in front of your face, plain wall behind you, white top. Paper, pen, water."]],
+ ["7:00 – 8:00","The real tests",[
+  "English test first: Watch Intro → Allow camera and mic → answer each question looking at the camera.",
+  "Then the interpretation test: notes during each video, speak at REC, first person, every number, “Interpreter correction” if needed.",
   "Email Nada: both assessments are done."]],
  ["After the tests","Before the AnyDesk call and the Oct 16 pre-training",[
   "Read the Safety tab before the AnyDesk session.",
   "Check the tech requirements: ethernet, USB headset, 1080p camera, grey background, white top.",
   "Keep doing 30 flashcards and one role-play a day until training starts."]]
 ];
-const done=store.get("plan",{});
+const done=store.get("plan-today",{});
 function renderPlan(){
  let total=0,n=0;
  $("#plan").innerHTML=PLAN.map((b,bi)=>`<div class="block"><div class="block-head"><h3>${esc(b[0])}</h3><span class="muted">${esc(b[1])}</span></div>${b[2].map((t,ti)=>{const id=`c${bi}_${ti}`;total++;if(done[id])n++;return `<label class="check ${done[id]?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${done[id]?"checked":""}><span>${esc(t)}</span></label>`}).join("")}</div>`).join("");
  $("#planbar").style.width=(100*n/total)+"%";$("#plancount").textContent=`${n} of ${total} steps done`;
 }
 renderPlan();
-$("#plan").addEventListener("change",e=>{if(e.target.type==="checkbox"){done[e.target.id]=e.target.checked;store.set("plan",done);renderPlan()}});
+$("#plan").addEventListener("change",e=>{if(e.target.type==="checkbox"){done[e.target.id]=e.target.checked;store.set("plan-today",done);renderPlan()}});
 
 /* ---------- scripts ---------- */
 const SCRIPTS=[
