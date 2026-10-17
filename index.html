@@ -554,6 +554,18 @@ section.panel:not(.cover)::after{content:"one beautiful step at a time";display:
 .ep-ar{color:var(--rose-deep);font-weight:600;text-align:right}
 .ep-bonus{font-size:14.5px;line-height:1.6;margin:-2px 0 12px}
 .ep-bonus .pill{margin-right:4px}
+.prio{display:inline-block;margin-right:8px;padding:4px 8px;border-radius:999px;font:700 10px/1.2 var(--f-body);letter-spacing:.1em;text-transform:uppercase;vertical-align:2px;text-decoration:none}
+.prio.must{background:var(--accent);color:#fff}
+.prio.imp{background:var(--rose-soft);color:var(--rose-deep)}
+.prio.opt{background:#fff;border:1px solid var(--line-2);color:var(--muted)}
+.plan-top{margin-bottom:28px;background:linear-gradient(135deg,#fff 0%,var(--blush) 100%)}
+.plan-top ol.rules{grid-template-columns:1fr;gap:8px}
+.plan-top ol.rules li{box-shadow:none}
+#plan .block{margin-bottom:22px}
+#plan .block.today .block-head h3{color:var(--rose-deep)}
+#plan .block.today .check{border-color:rgba(169,79,107,.3)}
+#plan .block.past{opacity:.55}
+#plan .block-head .pill{vertical-align:4px;margin-left:6px;font-family:var(--f-body)}
 </style>
 
 <div class="wrap">
@@ -657,7 +669,7 @@ section.panel:not(.cover)::after{content:"one beautiful step at a time";display:
  <div class="stack-lg">
   <div class="stack">
     <header class="pg-head"><div class="pg-text"><span class="cv-eyebrow">This week <svg class="cv-heart sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></span><h2 class="pg-title">Ready for Kalam<span class="pg-script">on Tuesday</span></h2><span class="sync" id="syncstate">Saved on this device</span></div><div class="pg-art" aria-hidden="true"><div class="pg-arch"><img src="img/petals.jpg" alt="" loading="lazy"></div><svg class="cv-spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg><svg class="cv-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg><svg class="pg-sprig" viewBox="0 0 120 260" aria-hidden="true"><path d="M60 258C58 190 64 120 86 10"/><path d="M62 210c-18-8-30-24-34-42 18 4 30 18 34 42z"/><path d="M63 170c16-10 26-26 28-44-16 6-26 22-28 44z"/><path d="M66 130c-16-8-26-22-30-40 16 4 28 18 30 40z"/><path d="M71 92c14-10 22-24 24-40-14 6-22 20-24 40z"/><path d="M77 58c-12-6-20-18-22-32 12 4 20 14 22 32z"/></svg></div></header>
-    <p class="intro">Four days, about 1.5–2 hours a day. The <a href="#english" data-goto="eplan">English Plan</a> also starts today (Saturday, Oct 17). Until Tuesday, keep it light: just the words, the expressions and the 1-minute speaking task.</p>
+    <p class="intro">Three days to get ready, then interview day. Each day starts with the most important things: finish every <b>Must</b> before anything else. Short on time? Do the 5 things below. The <a href="#english" data-goto="eplan">English Plan</a> also starts today, but until Tuesday only its words and expressions.</p>
     <div class="progress" aria-hidden="true"><i id="planbar"></i></div>
     <p class="muted" id="plancount"></p>
   </div>
@@ -1486,40 +1498,57 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-mk-launch]
 const h=(location.hash||"").slice(1);const isTab=id=>panels.some(p=>p.id==="p-"+id)||subs.some(s=>s.id==="p-"+id);show(isTab(h)?h:"home");
 
 /* ---------- plan ---------- */
-const PLAN=[
- ["Friday, Oct 16","Phone screening answers",[
-  "Read the Kalam Interview tab once from top to bottom.",
-  "Fill in every [bracket] with your real details: laptop specs, internet speed (speedtest.net), shifts you accept, one real interpreting example.",
-  "Say answers 1–5 (phone screening) out loud 3 times each, then record yourself once.",
-  "Learn the 6 job words: OPI, VRI, consecutive, accuracy, confidentiality, impartiality."]],
- ["Saturday, Oct 17","Zoom answers",[
-  "Say answers 6–11 out loud 3 times each.",
-  "Mock Test → Kalam interview, start to finish, with “Show question text” on.",
-  "English speaking practice: 5 random questions from the speaking bank, 1 minute each.",
-  "Take the free EF SET practice test at efset.org (reading + listening). Kalam asks for C1 after the interview."]],
- ["Sunday, Oct 18","Full practice",[
-  "Mock Test → Kalam interview again, with text and timer off, recording yourself.",
-  "Watch the recording: are you smiling, slow, clear? Fix one thing.",
-  "Multilingual → Role-plays 1, 3 and 5 with Play and “Listen only” on, in case they give a short interpretation test.",
-  "Open your Claude app → voice mode → paste the “Kalam interviewer” prompt (English Plan tab) for a 15-minute mock interview."]],
- ["Monday, Oct 19","Light review and setup",[
-  "Read your answers once. Say your introduction twice.",
-  "Prepare your 3 questions for them (training, pay, shifts).",
-  "Zoom test at zoom.us/test: camera, headset, internet cable, light, plain background.",
-  "Choose your outfit. Sleep early."]],
- ["Tuesday, Oct 20","Interview day",[
-  "30 minutes before: water, quiet room, phone charged, say your introduction out loud twice.",
-  "Phone call: smile, speak slowly, “Could you repeat that, please?” if needed.",
-  "Zoom: look at the camera, short clear answers, mention that you passed a medical interpretation assessment.",
-  "After: write down every question they asked and send them to Nour."]],
- ["From Wednesday, Oct 21","Full English Plan days",[
-  "Do the whole English Plan day, every day: about 40 minutes, mostly speaking.",
-  "Keep 20 flashcards and one role-play a week so your interpreting stays sharp."]]
+/* Kalam week: every day lists Must first, then Important, then If time */
+const PLAN_TOP=[
+ ["Check your equipment","Windows laptop, wired USB headset, internet cable to the router. If something is missing, get it before Tuesday."],
+ ["Know your introduction by heart","Questions 1 and 7 in the Kalam tab. About 45 seconds, calm and slow."],
+ ["Answer the screening questions with your real details","Questions 2–6: your hours, the extra hour, your computer, your experience, certificates."],
+ ["Know the interpreter rules","Questions 12–18: interpret everything, speak in first person, keep it private, no opinions, ask when you don't understand, safety first."],
+ ["Do one full mock interview","Mock Test → Kalam interview, recorded. Then fix your 3 weakest answers."]
 ];
+const PLAN=[
+ {date:"2026-10-17",day:"Saturday, Oct 17",title:"The must-haves",time:"about 2 hours",items:[
+  ["must","Check your equipment now: Windows laptop, wired USB headset with a microphone, internet cable to the router. Missing something? Get it today or tomorrow. (15 min)"],
+  ["must","Kalam tab: fill in every [bracket] with your real details: laptop, internet speed (speedtest.net), the hours you can work, one real interpreting example. (20 min)"],
+  ["must","Your introduction (Questions 1 and 7): say it out loud 5 times, then record it once. (20 min)"],
+  ["must","Phone screening answers (Questions 2–6): say each one out loud 3 times. (20 min)"],
+  ["imp","Learn the 6 job words: OPI, VRI, consecutive, accuracy, confidentiality, impartiality. (10 min)"],
+  ["opt","English Plan: today's 3 words and 3 expressions only. (10 min)"]]},
+ {date:"2026-10-18",day:"Sunday, Oct 18",title:"The Zoom questions",time:"about 2 hours",items:[
+  ["must","Multilingual → Rules: read the 12 rules once. Every ethics question is answered with them. (10 min)"],
+  ["must","The interpreter questions first (12, 13, 15, 16, 17, 18): say each answer out loud 3 times. (25 min)"],
+  ["must","The other Zoom questions (8, 9, 10, 11, 14, 19): say each answer out loud twice. (20 min)"],
+  ["must","Mock Test → Kalam interview, start to finish, with the question text on. (30 min)"],
+  ["imp","Short interpretation test (Questions 21–24): interpret each one out loud 3 times, then look at Multilingual → Terms. (20 min)"],
+  ["imp","Question 25: choose your 3 questions for them (training, pay, shifts). (5 min)"],
+  ["opt","English Plan: today's 3 words and 3 expressions only. (10 min)"]]},
+ {date:"2026-10-19",day:"Monday, Oct 19",title:"Full practice and setup",time:"about 1.5 hours",items:[
+  ["must","Mock Test → Kalam interview again, with text and timer off, recording yourself. (30 min)"],
+  ["must","Watch the recording once: slow, clear, smiling? Then redo only your 3 weakest answers. (20 min)"],
+  ["must","Zoom test at zoom.us/test: camera, headset, internet cable, light in front of you, plain background. (15 min)"],
+  ["imp","Claude voice mode: paste the “Kalam interviewer” prompt (English Plan tab) for a 15-minute mock interview. (15 min)"],
+  ["imp","Question 20: spell your full name with the letter words (S as in Sierra…) and say your date of birth. (5 min)"],
+  ["must","Clothes ready, phone and laptop charged, sleep early."]]},
+ {date:"2026-10-20",day:"Tuesday, Oct 20",title:"Interview day",time:"nothing new today",items:[
+  ["must","Morning: say your introduction twice and read the 12 rules once. Don't learn anything new today. (10 min)"],
+  ["must","30 minutes before: water, quiet room, phone charged and on loud, laptop plugged in, headset connected."],
+  ["must","Phone call: smile and speak slowly. Didn't hear? “Could you repeat that, please?”"],
+  ["must","Zoom: look at the camera, short clear answers, and say that you passed a medical interpretation assessment."],
+  ["imp","After: write down every question they asked and send them to Nour."]]},
+ {date:"2026-10-21",day:"From Wednesday, Oct 21",title:"After the interview",time:"about 40 min a day",items:[
+  ["imp","Take the free EF SET practice test at efset.org (reading and listening). Kalam asks for C1 after the interview."],
+  ["imp","Do the whole English Plan day, every day: about 40 minutes, mostly speaking."],
+  ["opt","Keep 20 flashcards and one role-play a week so your interpreting stays sharp."]]}
+];
+const PRIO={must:"Must",imp:"Important",opt:"If time"};
 const done=store.get("plan-kalam",{});
+const isoToday=()=>{const t=new Date();return t.getFullYear()+"-"+String(t.getMonth()+1).padStart(2,"0")+"-"+String(t.getDate()).padStart(2,"0")};
 function renderPlan(){
- let total=0,n=0;
- $("#plan").innerHTML=PLAN.map((b,bi)=>`<div class="block"><div class="block-head"><h3>${esc(b[0])}</h3><span class="muted">${esc(b[1])}</span></div>${b[2].map((t,ti)=>{const id=`c${bi}_${ti}`;total++;if(done[id])n++;return `<label class="check ${done[id]?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${done[id]?"checked":""}><span>${esc(t)}</span></label>`}).join("")}</div>`).join("");
+ let total=0,n=0;const iso=isoToday();
+ const cur=PLAN.reduce((c,b,i)=>b.date<=iso?i:c,-1);
+ const top=`<div class="card stack plan-top"><span class="label">If you only do 5 things</span><ol class="rules">${PLAN_TOP.map(t=>`<li><b>${esc(t[0])}</b>${esc(t[1])}</li>`).join("")}</ol></div>`;
+ $("#plan").innerHTML=top+PLAN.map((b,bi)=>{const st=bi===cur?"today":(bi<cur?"past":"");
+  return `<div class="block ${st}"><div class="block-head"><h3>${esc(b.day)}${st==="today"?' <span class="pill">Today</span>':""}</h3><span class="muted">${esc(b.title)} · ${esc(b.time)}</span></div>${b.items.map((t,ti)=>{const id=`k${bi}_${ti}`;total++;if(done[id])n++;return `<label class="check ${done[id]?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${done[id]?"checked":""}><span><span class="prio ${t[0]}">${PRIO[t[0]]}</span>${esc(t[1])}</span></label>`}).join("")}</div>`}).join("");
  $("#planbar").style.width=(100*n/total)+"%";$("#plancount").textContent=`${n} of ${total} steps done`;
 }
 renderPlan();
