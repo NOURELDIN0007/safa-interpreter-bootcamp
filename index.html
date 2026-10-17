@@ -175,6 +175,8 @@ details[open] summary{margin-bottom:8px}
 .ans-q{display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow)}
 .ans-say{background:var(--ok-soft);border:1px solid var(--ok);border-radius:12px;padding:10px 12px}
 .ans-say .label{color:var(--ok)!important}
+.subtabs{border-bottom:1px solid var(--line);margin-bottom:8px}
+.subtabs .tabrow{flex-wrap:wrap}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 
@@ -334,6 +336,8 @@ details[open] summary{margin-bottom:8px}
 
 <!-- MULTILINGUAL -->
 <section class="panel" id="p-multi" data-title="Multilingual" hidden>
+ <nav class="subtabs" aria-label="Multilingual sections"><div class="tabrow" id="subtabrow"></div></nav>
+<section class="subpanel" id="p-moverview" data-title="Overview">
  <div class="stack-lg">
   <div class="stack">
     <h2>Multilingual Interpreters &amp; Translators</h2>
@@ -531,51 +535,19 @@ details[open] summary{margin-bottom:8px}
   </div>
  </div>
 </section>
-
-
-
-<!-- MOCK TEST -->
-<section class="panel" id="p-mock" data-title="Mock Test" hidden>
- <div class="stack-lg">
-  <div class="stack" id="mk-pick">
-    <h2>Mock test: the real flow</h2>
-    <p class="intro">This copies the screens of the real test website step by step: Watch Intro, the camera check, question videos that can't be paused, the 3-2-1 countdown, REC, up to 3 minutes per answer, and "Repeat (N left)". The questions are our best prediction, read aloud by your phone's voice.</p>
-    <div class="callout warn"><strong>Record yourself</strong>Inside this page the browser usually blocks the camera. So before you start, prop your phone up, open the <b>camera in video mode</b> (or the voice recorder) and keep it recording the whole test. If the page can use your camera (for example, the file opened in Chrome on a laptop), you'll see yourself on the camera-check screen and your answers will be saved for playback at the end.</div>
-    <div class="grid2">
-      <button class="mk-card" data-mk="en"><b>Multilingual · English assessment</b><span>9 questions · about 20 minutes</span></button>
-      <button class="mk-card" data-mk="med"><b>Multilingual · Medical interpretation</b><span>12 questions · about 30 minutes</span></button>
-      <button class="mk-card" data-mk="kalam"><b>Kalam interview</b><span>Phone screening + Zoom · 25 questions</span></button>
-      <button class="mk-card" data-mk="gen"><b>English speaking test</b><span>22 random general questions · aim for 1 minute each</span></button>
-    </div>
-    <div class="rp-controls">
-      <button class="chip" id="mk-showtext" aria-pressed="false">Show question text (easier)</button>
-      <button class="chip" id="mk-showtimer" aria-pressed="false">Show timer (easier)</button>
-    </div>
-    <p class="muted">The real test shows no text and no timer. Turn these on only for your first practice run.</p>
-  </div>
-  <div id="mk-stage" class="mk-stage" hidden></div>
- </div>
-</section>
-
-<!-- TEST ANSWERS -->
-<section class="panel" id="p-answers" data-title="Test Answers" hidden>
+<section class="subpanel" id="p-mmock" data-title="Mock tests" hidden>
  <div class="stack-lg">
   <div class="stack">
-    <h2>Predicted questions and what to say</h2>
-    <p class="intro">Nobody can see the real questions in advance. These are our predictions, based on how this company's test works and what interpreting companies usually ask. Learn the <b>structure</b> of each answer, not word for word, and say it in your own natural English. Anything in [brackets] you must replace with your own true details.</p>
-    <div class="rp-controls">
-      
-      
-      <button class="chip" data-ans="kalam" aria-pressed="true">Kalam interview</button>
-      <button class="chip" data-ans="gen" aria-pressed="false">English speaking bank (34)</button>
+    <h2>Multilingual mock tests</h2>
+    <p class="intro">The same screens as their real test website. Pressing a card opens it in the Mock Test tab.</p>
+    <div class="grid2">
+      <button class="mk-card" data-mk-launch="en"><b>English assessment</b><span>9 questions · about 20 minutes</span></button>
+      <button class="mk-card" data-mk-launch="med"><b>Medical interpretation</b><span>12 questions · about 30 minutes</span></button>
     </div>
   </div>
-  <div class="stack-lg" id="ans"></div>
  </div>
 </section>
-
-<!-- RULES -->
-<section class="panel" id="p-rules" data-title="Rules" hidden>
+<section class="subpanel" id="p-rules" data-title="Rules" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>The 12 rules that pass the test</h2>
@@ -632,9 +604,7 @@ details[open] summary{margin-bottom:8px}
   </div>
  </div>
 </section>
-
-<!-- SCRIPTS -->
-<section class="panel" id="p-scripts" data-title="Scripts" hidden>
+<section class="subpanel" id="p-scripts" data-title="Scripts" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>Say these from memory</h2>
@@ -643,9 +613,7 @@ details[open] summary{margin-bottom:8px}
   <div class="stack" id="scripts"></div>
  </div>
 </section>
-
-<!-- ROLEPLAYS -->
-<section class="panel" id="p-roleplays" data-title="Role-plays" hidden>
+<section class="subpanel" id="p-roleplays" data-title="Role-plays" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>Ten practice calls</h2>
@@ -660,9 +628,7 @@ details[open] summary{margin-bottom:8px}
   <div class="stack" id="rp"></div>
  </div>
 </section>
-
-<!-- NUMBERS -->
-<section class="panel" id="p-numbers" data-title="Numbers" hidden>
+<section class="subpanel" id="p-numbers" data-title="Numbers" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>Numbers, doses, dates</h2>
@@ -697,9 +663,7 @@ details[open] summary{margin-bottom:8px}
   <div class="stack" id="nums"></div>
  </div>
 </section>
-
-<!-- TERMS -->
-<section class="panel" id="p-terms" data-title="Terms" hidden>
+<section class="subpanel" id="p-terms" data-title="Terms" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>Medical vocabulary</h2>
@@ -730,9 +694,7 @@ details[open] summary{margin-bottom:8px}
   </div>
  </div>
 </section>
-
-<!-- QUIZ -->
-<section class="panel" id="p-quiz" data-title="Quiz 1" hidden>
+<section class="subpanel" id="p-quiz" data-title="Quiz 1" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>What would you do?</h2>
@@ -742,9 +704,7 @@ details[open] summary{margin-bottom:8px}
   <div class="stack-lg" id="quiz"></div>
  </div>
 </section>
-
-<!-- QUIZ 2 -->
-<section class="panel" id="p-quiz2" data-title="Quiz 2" hidden>
+<section class="subpanel" id="p-quiz2" data-title="Quiz 2" hidden>
  <div class="stack-lg">
   <div class="stack">
     <h2>Words, dialects, numbers</h2>
@@ -754,11 +714,7 @@ details[open] summary{margin-bottom:8px}
   <div class="stack-lg" id="quiz2"></div>
  </div>
 </section>
-
-
-
-<!-- LINKS -->
-<section class="panel" id="p-links" data-title="Links" hidden>
+<section class="subpanel" id="p-links" data-title="Links" hidden>
  <div class="stack-lg">
   <div class="stack"><h2>Free resources</h2><p class="intro">Use these after the test too: training and the ALTA exam come next.</p></div>
   <div class="grid2">
@@ -793,6 +749,56 @@ details[open] summary{margin-bottom:8px}
   </div>
  </div>
 </section>
+</section>
+
+
+
+<!-- MOCK TEST -->
+<section class="panel" id="p-mock" data-title="Mock Test" hidden>
+ <div class="stack-lg">
+  <div class="stack" id="mk-pick">
+    <h2>Mock test: the real flow</h2>
+    <p class="intro">This copies the screens of the real test website step by step: Watch Intro, the camera check, question videos that can't be paused, the 3-2-1 countdown, REC, up to 3 minutes per answer, and "Repeat (N left)". The questions are our best prediction, read aloud by your phone's voice.</p>
+    <div class="callout warn"><strong>Record yourself</strong>Inside this page the browser usually blocks the camera. So before you start, prop your phone up, open the <b>camera in video mode</b> (or the voice recorder) and keep it recording the whole test. If the page can use your camera (for example, the file opened in Chrome on a laptop), you'll see yourself on the camera-check screen and your answers will be saved for playback at the end.</div>
+    <div class="grid2">
+      <button class="mk-card" data-mk="kalam"><b>Kalam interview</b><span>Phone screening + Zoom · 25 questions</span></button>
+      <button class="mk-card" data-mk="gen"><b>English speaking test</b><span>22 random general questions · aim for 1 minute each</span></button>
+    </div>
+    <div class="rp-controls">
+      <button class="chip" id="mk-showtext" aria-pressed="false">Show question text (easier)</button>
+      <button class="chip" id="mk-showtimer" aria-pressed="false">Show timer (easier)</button>
+    </div>
+    <p class="muted">The real test shows no text and no timer. Turn these on only for your first practice run.</p>
+  </div>
+  <div id="mk-stage" class="mk-stage" hidden></div>
+ </div>
+</section>
+
+<!-- TEST ANSWERS -->
+<section class="panel" id="p-answers" data-title="Test Answers" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Predicted questions and what to say</h2>
+    <p class="intro">Nobody can see the real questions in advance. These are our predictions, based on how this company's test works and what interpreting companies usually ask. Learn the <b>structure</b> of each answer, not word for word, and say it in your own natural English. Anything in [brackets] you must replace with your own true details.</p>
+    <div class="rp-controls">
+      
+      
+      <button class="chip" data-ans="kalam" aria-pressed="true">Kalam interview</button>
+      <button class="chip" data-ans="gen" aria-pressed="false">English speaking bank (34)</button>
+    </div>
+  </div>
+  <div class="stack-lg" id="ans"></div>
+ </div>
+</section>
+
+
+
+
+
+
+
+
+
 </div>
 
 <script>
@@ -806,9 +812,15 @@ const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
 const panels=[...document.querySelectorAll("section.panel")];
 const row=$("#tabrow");
 panels.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.tab=id;b.id="tab-"+id;b.setAttribute("aria-controls",p.id);b.onclick=()=>show(id,true);row.appendChild(b)});
-function show(id,user){if(id!=="mock"){try{if(window.__stopAudio)window.__stopAudio();else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
+function show(id,user){if(subs&&subs.some(s=>s.id==="p-"+id)){showSub(id);id="multi"}if(id!=="mock"){try{if(window.__stopAudio)window.__stopAudio();else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(a){e.preventDefault();show(a.dataset.goto,true)}});
-const h=(location.hash||"").slice(1);show(panels.some(p=>p.id==="p-"+h)?h:store.get("tab","plan"));
+var subs=[...document.querySelectorAll("section.subpanel")];
+const srow=$("#subtabrow");
+subs.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.sub=id;b.id="sub-"+id;b.onclick=()=>{show(id,false);p.scrollIntoView({block:"start"})};srow.appendChild(b)});
+function showSub(id){subs.forEach(s=>s.hidden=s.id!=="p-"+id);srow.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===id));store.set("subtab",id)}
+showSub(subs.some(s=>s.id==="p-"+store.get("subtab",""))?store.get("subtab"):"moverview");
+document.addEventListener("click",e=>{const b=e.target.closest("[data-mk-launch]");if(b){show("mock",true);mkWelcome(b.dataset.mkLaunch)}});
+const h=(location.hash||"").slice(1);const isTab=id=>panels.some(p=>p.id==="p-"+id)||subs.some(s=>s.id==="p-"+id);show(isTab(h)?h:(isTab(store.get("tab","plan"))?store.get("tab","plan"):"plan"));
 
 /* ---------- plan ---------- */
 const PLAN=[
@@ -825,7 +837,7 @@ const PLAN=[
  ["Sunday, Oct 18","Full practice",[
   "Mock Test → Kalam interview again, with text and timer off, recording yourself.",
   "Watch the recording: are you smiling, slow, clear? Fix one thing.",
-  "Role-plays 1, 3 and 5 with Play and “Listen only” on, in case they give a short interpretation test.",
+  "Multilingual → Role-plays 1, 3 and 5 with Play and “Listen only” on, in case they give a short interpretation test.",
   "Open your Claude app → voice mode → paste the “Kalam interviewer” prompt (English Plan tab) for a 15-minute mock interview."]],
  ["Monday, Oct 19","Light review and setup",[
   "Read your answers once. Say your introduction twice.",
