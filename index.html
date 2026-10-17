@@ -2,7 +2,7 @@
 <title>Safa's Corner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
 /* Minimal, Swiss-inspired: white space, one typeface, crisp 1px borders, a single pink accent, subtle motion.
    Phones: compact top bar + bottom tab bar (4 main tabs + More sheet). Wide screens: text tabs in the top bar. */
@@ -277,6 +277,144 @@ details[open] summary{margin-bottom:12px}
   .fc-bar .btn{flex:1 1 calc(50% - 8px)}
 }
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* ===== Cover page: blush editorial, serif + script, arched photos, line-art botanicals ===== */
+:root{--blush:#fbf1ef;--blush-2:#f6e3e1;--rose:#c86b85;--rose-deep:#a94f6b;--rose-soft:#f3d9df;--plum:#3b2530;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--script:"Great Vibes","Brush Script MT",cursive}
+body[data-tab="home"]{background:var(--blush)}
+@media (min-width:1024px){body[data-tab="home"] .wrap{max-width:1120px}}
+body[data-tab="home"] .topbar{background:rgba(251,241,239,.86);border-bottom-color:transparent}
+.brand{font-family:var(--script);font-weight:400;font-size:27px;color:var(--rose-deep);letter-spacing:0}
+.brand .logo{display:none}
+.cover{padding-top:8px!important;color:var(--plum)}
+.cover h1,.cover h2{color:var(--plum)}
+.cover img{display:block;width:100%;height:100%;object-fit:cover}
+.cv-heart{width:15px;height:15px;fill:none;stroke:var(--rose);stroke-width:2;vertical-align:-2px}
+.cv-heart.sm{width:13px;height:13px}
+.cover svg path,.cover svg rect,.cover svg circle{vector-effect:non-scaling-stroke}
+
+/* hero */
+.cv-hero{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center;min-height:min(78vh,680px);padding-block:24px 40px}
+.cv-hello{display:inline-flex;align-items:center;gap:8px;font:700 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--plum)}
+.cv-title{margin:18px 0 18px;font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.02;font-size:clamp(44px,6.4vw,72px);display:flex;flex-direction:column}
+.cv-title span{display:block;animation:cvUp .9s var(--ease) both}
+.cv-l2{animation-delay:.1s!important}
+.cv-script{font-family:var(--script);font-weight:400;color:var(--rose);font-size:1.18em;line-height:1.05;margin-top:2px;animation-delay:.22s!important}
+.cv-sub{max-width:42ch;color:#6e5560;font-size:16.5px;line-height:1.7;animation:cvUp .9s .32s var(--ease) both}
+.cv-ctas{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:28px;animation:cvUp .9s .42s var(--ease) both}
+.cv-btn{display:inline-flex;align-items:center;gap:14px;padding:7px 7px 7px 24px;border-radius:999px;background:var(--rose);color:#fff;text-decoration:none;font:700 12.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;box-shadow:0 14px 26px -16px rgba(169,79,107,.9);transition:background .25s,transform .25s var(--ease)}
+.cv-btn:hover{background:var(--rose-deep);transform:translateY(-2px)}
+.cv-btn .cv-arrow{width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center;transition:transform .3s var(--ease)}
+.cv-btn:hover .cv-arrow{transform:translateX(3px)}
+.cv-arrow svg{width:18px;height:18px;fill:none;stroke:var(--rose-deep);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cv-btn.ghost{background:transparent;color:var(--rose-deep);border:1.5px solid var(--rose);box-shadow:none;padding:5px 5px 5px 22px}
+.cv-btn.ghost .cv-arrow{background:var(--rose-soft)}
+.cv-link{font:700 12.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--plum);text-decoration:none;border-bottom:1.5px solid var(--rose);padding-bottom:4px}
+.cv-hero-art{position:relative;justify-self:center;width:min(100%,430px)}
+.cv-arch{aspect-ratio:3/4;border-radius:999px 999px 28px 28px;overflow:hidden;background:var(--blush-2);box-shadow:0 30px 60px -36px rgba(120,50,70,.55);animation:cvFade 1.2s var(--ease) both}
+.cv-arch img{animation:cvZoom 2.4s var(--ease) both}
+.cv-note{position:absolute;right:-6px;top:14%;font-family:var(--script);font-size:26px;line-height:1.05;color:var(--rose-deep);transform:rotate(-8deg);text-align:right;animation:cvFade 1s .9s both}
+.cv-note svg{display:block;width:52px;height:34px;margin:4px 0 0 auto;fill:none;stroke:var(--rose-deep);stroke-width:1.6;stroke-linecap:round}
+.cv-note.small{font-size:22px;right:12px;top:auto;bottom:16px;color:#fff;text-shadow:0 2px 10px rgba(120,40,60,.4)}
+.cv-spark{position:absolute;width:20px;height:20px;fill:var(--rose);opacity:.75;animation:cvTwinkle 3.2s ease-in-out infinite}
+.cv-spark.s1{left:-18px;top:8%}
+.cv-spark.s2{left:4%;bottom:12%;width:14px;height:14px;animation-delay:-1.4s}
+.cv-sprig{position:absolute;left:-58px;bottom:-14px;width:88px;height:190px;fill:none;stroke:var(--rose);stroke-width:1.3;opacity:.55}
+@keyframes cvUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes cvFade{from{opacity:0}to{opacity:1}}
+@keyframes cvZoom{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes cvTwinkle{0%,100%{transform:scale(.7) rotate(0);opacity:.35}50%{transform:scale(1.1) rotate(20deg);opacity:.9}}
+
+/* about */
+.cv-about{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;padding-block:56px;border-top:1px solid var(--blush-2)}
+.cv-about-img{position:relative;aspect-ratio:4/5;border-radius:200px 200px 24px 24px;overflow:visible}
+.cv-about-img img{border-radius:200px 200px 24px 24px;box-shadow:0 26px 50px -34px rgba(120,50,70,.55)}
+.cv-badge{position:absolute;right:-18px;top:18px;width:116px;height:116px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 14px 30px -18px rgba(120,50,70,.6);font:600 10px/1.35 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:#7b5f69;animation:cvSpinIn 1s var(--ease) both}
+.cv-badge b{font:500 24px/1 var(--serif);letter-spacing:0;text-transform:none;color:var(--rose-deep);margin-bottom:4px}
+@keyframes cvSpinIn{from{transform:rotate(-30deg) scale(.6);opacity:0}to{transform:none;opacity:1}}
+.cv-eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--plum)}
+.cv-h2{font-family:var(--serif)!important;font-weight:500!important;font-size:clamp(30px,4vw,42px)!important;line-height:1.12!important;letter-spacing:-.005em!important;margin:14px 0!important}
+.cv-h2 em{font-style:italic;color:var(--rose)}
+.cv-p{color:#6e5560;max-width:48ch;line-height:1.75}
+.cv-feats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:26px 0 28px}
+.cv-feats div{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:4px 8px;border-left:1px solid var(--blush-2);font:700 10.5px/1.3 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:#7b5f69}
+.cv-feats div:first-child{border-left:0}
+.cv-feats svg,.cv-band svg,.cv-list svg{width:26px;height:26px;fill:none;stroke:var(--rose);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* corners */
+.cv-corners{padding-block:16px 56px}
+.cv-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.cv-spark-inline{width:12px;height:12px;fill:var(--rose)}
+.cv-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.cv-card{text-decoration:none;color:var(--plum);display:flex;flex-direction:column;gap:14px}
+.cv-card-img{position:relative;aspect-ratio:4/3.3;border-radius:14px;overflow:hidden;background:var(--blush-2)}
+.cv-card-img img{transition:transform .8s var(--ease)}
+.cv-card:hover .cv-card-img img{transform:scale(1.06)}
+.cv-card-spark{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 8px 16px -10px rgba(120,50,70,.6);transition:transform .4s var(--ease)}
+.cv-card:hover .cv-card-spark{transform:rotate(90deg)}
+.cv-card-spark svg{width:16px;height:16px;fill:var(--rose)}
+.cv-card-meta{display:flex;gap:14px;align-items:flex-start}
+.cv-num{font:500 22px/1 var(--serif);color:var(--rose-deep)}
+.cv-card-meta b{display:block;font-size:15px}
+.cv-card-meta div span{font-size:13.5px;color:#7b5f69}
+
+/* band */
+.cv-band{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-inline:-20px;padding:30px 20px;background:var(--blush-2)}
+.cv-band div{display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:4px;padding:0 18px;border-left:1px solid rgba(169,79,107,.18)}
+.cv-band div:first-child{border-left:0}
+.cv-band svg{grid-row:span 2;margin-top:2px}
+.cv-band b{font:700 11.5px/1.3 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+.cv-band span{font-size:13.5px;line-height:1.5;color:#7b5f69}
+
+/* quote */
+.cv-quote{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;padding-block:56px 40px}
+.cv-qmark{font:500 96px/.7 var(--serif);color:var(--rose)}
+.cv-quote blockquote{margin:0;font:500 clamp(22px,2.8vw,28px)/1.45 var(--serif);color:var(--plum)}
+.cv-quote blockquote em{color:var(--rose)}
+.cv-from{display:flex;align-items:center;gap:12px}
+.cv-avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--rose-soft);color:var(--rose-deep);font:500 24px/1 var(--serif);border:3px solid #fff;box-shadow:0 8px 16px -10px rgba(120,50,70,.6)}
+.cv-from b{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+.cv-from span{font-size:13.5px;color:#7b5f69}
+
+/* closing */
+.cv-close{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding-block:40px 56px;border-top:1px solid var(--blush-2)}
+.cv-list{list-style:none;margin:6px 0 28px;padding:0;display:flex;flex-direction:column;gap:14px}
+.cv-list li{display:flex;align-items:center;gap:14px;font-size:15px}
+.cv-close-img{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;box-shadow:0 26px 50px -34px rgba(120,50,70,.55)}
+.cv-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-inline:-20px;padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px));background:var(--rose);color:#fff;font:600 11.5px/1.4 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.cv-foot nav{display:flex;gap:20px}
+.cv-foot a{color:#fff;text-decoration:none;opacity:.9}
+
+/* scroll reveal for cover images/blocks */
+@supports (animation-timeline: view()){
+  .cv-about-img,.cv-card,.cv-band div,.cv-quote,.cv-close-img,.cv-close-text{animation:cvUp both linear;animation-timeline:view();animation-range:entry 5% entry 45%}
+}
+
+/* phones */
+@media (max-width:820px){
+  .cv-hero{grid-template-columns:1fr;min-height:0;padding-block:18px 32px;gap:30px}
+  .cv-hero-text{text-align:left}
+  .cv-hero-art{width:min(86%,360px)}
+  .cv-note{right:-10px;top:-52px;font-size:22px}
+  .cv-hero-art{margin-top:36px}
+  .cv-badge{letter-spacing:.06em}
+  .cv-sprig{left:-40px;width:64px;height:140px}
+  .cv-about{grid-template-columns:1fr;gap:30px;padding-block:40px}
+  .cv-about-img{width:min(86%,360px);justify-self:center}
+  .cv-badge{right:-14px;width:112px;height:112px}
+  .cv-feats{grid-template-columns:repeat(2,1fr);row-gap:20px}
+  .cv-feats div:nth-child(3){border-left:0}
+  .cv-cards{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-20px;padding:0 20px 6px;scrollbar-width:none}
+  .cv-cards::-webkit-scrollbar{display:none}
+  .cv-card{flex:0 0 76%;scroll-snap-align:start}
+  .cv-band{grid-template-columns:1fr 1fr;row-gap:22px;padding:26px 16px}
+  .cv-band div{padding:0 10px}
+  .cv-band div:nth-child(3){border-left:0}
+  .cv-quote{grid-template-columns:1fr;gap:12px;padding-block:40px 28px}
+  .cv-qmark{font-size:72px;line-height:.6}
+  .cv-close{grid-template-columns:1fr;gap:28px}
+  .cv-close-img{width:min(86%,360px);justify-self:center}
+  .cv-foot{flex-direction:column;align-items:flex-start;margin-bottom:-120px;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:640px){.cv-band,.cv-cards,.cv-foot{margin-inline:-16px}.cv-cards{padding-inline:16px}}
 </style>
 
 <div class="wrap">
@@ -289,24 +427,97 @@ details[open] summary{margin-bottom:12px}
 <div class="sheet" id="sheet" hidden><div class="sheet-grid" id="sheetgrid"></div></div>
 <nav class="bnav" id="bnav" aria-label="Main sections"></nav>
 
-<header class="hero" id="hero">
-  <span class="eyebrow">Arabic ⇄ English medical interpreting</span>
-  <h1>Safa's <em>Corner</em></h1>
-  <p class="tagline">Your little space to learn, practice, and grow.</p>
-  <span class="sync" id="syncstate">Saved on this device</span>
-  <div class="bubbles" id="bubbles"><span class="bub-count" id="bubcount"></span></div>
-  <p class="intro">You passed the medical interpretation assessment.</p>
-  <div class="dates">
-    <div class="date hot"><span class="label">Next</span><b>Kalam interview · Tue, Oct 20</b><span class="muted">Phone screening + Zoom meeting</span></div>
-    <div class="date"><span class="label">English goal</span><b>Reapply · mid-January 2027</b><span class="muted">Multilingual English test</span></div>
-    <div class="date"><span class="label">Every day</span><b>1 hour of speaking</b><span class="muted">Follow the English Plan</span></div>
+
+
+<!-- HOME / COVER -->
+<section class="panel cover" id="p-home" data-title="Home">
+  <!-- hero -->
+  <div class="cv-hero">
+    <div class="cv-hero-text">
+      <span class="cv-hello">Hey, Safa <svg class="cv-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></span>
+      <h1 class="cv-title"><span class="cv-l1">Every day, a little</span><span class="cv-l2">closer to your</span><span class="cv-script">dream job</span></h1>
+      <p class="cv-sub">Your own corner to prepare for interpreting interviews, grow your English, and see every step you take, saved for both of us.</p>
+      <div class="cv-ctas">
+        <a class="cv-btn" href="#plan" data-goto="plan">Start today's plan <span class="cv-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="cv-link" href="#eplan" data-goto="eplan">English Plan</a>
+      </div>
+    </div>
+    <div class="cv-hero-art">
+      <div class="cv-arch"><img src="img/hydrangea.jpg" alt="Pink hydrangeas in a glass vase on a round table" width="933" height="1400" fetchpriority="high"></div>
+      <p class="cv-note">you've got<br>this, Safa <svg viewBox="0 0 60 40" aria-hidden="true"><path d="M4 6c10 2 26 10 30 26M34 32l-8-3M34 32l1-8"/></svg></p>
+      <svg class="cv-spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg>
+      <svg class="cv-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg>
+      <svg class="cv-sprig" viewBox="0 0 120 260" aria-hidden="true"><path d="M60 258C58 190 64 120 86 10"/><path d="M62 210c-18-8-30-24-34-42 18 4 30 18 34 42z"/><path d="M63 170c16-10 26-26 28-44-16 6-26 22-28 44z"/><path d="M66 130c-16-8-26-22-30-40 16 4 28 18 30 40z"/><path d="M71 92c14-10 22-24 24-40-14 6-22 20-24 40z"/><path d="M77 58c-12-6-20-18-22-32 12 4 20 14 22 32z"/></svg>
+    </div>
   </div>
-</header>
+
+  <!-- about -->
+  <div class="cv-about">
+    <div class="cv-about-img">
+      <img src="img/peony.jpg" alt="Pink peonies in a ribbed glass vase" loading="lazy" width="933" height="1400">
+      <div class="cv-badge"><b>Passed</b><span>medical<br>interpretation<br>test</span></div>
+    </div>
+    <div class="cv-about-text">
+      <span class="cv-eyebrow">About your journey <svg class="cv-heart sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></span>
+      <h2 class="cv-h2">You already passed the hard part. <em>Now we polish the rest.</em></h2>
+      <p class="cv-p">Your medical interpretation test is behind you. Next comes the Kalam interview on Tuesday, then twelve gentle weeks of spoken English before the retake in January.</p>
+      <div class="cv-feats">
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Interview ready</span></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Daily English</span></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg><span>Calm confidence</span></div>
+        <div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><span>New offers</span></div>
+      </div>
+      <a class="cv-btn ghost" href="#confidence" data-goto="confidence">Read the confidence tips <span class="cv-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+  </div>
+
+  <!-- corners -->
+  <div class="cv-corners">
+    <div class="cv-row-head"><span class="cv-eyebrow">Your corners <svg class="cv-spark-inline" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg></span><a class="cv-link" href="#jobs" data-goto="jobs">Other jobs</a></div>
+    <div class="cv-cards">
+      <a class="cv-card" href="#kalam" data-goto="kalam"><div class="cv-card-img"><img src="img/desk.jpg" alt="Pink peonies beside a white keyboard" loading="lazy" width="934" height="1400"><span class="cv-card-spark"><svg viewBox="0 0 24 24"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg></span></div><div class="cv-card-meta"><span class="cv-num">01</span><div><b>Kalam Interview</b><span>Tuesday, Oct 20</span></div></div></a>
+      <a class="cv-card" href="#eplan" data-goto="eplan"><div class="cv-card-img"><img src="img/pen.jpg" alt="A pink pen, glasses and baby's breath on a desk" loading="lazy" width="933" height="1400"><span class="cv-card-spark"><svg viewBox="0 0 24 24"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg></span></div><div class="cv-card-meta"><span class="cv-num">02</span><div><b>English Plan</b><span>12 weeks, day by day</span></div></div></a>
+      <a class="cv-card" href="#mock" data-goto="mock"><div class="cv-card-img"><img src="img/vase.jpg" alt="Pink baby's breath in a pink vase" loading="lazy" width="1100" height="1100"><span class="cv-card-spark"><svg viewBox="0 0 24 24"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg></span></div><div class="cv-card-meta"><span class="cv-num">03</span><div><b>Mock Test</b><span>Practice the real thing</span></div></div></a>
+    </div>
+  </div>
+
+  <!-- band -->
+  <div class="cv-band">
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><b>New words daily</b><span>3 words, an expression and a phrasal verb, with voices.</span></div>
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/></svg><b>Real voices</b><span>Doctors, patients and interviewers, read aloud.</span></div>
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg><b>Mock tests</b><span>The same screens as the real test.</span></div>
+    <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><b>Saved progress</b><span>Every tick is kept for next time.</span></div>
+  </div>
+
+  <!-- quote -->
+  <div class="cv-quote">
+    <span class="cv-qmark" aria-hidden="true">“</span>
+    <blockquote>You already passed the hardest part. The rest is practice, one small step at a time, <em>and you are so ready for it.</em></blockquote>
+    <div class="cv-from"><span class="cv-avatar">N</span><div><b>Nour</b><span>Your biggest fan</span></div></div>
+  </div>
+
+  <!-- closing -->
+  <div class="cv-close">
+    <div class="cv-close-text">
+      <h2 class="cv-h2">Let's make today count, <em>one beautiful step at a time.</em></h2>
+      <ul class="cv-list">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/></svg>Kalam interview · Tuesday, Oct 20</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>English retake · mid-January 2027</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>One hour of speaking, every day</li>
+      </ul>
+      <a class="cv-btn" href="#plan" data-goto="plan">Open today's plan <span class="cv-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+    <div class="cv-close-img"><img src="img/petals.jpg" alt="Soft pink carnation petals" loading="lazy" width="787" height="1400"><p class="cv-note small">small steps,<br>big dreams</p></div>
+  </div>
+
+  <footer class="cv-foot"><span>Safa's Corner · made with love by Nour</span><nav><a href="#plan" data-goto="plan">Plan</a><a href="#eplan" data-goto="eplan">English</a><a href="#kalam" data-goto="kalam">Kalam</a><a href="#jobs" data-goto="jobs">Jobs</a></nav></footer>
+</section>
 
 <!-- PLAN -->
 <section class="panel" id="p-plan" data-title="Plan">
  <div class="stack-lg">
   <div class="stack">
+    <span class="sync" id="syncstate">Saved on this device</span>
     <h2>This week: ready for Kalam on Tuesday</h2>
     <p class="intro">Four days, about 1.5–2 hours a day. After Tuesday, the <a href="#english" data-goto="eplan">English Plan</a> starts (Wednesday, Oct 21).</p>
     <div class="progress" aria-hidden="true"><i id="planbar"></i></div>
@@ -1114,11 +1325,11 @@ panels.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button
 function show(id,user){if(subs&&subs.some(s=>s.id==="p-"+id)){showSub(id);id="multi"}if(id!=="mock"){try{if(window.__stopAudio)window.__stopAudio();else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);document.body.dataset.tab=id;document.querySelectorAll("[data-sheet]").forEach(x=>x.classList.toggle("on",x.dataset.sheet===id));window.__navSync&&window.__navSync(id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(a){e.preventDefault();show(a.dataset.goto,true)}});
 /* navigation: bottom bar (phones), More sheet, current title */
-const ICONS={plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
+const ICONS={home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.more}</svg>`;
-const NAVSUB={plan:"This week's checklist",kalam:"Tuesday interview prep",eplan:"12 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers"};
-const SHORT={plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers"};
-const PRIMARY=["plan","eplan","kalam","mock"];
+const NAVSUB={home:"Your cover page",plan:"This week's checklist",kalam:"Tuesday interview prep",eplan:"12 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers"};
+const SHORT={home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers"};
+const PRIMARY=["home","plan","eplan","kalam"];
 const sheet=$("#sheet");
 $("#bnav").innerHTML=PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
 $("#sheetgrid").innerHTML=panels.map(p=>{const id=p.id.slice(2);return `<button data-sheet="${id}"><span class="ico">${svgI(id)}</span><span><b>${esc(p.dataset.title)}</b><small>${esc(NAVSUB[id]||"")}</small></span></button>`}).join("");
@@ -1133,7 +1344,7 @@ subs.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button")
 function showSub(id){subs.forEach(s=>s.hidden=s.id!=="p-"+id);srow.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.sub===id));store.set("subtab",id)}
 showSub(subs.some(s=>s.id==="p-"+store.get("subtab",""))?store.get("subtab"):"moverview");
 document.addEventListener("click",e=>{const b=e.target.closest("[data-mk-launch]");if(b){show("mock",true);mkWelcome(b.dataset.mkLaunch)}});
-const h=(location.hash||"").slice(1);const isTab=id=>panels.some(p=>p.id==="p-"+id)||subs.some(s=>s.id==="p-"+id);show(isTab(h)?h:(isTab(store.get("tab","plan"))?store.get("tab","plan"):"plan"));
+const h=(location.hash||"").slice(1);const isTab=id=>panels.some(p=>p.id==="p-"+id)||subs.some(s=>s.id==="p-"+id);show(isTab(h)?h:"home");
 
 /* ---------- plan ---------- */
 const PLAN=[
