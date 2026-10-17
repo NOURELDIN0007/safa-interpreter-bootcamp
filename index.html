@@ -177,6 +177,18 @@ details[open] summary{margin-bottom:8px}
 .ans-say .label{color:var(--ok)!important}
 .subtabs{border-bottom:1px solid var(--line);margin-bottom:8px}
 .subtabs .tabrow{flex-wrap:wrap}
+.sync{align-self:flex-start;font:600 12px/1 var(--f-body);padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
+.sync.on{color:var(--ok);border-color:var(--ok);background:var(--ok-soft)}
+.pill{display:inline-block;font:700 11px/1 var(--f-body);padding:5px 9px;border-radius:999px;background:var(--accent);color:var(--accent-ink);letter-spacing:.03em}
+.pill.soft{background:var(--accent-soft);color:var(--accent)}
+.ep-head h2::after{display:none}
+.ep-day{padding:12px 16px}
+.ep-day summary{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ep-day .ep-n{margin-left:auto;font-variant-numeric:tabular-nums}
+.ep-day.today{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.ep-idiom{background:var(--accent-soft);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.job.applied{border-color:var(--ok)}
+.sel{user-select:all}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 
@@ -185,6 +197,7 @@ details[open] summary{margin-bottom:8px}
   <span class="label">Arabic ⇄ English · Medical OPI / VRI</span>
   <h1>Safa's <em>Corner</em></h1>
   <p class="tagline">Your little space to learn, practice, and grow.</p>
+  <span class="sync" id="syncstate">Saved on this device</span>
   <p class="intro">You passed the medical interpretation assessment, which is the hard, professional part. Now: win the Kalam interview on Tuesday, and build your spoken English so you pass the English test when you reapply in 3 months. Your checkmarks and progress are saved on this device.</p>
   <div class="dates">
     <div class="date hot"><span class="label">Next</span><b>Kalam interview · Tue, Oct 20</b><span class="muted">Phone screening + Zoom meeting</span></div>
@@ -316,8 +329,15 @@ details[open] summary{margin-bottom:8px}
   </div>
 
   <div class="stack">
-    <h3>Week by week (Oct 21 → Jan 12)</h3>
-    <div class="stack" id="eplanweeks"></div>
+    <h2>Week by week</h2>
+    <p class="muted">Pick a week. Today opens automatically. Each day has its tasks, 3 new words, an expression and a phrasal verb, all with Hear buttons.</p>
+    <div class="rp-controls" id="epw-chips"></div>
+  </div>
+  <div class="stack-lg" id="epw"></div>
+
+  <div class="stack">
+    <h2>Every free resource</h2>
+    <div class="grid2" id="epres"></div>
   </div>
 
   <div class="stack">
@@ -333,6 +353,117 @@ details[open] summary{margin-bottom:8px}
   </div>
  </div>
 </section>
+
+<!-- CONFIDENCE -->
+<section class="panel" id="p-confidence" data-title="Confidence" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Speaking with confidence</h2>
+    <p class="intro">You understand English well. What stops you is the moment of freezing when you must talk alone. That freeze is not a language problem; it's a stress reaction, and it can be trained away like a muscle.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card stack"><h3>Why you freeze</h3>
+      <ul class="clean">
+        <li><b>Stress blocks memory.</b> When you're nervous, your brain protects you and the words you know “disappear”.</li>
+        <li><b>Translating word by word.</b> You build the sentence in Arabic first, then translate it. That's slow, so you stop.</li>
+        <li><b>Fear of mistakes.</b> You check every word for grammar before you say it, so nothing comes out.</li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>The truth about the test</h3>
+      <ul class="clean">
+        <li>Examiners score <b>clear communication and fluency</b> more than perfect grammar.</li>
+        <li>Small mistakes are normal. Native speakers make them and say “um” too.</li>
+        <li>A simple, complete answer beats a perfect half answer.</li>
+        <li>You already passed the harder test, the interpretation one.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stack">
+    <h2>Before you speak (2 minutes)</h2>
+    <ol class="rules">
+      <li><b>Box breathing</b>Breathe in for 4, hold for 4, out for 4, hold for 4. Do it 3 times. It calms your body in one minute.</li>
+      <li><b>Power pose</b>Stand tall, shoulders back, hands on hips, for 2 minutes before practice or a test (from Amy Cuddy's talk below).</li>
+      <li><b>Smile</b>Smiling relaxes your voice. People can hear a smile even on the phone.</li>
+      <li><b>Know your first sentence</b>Have a ready opening: “That's a great question. Well, to be honest…” The first sentence starts the engine.</li>
+    </ol>
+  </div>
+
+  <div class="stack">
+    <h2>While you speak</h2>
+    <div class="grid2">
+      <div class="card stack"><h3>Do</h3>
+        <ul class="clean">
+          <li>Slow down. Calm and slow sounds confident.</li>
+          <li>Use short, simple sentences.</li>
+          <li>Pause silently instead of saying “umm”.</li>
+          <li>Follow the 4 steps: answer, reason, example, close.</li>
+          <li>Look at the camera, like it's a friendly person.</li>
+          <li>Keep your hands relaxed and visible.</li>
+        </ul>
+      </div>
+      <div class="card stack"><h3>Rescue phrases</h3>
+        <ul class="clean">
+          <li><b>Mind goes blank:</b> “Let me think about that for a second.”</li>
+          <li><b>Forgot a word:</b> “It's a kind of…” / “It's something you use to…”</li>
+          <li><b>Made a mistake:</b> “Sorry, I mean…” then continue.</li>
+          <li><b>Lost the point:</b> “What I'm trying to say is…”</li>
+          <li><b>Need to finish:</b> “So overall, that's why I think…”</li>
+          <li><b>Live interview, didn't understand:</b> “Sorry, could you repeat that, please?”</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack">
+    <h2>Build it step by step</h2>
+    <p class="muted">Confidence grows when you go one small step past your comfort zone, again and again. Move up a step when the current one feels easy.</p>
+    <ol class="rules">
+      <li><b>Talk to yourself</b>Describe what you're doing, out loud, in English, at home.</li>
+      <li><b>Voice notes</b>Record yourself and listen. Nobody else hears it.</li>
+      <li><b>Claude voice mode</b>A patient partner who never judges you.</li>
+      <li><b>Camera</b>Record answers on video, like the real test.</li>
+      <li><b>A real person</b>A friend, Nour, or a partner on Tandem / HelloTalk.</li>
+      <li><b>Mock interview</b>A tutor or Claude playing a strict interviewer.</li>
+    </ol>
+  </div>
+
+  <div class="grid2">
+    <div class="card stack"><h3>Change what you tell yourself</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Instead of</th><th>Say</th></tr>
+        <tr><td>“My English is bad.”</td><td>“My English is clear enough, and it's getting better every day.”</td></tr>
+        <tr><td>“I'll make a mistake.”</td><td>“Mistakes are fine. I'll fix it and keep going.”</td></tr>
+        <tr><td>“They will judge me.”</td><td>“They want me to do well.”</td></tr>
+        <tr><td>“I failed the test.”</td><td>“I passed the hard part. Now I'm training the rest.”</td></tr>
+      </table></div>
+    </div>
+    <div class="card stack"><h3>Your story bank</h3>
+      <p>Prepare 5 short true stories. One story can answer many questions, so you never start from zero:</p>
+      <ul class="clean">
+        <li>A moment you were proud of</li>
+        <li>A challenge you overcame</li>
+        <li>A time you helped someone</li>
+        <li>A mistake you learned from</li>
+        <li>A trip or celebration you remember</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stack">
+    <h2>Watch these</h2>
+    <ul class="clean" id="conf-videos"></ul>
+  </div>
+
+  <div class="stack">
+    <h2>30-day confidence challenge</h2>
+    <p class="muted" id="confcount"></p>
+    <div class="stack" id="conf30"></div>
+  </div>
+ </div>
+</section>
+
 
 <!-- MULTILINGUAL -->
 <section class="panel" id="p-multi" data-title="Multilingual" hidden>
@@ -751,6 +882,67 @@ details[open] summary{margin-bottom:8px}
 </section>
 </section>
 
+<!-- JOBS -->
+<section class="panel" id="p-jobs" data-title="Jobs" hidden>
+ <div class="stack-lg">
+  <div class="stack">
+    <h2>Other jobs you can apply for</h2>
+    <p class="intro">Remote jobs paying in US dollars that accept people living in Egypt: interpreting jobs like Multilingual and Kalam, AI companies that need Arabic speakers, and ways to build experience. Tick “I applied” to keep track.</p>
+    <p class="pill" id="jobcount"></p>
+  </div>
+
+  <div class="stack">
+    <h2>How to apply well</h2>
+    <ol class="rules">
+      <li><b>Use your interpreting CV</b>Put “Arabic–English Interpreter” at the top, and the medical interpretation assessment you passed.</li>
+      <li><b>Apply on the company's own page</b>Not on copies on other job sites.</li>
+      <li><b>Send a short email</b>Use the template below. Change the company name each time.</li>
+      <li><b>Track it here</b>Tick “I applied”. Follow up once after 7–10 days if there's no reply.</li>
+      <li><b>Prepare for their test</b>Most interpreting companies give a recorded test like the Multilingual one, so the Mock Test tab is your practice.</li>
+    </ol>
+  </div>
+
+  <div class="stack">
+    <div class="mk-top"><h3>Email template</h3><button class="btn ghost" id="jobmail-copy">Copy</button></div>
+    <div class="card" id="jobmail">
+      <p><b>Subject:</b> Application – Arabic–English Interpreter – Safa Mohamed Ahmed</p>
+      <p>Dear Hiring Team,</p>
+      <p>My name is Safa Mohamed Ahmed, an Arabic–English interpreter based in Alexandria, Egypt. I am a law graduate from Alexandria University (English Section) and a native Arabic speaker. I recently passed a medical interpretation assessment with a US interpreting company, and I have been training on medical terminology, the interpreter code of ethics, and phone and video interpreting.</p>
+      <p>I would like to apply for your Arabic interpreter position. I can work remotely from a private, quiet room with a wired internet connection and a USB headset, and I am available for shifts in US hours.</p>
+      <p>My CV is attached. Thank you for your time and consideration.</p>
+      <p>Best regards,<br>Safa Mohamed Ahmed<br>[your email] · [your phone number]</p>
+    </div>
+  </div>
+
+  <div class="stack-lg" id="jobs"></div>
+
+  <div class="grid2">
+    <div class="card stack"><h3>Getting paid in Egypt</h3>
+      <ul class="clean">
+        <li><b>PayPal:</b> link an Egyptian Visa card to receive and withdraw money.</li>
+        <li><b>Payoneer:</b> used by many of these companies; withdraws to an Egyptian bank.</li>
+        <li><b>Wise:</b> used by Multilingual.</li>
+        <li><b>Bank account in your name:</b> needed for Mercor (Stripe).</li>
+      </ul>
+    </div>
+    <div class="card stack"><h3>Scam warning signs</h3>
+      <ul class="clean">
+        <li>Any fee: registration, training, “starter kit”, certificate.</li>
+        <li>A “recruiter” who moves you to Telegram or WhatsApp only.</li>
+        <li>Hired in minutes with no test or interview.</li>
+        <li>Asking for your ID, card or bank login in chat.</li>
+        <li>Emails not from the company's own website domain.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card stack"><h3>Skip these (US residents only)</h3>
+    <p class="muted">LanguageLine · CyraCom · Certified Languages International · Interpreters Unlimited · Ad Astra · Dialog One · Dals (EU only) · DataAnnotation · AMN / Stratus · Handshake AI</p>
+  </div>
+ </div>
+</section>
+
+
 
 
 <!-- MOCK TEST -->
@@ -804,6 +996,20 @@ details[open] summary{margin-bottom:8px}
 <script>
 (function(){
 const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const SYNC_KEYS=new Set(["plan-kalam","epw","jobs","known","conf"]);
+const SYNC_HOOKS={};
+let syncRef=null,syncExists=false,syncQ={},syncT=null,syncBusy=false;
+const _set=store.set;
+store.set=(k,v)=>{_set(k,v);if(SYNC_KEYS.has(k)&&syncRef){syncQ[k]=v;clearTimeout(syncT);syncT=setTimeout(syncFlush,700)}};
+function syncState(t,ok){const el=document.getElementById("syncstate");if(el){el.textContent=t;el.classList.toggle("on",!!ok)}}
+async function syncFlush(){if(syncBusy){clearTimeout(syncT);syncT=setTimeout(syncFlush,500);return}const q=syncQ;syncQ={};if(!Object.keys(q).length||!syncRef)return;syncBusy=true;syncState("Saving…",true);
+ try{if(syncExists)await syncRef.update(q);else{await syncRef.set(q);syncExists=true}syncState("Saved for both of you",true)}
+ catch(err){if(err&&err.code==="invalid_argument"){syncRef=null;syncState("Saved on this device only",false)}else{Object.assign(syncQ,q);clearTimeout(syncT);syncT=setTimeout(syncFlush,3000)}}
+ syncBusy=false}
+(async()=>{try{if(!window.claude||!window.claude.use)return;const db=await window.claude.use("db");if(!db)return;const ref=db.doc("progress/shared");
+ ref.onSnapshot(s=>{const first=!syncRef;syncRef=ref;syncExists=s.exists;const d=(s.exists&&s.data())||{};
+  SYNC_KEYS.forEach(k=>{if(k in syncQ)return;if(k in d){const nv=JSON.stringify(d[k]);let cur=null;try{cur=localStorage.getItem(k)}catch(e){}if(cur!==nv){try{localStorage.setItem(k,nv)}catch(e){}SYNC_HOOKS[k]&&SYNC_HOOKS[k]()}}else if(first){const v=store.get(k,null);if(v!=null)syncQ[k]=v}});
+  if(first&&Object.keys(syncQ).length)syncFlush();syncState("Saved for both of you",true)},()=>syncState("Saved on this device only",false))}catch(e){}})();
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
@@ -860,6 +1066,7 @@ function renderPlan(){
  $("#planbar").style.width=(100*n/total)+"%";$("#plancount").textContent=`${n} of ${total} steps done`;
 }
 renderPlan();
+SYNC_HOOKS["plan-kalam"]=()=>{for(const k in done)delete done[k];Object.assign(done,store.get("plan-kalam",{}));renderPlan()};
 $("#plan").addEventListener("change",e=>{if(e.target.type==="checkbox"){done[e.target.id]=e.target.checked;store.set("plan-kalam",done);renderPlan()}});
 
 /* ---------- scripts ---------- */
@@ -1163,6 +1370,7 @@ function renderList(){
 }
 $("#t-search").oninput=renderList;
 buildDeck();
+SYNC_HOOKS.known=()=>{known.clear();store.get("known",[]).forEach(x=>known.add(x));buildDeck()};
 
 /* ---------- quiz ---------- */
 const Q=[
@@ -1565,16 +1773,390 @@ renderAns("med",$("#ans-m-med"));
 
 /* ---------- English Plan tab ---------- */
 $("#phrases").innerHTML=`<tr><th>Use it to…</th><th>Phrases</th></tr>`+PHRASES.map(p=>`<tr><td><b>${esc(p[0])}</b></td><td>${p.slice(1).map(esc).join(" · ")}</td></tr>`).join("");
-const epDone=store.get("eplan",{});
-function renderEP(){
- let n=0;
- $("#eplanweeks").innerHTML=EPLAN.map((w,i)=>{const id="ep"+i;if(epDone[id])n++;return `<label class="check ${epDone[id]?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${epDone[id]?"checked":""}><span><b>${esc(w[0])}: ${esc(w[1])}</b><br>Topics: ${esc(w[2])}<br><span class="muted">${esc(w[3])}</span></span></label>`}).join("");
- $("#epbar").style.width=(100*n/EPLAN.length)+"%";$("#epcount").textContent=`${n} of ${EPLAN.length} weeks done`;
-}
-renderEP();
-$("#eplanweeks").addEventListener("change",e=>{if(e.target.type==="checkbox"){epDone[e.target.id]=e.target.checked;store.set("eplan",epDone);renderEP()}});
+
 $("#prompts").innerHTML=PROMPTS.map((p,i)=>`<div class="ans-q"><div class="mk-top"><b>${esc(p[0])}</b><button class="btn ghost" data-copy="pr${i}">Copy</button></div><p id="pr${i}">${esc(p[1])}</p></div>`).join("");
 $("#prompts").addEventListener("click",async e=>{const b=e.target.closest("[data-copy]");if(!b)return;const el=$("#"+b.dataset.copy);try{await navigator.clipboard.writeText(el.textContent);b.textContent="Copied"}catch(err){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected: press Ctrl+C"}setTimeout(()=>b.textContent="Copy",2500)});
+const EPW=[
+{focus:"Daily life + present tense",goal:"Talk about your day, family and city for one minute without stopping.",
+ grammar:{title:"Present simple vs present continuous",rules:["Present simple = habits and facts: I wake up at 8. She works in a bank.","Present continuous = now or these days: I'm studying for a test these days.","Signal words: usually, always, every day → simple · now, at the moment, these days → continuous.","He / she / it + s: she works, he lives, it takes."],examples:["I usually have tea in the morning.","These days, I'm practicing English every evening.","My father works in Alexandria."]},
+ qs:["Describe your day from the morning until the end of the day.","Tell me about your family.","Describe your hometown.","What do you usually do on the weekend?","What do you like to do in your free time?"],
+ writing:"Describe your typical weekday from morning to night (about 120 words).",
+ convo:"your daily routine, your family and your city",
+ checkpoint:"Talk about your day for 1 minute without stopping, using the present simple correctly.",
+ days:[
+  {w:[["routine","روتين","My morning routine starts with a cup of tea."],["commute","مشوار الشغل اليومي","My commute takes about 20 minutes."],["schedule","جدول المواعيد","My schedule is busy on weekdays."]],i:["a piece of cake","very easy","سهلة جدًا / زي شرب المية","The first question was a piece of cake."],p:["wake up","stop sleeping","I wake up at seven every day."]},
+  {w:[["household chores","أعمال البيت","I help with the household chores in the afternoon."],["errand","مشوار أو مهمة صغيرة","I run a few errands on Saturday."],["relax","يسترخي","I relax by reading in the evening."]],i:["call it a day","stop working for today","كفاية كده النهارده","After six hours of study, I called it a day."],p:["get up","leave your bed","I get up as soon as my alarm rings."]},
+  {w:[["relatives","أقارب","We visit our relatives every Friday."],["siblings","إخوات","I have two siblings."],["close-knit","مترابطة","We are a close-knit family."]],i:["run in the family","many people in the family have it","وراثة في العيلة","Patience runs in my family."],p:["get along with","have a good relationship with","I get along well with my sister."]},
+  {w:[["neighborhood","الحي أو المنطقة","My neighborhood is quiet and friendly."],["crowded","زحمة","The streets are crowded in the evening."],["seaside","على البحر","Alexandria is a seaside city."]],i:["home sweet home","it's lovely to be home","مفيش زي البيت","After a long trip: home sweet home!"],p:["grow up","spend your childhood","I grew up in Alexandria."]},
+  {w:[["hobby","هواية","My favorite hobby is reading."],["spare time","وقت الفراغ","In my spare time, I watch series."],["enjoy","يستمتع","I really enjoy walking by the sea."]],i:["kill time","do something while you wait","أضيّع وقت","I read on my phone to kill time."],p:["hang out with","spend free time with","I hang out with my friends on weekends."]},
+  {w:[["usually","عادةً","I usually have breakfast at home."],["occasionally","أحيانًا قليلة","I occasionally go to the cinema."],["habit","عادة","Reading before bed is a good habit."]],i:["once in a blue moon","very rarely","مرة كل فين وفين","I eat fast food once in a blue moon."],p:["look after","take care of","I sometimes look after my grandmother."]},
+  {w:[["weekday","يوم شغل","On weekdays, I study in the morning."],["weekend","نهاية الأسبوع","On the weekend, I rest with my family."],["productive","منتج ومفيد","Today was a productive day."]],i:["every now and then","sometimes","من وقت للتاني","Every now and then, I call my old friends."],p:["catch up with","talk to someone after a long time","I caught up with my cousin last week."]}
+ ]},
+{focus:"Past tense: trips, events, challenges",goal:"Tell a short story about your past clearly, with correct past verbs.",
+ grammar:{title:"Past simple (regular and irregular verbs)",rules:["Finished time in the past: yesterday, last week, two years ago, in 2025.","Regular verbs add -ed. Three sounds: /t/ watched, worked · /d/ played, lived · /id/ visited, wanted.","Irregular verbs you need: go→went, have→had, see→saw, take→took, make→made, feel→felt, get→got, come→came.","Questions and negatives use did + base verb: Did you go? I didn't go."],examples:["Last summer, we went to Marsa Matrouh.","I visited my grandparents yesterday.","I didn't understand the question at first."]},
+ qs:["Describe the best trip you have ever taken.","What did you do last weekend?","Tell us about a hard situation you went through.","Describe a special celebration in your country.","Tell us about something that happened to you that you learned from."],
+ writing:"Describe the best day of your life or a trip you remember (about 120 words).",
+ convo:"a trip, a celebration and a challenge from your past",
+ checkpoint:"Tell a trip story in 1 minute using 6 past verbs, with correct -ed sounds.",
+ days:[
+  {w:[["memorable","لا يُنسى","It was a memorable trip."],["journey","رحلة","The journey took three hours."],["destination","وجهة","Our destination was Marsa Matrouh."]],i:["the trip of a lifetime","a once-in-a-life special trip","رحلة العمر","Visiting Aswan was the trip of a lifetime."],p:["set off","start a journey","We set off early in the morning."]},
+  {w:[["celebrate","يحتفل","We celebrated my graduation at home."],["gathering","لمّة","Eid is a big family gathering."],["tradition","عادة متوارثة","Eating kahk is an Eid tradition."]],i:["have a blast","have a lot of fun","انبسطنا جدًا","We had a blast at the wedding."],p:["dress up","wear nice clothes","We dressed up for Eid."]},
+  {w:[["challenge","تحدّي","Learning English is a challenge for me."],["overcome","يتغلب على","I overcame my fear step by step."],["pressure","ضغط","I worked under pressure before exams."]],i:["learn the hard way","learn from a bad experience","اتعلمت بالطريقة الصعبة","I learned the hard way to start studying early."],p:["give up","stop trying","I didn't give up after I failed."]},
+  {w:[["graduate","يتخرج","I graduated in 2025."],["achievement","إنجاز","My degree is my biggest achievement."],["proud","فخورة","My parents were proud of me."]],i:["over the moon","extremely happy","طايرة من الفرحة","I was over the moon when I passed."],p:["turn out","end in a certain way","The exam turned out easier than I expected."]},
+  {w:[["experience","تجربة","It was a great experience."],["unexpected","مش متوقع","We had an unexpected problem."],["realize","ياخد باله / يدرك","I realized that I needed more practice."]],i:["out of the blue","suddenly, with no warning","فجأة من غير مقدمات","My friend called me out of the blue."],p:["find out","discover information","I found out about the job online."]},
+  {w:[["recently","مؤخرًا","I recently passed an interpreting test."],["ago","من (مدة)","I graduated a year ago."],["afterwards","بعد كده","Afterwards, we went home."]],i:["back in the day","in the past","زمان","Back in the day, we didn't have smartphones."],p:["look back on","think about the past","When I look back on that year, I feel proud."]},
+  {w:[["childhood","طفولة","I had a happy childhood."],["remember","يفتكر","I remember my first day at school."],["nostalgic","حنين للماضي","Old songs make me nostalgic."]],i:["time flies","time passes very quickly","الوقت بيجري","Time flies when you're busy."],p:["go back","return","I want to go back to Aswan one day."]}
+ ]},
+{focus:"Opinions and linking words",goal:"Give a balanced opinion: both sides, then your view, joined with linking words.",
+ grammar:{title:"Opinion language and linking words",rules:["Opinion: In my opinion… · I believe that… · From my point of view…","Reason and result: because · so · that's why · as a result","Contrast: however · on the other hand · although · whereas","Balanced answer: good side → bad side → your opinion → close."],examples:["In my opinion, AI is useful because it saves time.","However, it can make mistakes.","Although social media connects people, it can waste a lot of time."]},
+ qs:["What do you think about artificial intelligence?","What is the effect of AI on families?","How do you use social media? Do you think it's good or bad?","How has technology changed the way people communicate?","Do you think online learning is as good as studying in a classroom?"],
+ writing:"Is social media good or bad for young people? Give both sides and your opinion (about 150 words).",
+ convo:"AI, social media and online learning: ask Claude to disagree with you so you practice defending your opinion",
+ checkpoint:"Give a balanced 1-minute opinion on AI with 'however' and 'on the other hand'.",
+ days:[
+  {w:[["artificial intelligence","الذكاء الاصطناعي","Artificial intelligence is changing many jobs."],["benefit","فايدة","One benefit of AI is speed."],["drawback","عيب","One drawback is that it can make mistakes."]],i:["a double-edged sword","something with good and bad sides","سلاح ذو حدين","Social media is a double-edged sword."],p:["rely on","depend on","Many students rely on AI too much."]},
+  {w:[["argue","يرى / يجادل","Some people argue that AI is dangerous."],["convenient","عملي ومريح","Online shopping is very convenient."],["addictive","بيسبب إدمان","Social media can be addictive."]],i:["on the other hand","used to give the other side","من ناحية تانية","On the other hand, it wastes time."],p:["keep up with","stay updated with","I use the internet to keep up with the news."]},
+  {w:[["privacy","الخصوصية","Privacy is a big concern online."],["concern","قلق أو مخاوف","My main concern is fake news."],["trustworthy","موثوق","Not all websites are trustworthy."]],i:["take it with a pinch of salt","don't believe it completely","ما تصدقيش كل حاجة","Take online news with a pinch of salt."],p:["point out","mention or show","I'd like to point out one problem."]},
+  {w:[["efficient","فعّال","Technology makes work more efficient."],["replace","يستبدل","AI won't replace human interpreters completely."],["skill","مهارة","Communication is an important skill."]],i:["the bottom line","the most important point","الخلاصة","The bottom line is that we must use AI wisely."],p:["come up with","think of an idea","We need to come up with new solutions."]},
+  {w:[["flexible","مرن","Online learning is flexible."],["interaction","تفاعل","Classrooms offer more interaction."],["distraction","تشتيت","Phones are a big distraction."]],i:["the best of both worlds","the advantages of two things together","أحسن ما في الاتنين","Mixing online and classroom learning gives you the best of both worlds."],p:["focus on","give your attention to","I need to focus on speaking."]},
+  {w:[["obviously","طبعًا / واضح","Obviously, technology has changed our lives."],["overall","بشكل عام","Overall, I think it's positive."],["whereas","في حين أن","I prefer reading, whereas my sister prefers videos."]],i:["it goes without saying","it's obvious","من غير ما نقول","It goes without saying that health comes first."],p:["sum up","give a short summary","To sum up, AI is useful but risky."]},
+  {w:[["impact","تأثير","AI has a big impact on education."],["responsible","مسؤول","We must be responsible users."],["balance","توازن","We need a balance between online and offline life."]],i:["food for thought","something worth thinking about","حاجة تستاهل التفكير","That idea gave me food for thought."],p:["think over","consider carefully","I'll think it over and decide."]}
+ ]},
+{focus:"Future plans and goals",goal:"Talk about your plans and goals with the right future forms. First full mock test this week.",
+ grammar:{title:"Talking about the future",rules:["going to = a plan you already decided: I'm going to apply again in January.","will = a prediction or a decision now: I think AI will change many jobs. / I'll call you later.","present continuous = an arrangement with a time: I'm meeting my tutor on Monday.","Goals: I plan to… · I hope to… · I'd like to… · My goal is to…"],examples:["I'm going to take the English test in January.","I think I will pass this time.","In five years, I'd like to be a certified interpreter."]},
+ qs:["What are your goals for the next five years?","Where do you see yourself in 10 years?","Describe your dream job.","What is a skill you would like to learn, and why?","How will transportation change in the next 20 years?"],
+ writing:"Where do you see yourself in five years? (about 150 words)",
+ convo:"your goals, your dream job and the future of technology",
+ checkpoint:"Full 22-question mock test done. Write down your 3 weakest answers.",
+ days:[
+  {w:[["goal","هدف","My goal is to become a certified interpreter."],["ambition","طموح","My ambition is to work with international clients."],["career","مسار مهني","I want a career in interpreting."]],i:["reach for the stars","aim very high","احلمي بالعالي","My parents always told me to reach for the stars."],p:["aim for","try to achieve","I'm aiming for C1 level."]},
+  {w:[["certified","معتمد","I plan to become a certified medical interpreter."],["improve","يحسّن","I want to improve my speaking."],["progress","تقدّم","I can see my progress every week."]],i:["step by step","gradually","خطوة بخطوة","I'm improving step by step."],p:["work on","try to improve","I'm working on my pronunciation."]},
+  {w:[["opportunity","فرصة","This job is a great opportunity."],["apply","يقدّم على","I'm going to apply again in January."],["position","وظيفة","I'm interested in this position."]],i:["a golden opportunity","a very good chance","فرصة ذهبية","This interview is a golden opportunity."],p:["go for","try to get something","I'm going to go for it."]},
+  {w:[["determined","مُصرّة","I'm determined to pass the test."],["motivated","عندي حافز","I feel very motivated."],["patient","صبورة","Learning a language needs you to be patient."]],i:["where there's a will, there's a way","if you really want it, you'll find a way","اللي عايز حاجة بيلاقي طريقة","I'll pass. Where there's a will, there's a way."],p:["stick to","keep following a plan","I stick to my daily plan."]},
+  {w:[["in the long term","على المدى البعيد","In the long term, I want to work in legal interpreting."],["in the short term","على المدى القريب","In the short term, I want to pass the English test."],["eventually","في النهاية","Eventually, I'd like to train new interpreters."]],i:["the sky's the limit","there's no limit","مفيش حدود","With hard work, the sky's the limit."],p:["look forward to","feel excited about something coming","I'm looking forward to the training."]},
+  {w:[["confident","واثقة","I want to feel confident in English."],["fluent","طليقة","My goal is to be fluent."],["public speaking","التحدث أمام الناس","Public speaking is a skill I want to learn."]],i:["practice makes perfect","doing something many times makes you good at it","التكرار يعلّم الشطار","Practice makes perfect, so I speak every day."],p:["take up","start a new activity","I want to take up swimming."]},
+  {w:[["plan","خطة","My plan is to practice one hour a day."],["deadline","موعد نهائي","My deadline is mid-January."],["achieve","يحقق","I will achieve my goal."]],i:["get the ball rolling","start something","نبدأ","Let's get the ball rolling with a mock test."],p:["follow through","finish what you planned","I always follow through on my plans."]}
+ ]},
+{focus:"Present perfect: experience and changes",goal:"Talk about your experience and how your life has changed.",
+ grammar:{title:"Present perfect vs past simple",rules:["Present perfect = have / has + past participle: I have studied, she has worked.","Use it for experience and for something that started in the past and continues: I've studied English since 2015.","since + a point in time (since 2021, since October) · for + a period (for three years).","ever / never / already / yet: Have you ever…? I've never… I've already… I haven't… yet.","A finished time (yesterday, in 2025) needs the past simple: I graduated in 2025."],examples:["I have passed a medical interpretation assessment.","I've been practicing English every day since October.","I graduated in 2025, and since then I've been preparing for interpreting."]},
+ qs:["What did you study, and why did you choose it?","How has your life changed in the last three years?","Tell me about your interpreting or translation experience.","What is the best advice you have ever received?","Why is it important to learn English?"],
+ writing:"How has your life changed in the last three years? (about 150 words)",
+ convo:"your studies, your experience, and what you have learned so far",
+ checkpoint:"Use the present perfect with since or for 5 times correctly in one answer.",
+ days:[
+  {w:[["degree","شهادة جامعية","I have a degree in law."],["subject","مادة","Criminal law was my favorite subject."],["lecture","محاضرة","I've attended many lectures in English."]],i:["hit the books","study hard","أذاكر جامد","I have to hit the books tonight."],p:["drop out","leave school before finishing","He dropped out of university."]},
+  {w:[["experience","خبرة","I've gained experience through practice."],["volunteer","يتطوع","I've volunteered to help people communicate."],["skilled","ماهرة","She's skilled at languages."]],i:["learn the ropes","learn how to do a job","أتعلم أصول الشغل","Training helps new interpreters learn the ropes."],p:["take on","accept a new responsibility","I've taken on new challenges this year."]},
+  {w:[["change","يتغير","My life has changed a lot."],["mature","ناضجة","I've become more mature."],["perspective","وجهة نظر","Studying law changed my perspective."]],i:["turn over a new leaf","start doing things better","أبدأ صفحة جديدة","I've turned over a new leaf and I study every day."],p:["settle down","become calm and stable","Things have settled down at home."]},
+  {w:[["since","منذ (نقطة زمن)","I've studied English since 2015."],["so far","لحد دلوقتي","So far, I've finished four weeks of my plan."],["lately","الفترة اللي فاتت","I've been very busy lately."]],i:["up to now","until this moment","لحد دلوقتي","Up to now, everything is going well."],p:["keep on","continue","I've kept on practicing every day."]},
+  {w:[["accomplish","يُنجز","I've accomplished a lot this year."],["effort","مجهود","It took a lot of effort."],["reward","مكافأة / نتيجة حلوة","Passing the test was my reward."]],i:["hard work pays off","effort brings good results","التعب بيجيب نتيجة","I believe hard work pays off."],p:["pull through","get through a hard time","We pulled through a difficult year."]},
+  {w:[["ever","في حياتك","Have you ever been to Cairo?"],["never","عمري ما","I've never been abroad."],["already","خلاص / بالفعل","I've already finished my homework."]],i:["been there, done that","I've done this before","جربتها قبل كده","Interview stress? Been there, done that."],p:["try out","test something new","I've tried out a new learning app."]},
+  {w:[["improvement","تحسّن","I've noticed a big improvement in my speaking."],["consistent","منتظمة","Being consistent is the key."],["milestone","محطة مهمة","Finishing week 5 is a milestone."]],i:["come a long way","make great progress","اتقدمتي كتير","I've come a long way since October."],p:["build up","increase gradually","I've built up my vocabulary."]}
+ ]},
+{focus:"Comparing and preferring",goal:"Compare two things and say what you prefer, with reasons.",
+ grammar:{title:"Comparatives, superlatives and preferences",rules:["Short adjectives: big → bigger → the biggest · cheap → cheaper → the cheapest.","Long adjectives: comfortable → more comfortable → the most comfortable.","Irregular: good → better → the best · bad → worse → the worst.","as … as: Alexandria is as beautiful as Cairo.","Preferences: I prefer tea to coffee · I'd rather work from home · I would prefer to study in the morning."],examples:["Working from home is more comfortable than working in an office.","Alexandria is less crowded than Cairo.","I'd rather study in the morning because my mind is fresh."]},
+ qs:["Should people work from home or from an office? What do you think?","Do you prefer working alone or in a team? Why?","What do you like and dislike about your city?","What is your favorite food, and why?","Is it better to live in a big city or a small town?"],
+ writing:"Is it better to live in a big city or a small town? (about 150 words)",
+ convo:"choices: city or village, home or office, team or alone",
+ checkpoint:"Compare two things for 1 minute using 4 comparatives and 'I'd rather'.",
+ days:[
+  {w:[["advantage","ميزة","One advantage of working from home is saving time."],["disadvantage","عيب","One disadvantage is feeling lonely."],["prefer","يفضّل","I prefer working in a team."]],i:["six of one, half a dozen of the other","both options are almost the same","زي بعض","City or village? It's six of one, half a dozen of the other."],p:["opt for","choose","I'd opt for working from home."]},
+  {w:[["comfortable","مريح","Home is more comfortable than the office."],["noisy","دوشة","Big cities are noisier than villages."],["peaceful","هادي","Villages are more peaceful."]],i:["the grass is always greener on the other side","other options always look better","عيننا دايمًا على اللي عند غيرنا","People think city life is better, but the grass is always greener on the other side."],p:["put up with","tolerate something bad","I can't put up with traffic every day."]},
+  {w:[["cooperate","يتعاون","Team members need to cooperate."],["independent","مستقلة","I can work independently."],["responsibility","مسؤولية","Each person has a responsibility."]],i:["two heads are better than one","two people solve problems better","اتنين أحسن من واحد","Let's discuss it. Two heads are better than one."],p:["team up with","work together with","I teamed up with a classmate for the project."]},
+  {w:[["affordable","أسعاره معقولة","Living in a small town is more affordable."],["expensive","غالي","Cairo is more expensive than Alexandria."],["worth it","يستاهل","The trip was expensive, but it was worth it."]],i:["cost an arm and a leg","be very expensive","غالي جدًا","That phone costs an arm and a leg."],p:["save up","keep money for later","I'm saving up for a new laptop."]},
+  {w:[["similar","شبه","My sister and I are similar."],["different from","مختلف عن","Egyptian Arabic is different from Moroccan Arabic."],["compared to","مقارنةً بـ","Compared to Cairo, Alexandria is calm."]],i:["like two peas in a pod","very similar","نسخة من بعض","My cousin and I are like two peas in a pod."],p:["take after","look or act like a parent","I take after my mother."]},
+  {w:[["the best","الأفضل","Alexandria is the best city in summer."],["the most","الأكثر","Spring is the most beautiful season."],["the worst","الأسوأ","Traffic is the worst thing about my city."]],i:["second to none","the best, better than all others","ملهوش مثيل","My mom's cooking is second to none."],p:["stand out","be easy to notice because it's better","Her answer really stood out."]},
+  {w:[["rather","أفضّل (I'd rather)","I'd rather study in the morning."],["choice","اختيار","It's a personal choice."],["depend on","يعتمد على","It depends on the situation."]],i:["not my cup of tea","not something I like","مش من ذوقي","Horror movies are not my cup of tea."],p:["weigh up","compare the good and bad sides","I weighed up the pros and cons."]}
+ ]},
+{focus:"\"If\" sentences: real and imaginary",goal:"Answer imaginary questions confidently with would.",
+ grammar:{title:"First and second conditional",rules:["First conditional (real, possible): If + present, will + verb. If I practice every day, I will pass.","Second conditional (imaginary): If + past, would + verb. If I won a lot of money, I would travel.","Use 'were' for all people in imaginary sentences: If I were you, I would take the job.","Useful starters: I would probably… · The first thing I'd do is… · I don't think I would…"],examples:["If it rains tomorrow, I'll stay at home.","If I could live anywhere, I would live near the sea.","If I were the mayor, I would fix the traffic."]},
+ qs:["What would you do if you won a lot of money?","If you could live in any country, where would you live and why?","If you could change one thing about your city, what would it be?","If you had a free day tomorrow, how would you spend it?","What would you do if a colleague made a serious mistake at work?"],
+ writing:"What would you do if you won one million dollars? (about 150 words)",
+ convo:"imaginary questions: 'What would you do if…?' Ask Claude to give you 10 of them",
+ checkpoint:"Answer an imaginary question with at least 3 'would' sentences.",
+ days:[
+  {w:[["unless","إلا إذا","I won't go unless you come with me."],["in case","تحسبًا لـ","Take an umbrella in case it rains."],["condition","شرط","I'll accept on one condition."]],i:["cross that bridge when we come to it","deal with a problem later, when it happens","لما نوصلها نشوف","We'll cross that bridge when we come to it."],p:["put off","delay","Don't put off your practice."]},
+  {w:[["imagine","يتخيل","Imagine you could live anywhere."],["dream","حلم / يحلم","I dream of traveling the world."],["wish","يتمنى","I wish I could speak five languages."]],i:["in an ideal world","if everything were perfect","في عالم مثالي","In an ideal world, everyone would speak two languages."],p:["dream up","invent an idea","She dreamed up a great plan."]},
+  {w:[["invest","يستثمر","I would invest in my education."],["donate","يتبرع","I would donate some money to charity."],["afford","يقدر يدفع","I can't afford a car yet."]],i:["money doesn't grow on trees","money is limited, so spend carefully","الفلوس مش بتيجي بسهولة","My dad always says money doesn't grow on trees."],p:["pay back","return money you borrowed","I paid my friend back yesterday."]},
+  {w:[["advice","نصيحة","Can you give me some advice?"],["suggest","يقترح","I suggest practicing every day."],["recommend","ينصح بـ","I recommend this app."]],i:["if I were in your shoes","if I were in your situation","لو مكانك","If I were in your shoes, I'd take the job."],p:["think through","consider all the results","Think it through before you decide."]},
+  {w:[["risk","مخاطرة","Moving abroad is a big risk."],["consequence","نتيجة / عاقبة","Every decision has consequences."],["possible","ممكن","It's possible to pass if I practice."]],i:["better safe than sorry","be careful now to avoid problems later","الوقاية خير من العلاج","I'll test my internet again. Better safe than sorry."],p:["back out","decide not to do something you agreed to","Don't back out of the interview."]},
+  {w:[["decide","يقرر","I decided to apply again."],["option","خيار","I have two options."],["regret","يندم","I don't regret my choice."]],i:["on the fence","unable to decide","محتارة","I'm on the fence about this offer."],p:["make up your mind","decide","I made up my mind to keep practicing."]},
+  {w:[["hope","يأمل","I hope I'll pass next time."],["likely","مرجّح","It's likely to rain today."],["probably","غالبًا","I'll probably take the test in January."]],i:["fingers crossed","hoping for good luck","إن شاء الله خير","Fingers crossed for my interview!"],p:["count on","depend on someone","You can count on me."]}
+ ]},
+{focus:"Longer answers and stronger words",goal:"Speak for 90 seconds with details, two examples, and no 'very'.",
+ grammar:{title:"Adding detail and upgrading words",rules:["Add a second example: For instance… / Another example is…","Add who / which / where: My aunt, who is a teacher, inspires me.","Upgrade 'very' words: very good → excellent · very bad → terrible · very big → huge · very happy → delighted · very tired → exhausted · very important → essential.","Replace 'nice': pleasant, lovely, friendly, beautiful (choose the exact meaning)."],examples:["The trip was amazing, and the food was delicious.","My mother, who works very hard, is my role model.","I was exhausted after the exam, but I was delighted with the result."]},
+ qs:["Describe a person who inspires you.","Describe a book, a movie, or a series that you enjoyed.","In your opinion, what makes a good doctor?","How do you stay healthy?","What are your strengths and weaknesses?"],
+ writing:"Describe a person who inspires you, with details and examples (about 180 words).",
+ convo:"describing people, places and experiences in detail. Ask Claude to say 'tell me more' after each answer",
+ checkpoint:"Speak for 90 seconds on any topic with 2 examples and without the word 'very'.",
+ days:[
+  {w:[["excellent","ممتاز","The service was excellent."],["terrible","فظيع","The traffic was terrible."],["huge","ضخم","It was a huge success."]],i:["over the top","too much, more than needed","أوفر","The decorations were a bit over the top."],p:["go on about","talk too much about","He went on about his trip for an hour."]},
+  {w:[["delighted","مبسوطة جدًا","I was delighted with the result."],["exhausted","مرهقة جدًا","I was exhausted after the long shift."],["essential","أساسي","Sleep is essential."]],i:["on cloud nine","extremely happy","في السما من الفرحة","She was on cloud nine after the interview."],p:["wear out","make someone very tired","Long calls wear me out."]},
+  {w:[["pleasant","لطيف","We had a pleasant evening."],["fascinating","ممتع جدًا ومثير","The documentary was fascinating."],["disappointing","مخيب للأمل","The movie was disappointing."]],i:["a breath of fresh air","something new and refreshing","نسمة هوا","Her positive attitude is a breath of fresh air."],p:["cheer up","become happier","Music always cheers me up."]},
+  {w:[["generous","كريم","My grandfather is very generous."],["reliable","يُعتمد عليه","I'm a reliable person."],["hard-working","مجتهد","My mother is hard-working."]],i:["a heart of gold","a very kind nature","قلبه أبيض","My aunt has a heart of gold."],p:["look up to","admire and respect","I look up to my mother."]},
+  {w:[["for instance","على سبيل المثال","For instance, I practice every morning."],["in particular","بالتحديد","I love Alexandria, in particular the Corniche."],["what's more","وكمان","What's more, it's free."]],i:["to make a long story short","to say it briefly","من الآخر","To make a long story short, we missed the train."],p:["spell out","explain something clearly","Let me spell out my plan."]},
+  {w:[["plenty of","كتير من","There are plenty of free resources online."],["a wide range of","مجموعة كبيرة من","The city offers a wide range of activities."],["countless","لا يُعد","I've watched countless English videos."]],i:["the tip of the iceberg","a small part of a much bigger thing","جزء صغير من الحكاية","That mistake is just the tip of the iceberg."],p:["add up","make sense","His story doesn't add up."]},
+  {w:[["describe","يوصف","Let me describe my city."],["vivid","حيّ وواضح","I have a vivid memory of that day."],["remarkable","مميز وملفت","It was a remarkable experience."]],i:["paint a picture","describe something clearly","أرسم صورة","Let me paint a picture of my hometown."],p:["bring up","mention a topic","She brought up an interesting point."]}
+ ]},
+{focus:"Fluency week: keep talking",goal:"Answer random questions with no notes and fewer long pauses.",
+ grammar:{title:"Tools for fluent speaking",rules:["Time-buyers: That's an interesting question… · Let me think… · Well, to be honest…","Forgot a word? Describe it: It's a kind of… · It's something you use to… · It's like a…","Fix a mistake and keep going: Sorry, I mean…","Think in chunks, not single words: 'in my opinion', 'on the other hand', 'for example'."],examples:["That's a good question. Well, to be honest, I've never thought about it.","It's something you use to measure blood pressure.","I go… sorry, I went there last year."]},
+ qs:["Any 5 random questions: Mock Test → English speaking test","Describe something you bought recently.","Talk about a skill you are proud of.","Describe a place where you feel relaxed.","Talk about a time you helped someone."],
+ writing:"Speed writing: write for 5 minutes without stopping about anything. Don't correct, just keep going.",
+ convo:"anything at all: ask Claude for 'rapid-fire' questions and answer quickly",
+ checkpoint:"Answer 5 random questions with fewer than 3 long pauses each.",
+ days:[
+  {w:[["actually","في الحقيقة","Actually, I've never thought about that."],["basically","ببساطة","Basically, I love helping people."],["honestly","بصراحة","Honestly, it was hard at first."]],i:["off the top of my head","without thinking for long","على السريع كده","Off the top of my head, I can think of three reasons."],p:["come to mind","appear in your thoughts","The first thing that comes to mind is my family."]},
+  {w:[["kind of","نوعًا ما","It's kind of difficult."],["sort of","تقريبًا / نوعًا ما","I sort of agree."],["something like","حاجة زي","It's something like a small notebook."]],i:["on the tip of my tongue","almost remembered, but not quite","على طرف لساني","The word is on the tip of my tongue."],p:["figure out","understand or solve","I'll figure it out."]},
+  {w:[["explain","يشرح","Let me explain what I mean."],["mean","يقصد","What I mean is that practice matters."],["clarify","يوضّح","Could you clarify the question, please?"]],i:["in other words","said in a different way","بمعنى تاني","In other words, practice is everything."],p:["put into words","express a feeling or idea","It's hard to put it into words."]},
+  {w:[["spontaneous","تلقائي","Spontaneous speaking is my goal."],["hesitate","يتردد","Don't hesitate. Keep talking."],["smoothly","بسلاسة","I want to speak smoothly."]],i:["go with the flow","relax and accept what happens","ماشية مع التيار","In conversations, just go with the flow."],p:["carry on","continue","If you make a mistake, carry on."]},
+  {w:[["nervous","متوترة","I get nervous before interviews."],["calm","هادية","I stay calm under pressure."],["breathe","يتنفس","Breathe slowly before you answer."]],i:["butterflies in my stomach","a nervous feeling","متوترة وقلبي بيدق","I had butterflies in my stomach before the test."],p:["calm down","become relaxed","Take a deep breath and calm down."]},
+  {w:[["topic","موضوع","That's an interesting topic."],["point","نقطة","My first point is about time."],["example","مثال","Let me give you an example."]],i:["get to the point","say the important thing directly","أدخل في الموضوع","Let me get to the point."],p:["move on to","change to the next thing","Now let me move on to my second point."]},
+  {w:[["natural","طبيعي","I want to sound natural."],["chat","دردشة","I had a long chat with my cousin in English."],["fluency","الطلاقة","My fluency is getting better."]],i:["break the ice","start a conversation and make people relaxed","أكسر الجليد","A smile helps break the ice."],p:["open up","talk more freely about feelings","She opened up about her fears."]}
+ ]},
+{focus:"Accuracy week: fix your top mistakes",goal:"Make your 5 most common mistakes disappear from your recordings.",
+ grammar:{title:"The mistakes Arabic speakers make most",rules:["he / she / it + s: she works (not she work).","Articles: the doctor, a fever, an apple. Use 'the' for something specific.","Prepositions after words: depend on · interested in · good at · married to · responsible for.","No plural for: information, advice, equipment, news, furniture.","No extra 'about' or 'am': We discussed the problem (not discussed about) · I agree (not I am agree).","explain it to me (not explain me) · I'm 25 years old (not I have 25 years)."],examples:["She works as a nurse.","It depends on the situation.","Thank you for the information. Can you explain it to me?"]},
+ qs:["Re-answer your 5 weakest questions from your mistake log","Tell me about yourself.","What are your strengths and weaknesses?","Describe your typical day.","Why do you want this job?"],
+ writing:"Copy 5 wrong sentences from your mistake log, write the correct version of each, then write a short paragraph that uses all 5 correctly.",
+ convo:"ask Claude to stop you every time you make one of your top 5 mistakes",
+ checkpoint:"Your top 5 mistakes appear zero times in today's recording.",
+ days:[
+  {w:[["accurate","دقيقة","Interpreters must be accurate."],["mistake","غلطة","Everyone makes mistakes."],["correct","يصحح","I correct my mistakes every Sunday."]],i:["learn from your mistakes","get better because of your errors","اتعلم من غلطك","The key is to learn from your mistakes."],p:["point out","show someone a mistake","My tutor pointed out my errors."]},
+  {w:[["interested in","مهتمة بـ","I'm interested in medicine."],["good at","شاطرة في","I'm good at listening."],["responsible for","مسؤولة عن","I'm responsible for my own progress."]],i:["practice what you preach","do what you tell others to do","اعمل باللي بتقوله","Good teachers practice what they preach."],p:["depend on","rely on, or be decided by","It depends on the situation."]},
+  {w:[["information","معلومات (من غير s)","Thank you for the information."],["advice","نصيحة (من غير s)","She gave me some good advice."],["equipment","أجهزة (من غير s)","My equipment is ready."]],i:["a word of advice","a small piece of advice","نصيحة صغيرة","A word of advice: sleep well before the test."],p:["fill in","complete a form","Please fill in this form."]},
+  {w:[["pronounce","ينطق","How do you pronounce this word?"],["syllable","مقطع صوتي","The stress is on the first syllable."],["sound","صوت","The p sound is different from the b sound."]],i:["mind your p's and q's","be polite and careful with your words","خلي بالك من كلامك","In interviews, mind your p's and q's."],p:["sound out","say a word slowly to pronounce it","Sound out difficult words."]},
+  {w:[["explain to","يشرح لـ","Can you explain it to me?"],["discuss","يناقش (من غير about)","We discussed the problem."],["agree","يوافق (I agree)","I agree with you."]],i:["see eye to eye","agree completely","متفقين","We don't always see eye to eye."],p:["go over","review carefully","Let's go over the answers."]},
+  {w:[["article","أداة (a, an, the)","Don't forget the article 'the'."],["tense","زمن الفعل","Choose the right tense."],["review","يراجع","I review my notes every day."]],i:["dot the i's and cross the t's","check every small detail","أدقق في كل التفاصيل","Before you submit, dot the i's and cross the t's."],p:["double-check","check again","I always double-check numbers."]},
+  {w:[["careful","حريصة","Be careful with numbers."],["precise","دقيق جدًا","Legal language must be precise."],["habit","عادة","Correcting mistakes is a good habit."]],i:["nobody's perfect","everyone makes mistakes","محدش كامل","Don't worry, nobody's perfect."],p:["get rid of","remove","I want to get rid of my bad habits."]}
+ ]},
+{focus:"Exam simulation",goal:"Two full mock tests on camera, behaving exactly like test day.",
+ grammar:{title:"Test-day behavior",rules:["Look at the camera, not at your own picture. Smile at the start of each answer.","Use the 4 steps: answer → reason → example → close. Always finish with a closing line.","Aim for about 1 minute. Don't stop at 20 seconds; don't talk past 2 minutes.","Didn't understand? In the recorded test you can't ask, so answer the part you understood."],examples:["So overall, that's why I think AI is a useful tool.","To sum up, my family means everything to me.","That's why I'm confident I can do this job well."]},
+ qs:["Tell me about yourself.","What are your strengths and weaknesses?","Why do you want to be a medical interpreter?","How do you handle stress?","What do you know about our company?"],
+ writing:"Write your 'Tell me about yourself' in about 90 words. Memorize the ideas, not the words.",
+ convo:"a full job interview: ask Claude to be a strict interviewer",
+ checkpoint:"Two full mocks done on camera, and every answer has a closing line.",
+ days:[
+  {w:[["candidate","متقدّمة للوظيفة","I'm a strong candidate for this job."],["qualified","مؤهلة","I'm qualified for this position."],["requirement","شرط","I meet all the requirements."]],i:["put your best foot forward","try to make a good impression","وَرّيهم أحسن ما عندك","In the interview, put your best foot forward."],p:["fill in for","do someone's job for a short time","I can fill in for a colleague."]},
+  {w:[["strength","نقطة قوة","My biggest strength is accuracy."],["weakness","نقطة ضعف","My weakness is that I sometimes speak slowly."],["improve on","يحسّن","I'm improving on my weakness every day."]],i:["think on your feet","think quickly while you're talking","تفكري بسرعة","Interpreters must think on their feet."],p:["deal with","handle","I deal with stress by planning."]},
+  {w:[["available","متاحة","I'm available full-time."],["flexible","مرنة","My schedule is flexible."],["committed","ملتزمة","I'm committed to this job."]],i:["go the extra mile","do more than expected","تعملي أكتر من المطلوب","I always go the extra mile."],p:["show up","arrive","I always show up on time."]},
+  {w:[["professional","محترفة","I always behave professionally."],["confidential","سري","Patient information is confidential."],["neutral","محايدة","Interpreters stay neutral."]],i:["keep it under wraps","keep something secret","خليه سر","We keep patient details under wraps."],p:["stick to","follow (rules)","I stick to the code of ethics."]},
+  {w:[["impression","انطباع","I want to make a good impression."],["eye contact","التواصل بالعين","Keep eye contact with the camera."],["posture","طريقة القعدة","Good posture shows confidence."]],i:["first impressions count","the first meeting matters a lot","الانطباع الأول بيدوم","Dress well. First impressions count."],p:["sit up","sit with a straight back","Sit up straight during the interview."]},
+  {w:[["prepared","مستعدة","I'm well prepared."],["relaxed","مرتاحة","I feel relaxed and ready."],["focused","مركّزة","I'm focused on my goal."]],i:["in the bag","almost certainly yours","مضمونة","With this practice, the test is in the bag."],p:["run through","practice or check quickly","I'll run through my answers once more."]},
+  {w:[["succeed","ينجح","I will succeed this time."],["perform","يؤدي","I performed well in the mock test."],["result","نتيجة","I'm happy with my results."]],i:["give it your best shot","try as hard as you can","اعملي أحسن ما عندك","Whatever happens, give it your best shot."],p:["pull off","succeed in something difficult","I know I can pull it off."]}
+ ]},
+{focus:"Final polish and the retake",goal:"Sound natural and calm. Send the email to Nada and book the retake.",
+ grammar:{title:"Sounding natural",rules:["Link words together: 'I_am' → 'I'm', 'going_to' → said smoothly (but write 'going to').","Stress the important words: I REALLY ENJOY my JOB.","Let your voice go down at the end of a statement and up for yes/no questions.","Smile while you speak. People can hear it in your voice."],examples:["I'm really looking forward to it.","What I enjoy most is helping people.","So overall, I'm ready for this challenge."]},
+ qs:["Any 5 random questions: Mock Test → English speaking test","Tell me about yourself.","What did you do to improve your English?","What are your plans for the next year?","Why should we choose you?"],
+ writing:"Write your email to Nada asking to retake the English test (use the one in the Multilingual tab as a model).",
+ convo:"a relaxed conversation about everything you've learned in 12 weeks",
+ checkpoint:"Email to Nada sent. You're ready.",
+ days:[
+  {w:[["polish","يلمّع ويحسّن","I'm polishing my answers."],["rhythm","إيقاع","English has its own rhythm."],["tone","نبرة","Keep a friendly tone."]],i:["the finishing touches","the last small improvements","اللمسات الأخيرة","I'm putting the finishing touches on my answers."],p:["brush up on","refresh a skill","I'm brushing up on my grammar."]},
+  {w:[["request","يطلب","I'd like to request a retake."],["retake","يعيد الامتحان","I'm ready to retake the test."],["appreciate","يقدّر","I appreciate your time."]],i:["second time lucky","you succeed on the second try","المرة التانية أحسن","Second time lucky!"],p:["follow up","contact someone again about something","I'll follow up with HR next week."]},
+  {w:[["grateful","ممتنة","I'm grateful for this opportunity."],["journey","رحلة (مجازًا)","This has been a long journey."],["growth","تطور","I'm proud of my growth."]],i:["a blessing in disguise","something bad that turned out good","ضارة نافعة","Failing the first test was a blessing in disguise."],p:["look back on","think about the past","I look back on these weeks with pride."]},
+  {w:[["capable","قادرة","I'm capable of doing this job."],["fluently","بطلاقة","I can now speak more fluently."],["clearly","بوضوح","I speak clearly and calmly."]],i:["in good shape","well prepared, in a good state","في حالة كويسة","My English is in good shape."],p:["live up to","be as good as expected","I want to live up to their expectations."]},
+  {w:[["rest","راحة","Rest is important before a test."],["refresh","ينعش","A walk refreshes my mind."],["energy","طاقة","I need energy for the test."]],i:["recharge your batteries","rest to get your energy back","تشحني طاقتك","Take a day off to recharge your batteries."],p:["wind down","relax after being busy","I wind down with tea before bed."]},
+  {w:[["ready","جاهزة","I'm ready."],["steady","ثابتة","I keep a steady pace when I speak."],["positive","إيجابية","I'm feeling positive."]],i:["keep your chin up","stay positive","خلي معنوياتك عالية","Keep your chin up. You've got this."],p:["go through with","do something you planned, even if it's hard","I'll go through with my plan."]},
+  {w:[["celebrate","يحتفل","I'll celebrate after the test."],["proud","فخورة","I'm proud of myself."],["future","المستقبل","My future looks bright."]],i:["you've got this","you can do it","تقدري","You've got this, Safa!"],p:["move forward","make progress","Now I'm ready to move forward."]}
+ ]}
+];
+
+const EP_VIDEOS=[
+ [["Present Simple and Present Continuous - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=xFsYrTIndhI"],["Practise Speaking With Me | Daily Routines","mmmEnglish","https://www.youtube.com/watch?v=mY1ZBTmKqCc"],["THINK and SPEAK in English: your daily routine","Speak English With Vanessa","https://www.youtube.com/watch?v=nnDVoc5GwSc"],["Present Simple and Present Continuous Tenses - 5 Levels of Difficulty","Oxford Online English","https://www.youtube.com/watch?v=7dvV6oPbRxE"]],
+ [["The past simple tense - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=PgsG98vByiw"],["How to Pronounce -ed verb endings","Rachel's English","https://www.youtube.com/watch?v=A7hi-ipU2n0"],["6 Minute Vocabulary: How to use irregular verbs","BBC Learning English","https://www.youtube.com/watch?v=886JeoBoQ7g"],["3 ways to pronounce 'ed' - English In A Minute","BBC Learning English","https://www.youtube.com/watch?v=qNAfpbnIQkc"]],
+ [["How to Express Your Opinion in English","Learn English with Bob the Canadian","https://www.youtube.com/watch?v=LmDOQbwwlhw"],["Linking words of contrast: BBC English Class","BBC Learning English","https://www.youtube.com/watch?v=PccESvY9H58"],["The Best Professional Connectors to Explain Your Opinions in English","Speak Confident English","https://www.youtube.com/watch?v=XlmKqkZkfqI"],["Phrases for expressing an opinion","British Council LearnEnglish Teens","https://www.youtube.com/watch?v=I5l7e6oW-GM"]],
+ [["Talking about the future - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=jcAX1RtKq3U"],["How to Talk About Your Goals and Dreams in English","Learn English with Bob the Canadian","https://www.youtube.com/watch?v=JS9KpbF_804"],["Will vs Be Going To vs Present Continuous","To Fluency","https://www.youtube.com/watch?v=UISiuiPd_FY"],["Future tenses: present continuous, 'be going to', 'will'","BBC Learning English","https://www.youtube.com/watch?v=De_54szvmFM"]],
+ [["Present perfect and past simple - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=jwmKjgwlMk8"],["Present perfect with 'for' and 'since' - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=sSZcAh42qtI"],["Present perfect with 'ever' and 'never' - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=o-GWYDA4IQY"]],
+ [["Comparatives and superlatives - 6 Minute Grammar","BBC Learning English","https://www.youtube.com/watch?v=FAhpT7BH7GE"],["'prefer', 'would prefer', or 'would rather'?","BBC Learning English","https://www.youtube.com/watch?v=XlBfQXcGg9w"],["Comparative & Superlative Adjectives","English with Lucy","https://www.youtube.com/watch?v=oGr7l3q7SMI"],["Would Rather v Prefer? What's the difference?","English with Lucy","https://www.youtube.com/watch?v=p-sjnt8NvkM"]],
+ [["The first conditional - Conditionals with Georgie","BBC Learning English","https://www.youtube.com/watch?v=kpDaqFQ1YCM"],["The second conditional - Conditionals with Georgie","BBC Learning English","https://www.youtube.com/watch?v=0bHeJbPkAHA"],["First or Second Conditional? English Grammar Practice","mmmEnglish","https://www.youtube.com/watch?v=wA85Nu5mo68"],["Conditionals - 1st and 2nd","Learn English with Papa Teach Me","https://www.youtube.com/watch?v=RB8cDdvj5uc"]],
+ [["Give me 15 minutes and I'll improve your IELTS answers by 187%","English Speaking Success","https://www.youtube.com/watch?v=35rPCOp1YFc"],["Stop saying “very good” & “very bad”: 8 expressions to use instead","Learn English with Rebecca · engVid","https://www.youtube.com/watch?v=-zRiDx4gVKs"],["Stop saying “VERY” in IELTS Speaking: Build your Vocabulary","English Speaking Success","https://www.youtube.com/watch?v=ErXWy50FgXY"],["Improve your Vocabulary: Stop saying VERY!","ENGLISH with James · engVid","https://www.youtube.com/watch?v=PCoyTwltu5g"]],
+ [["What is 'shadowing'? Pronunciation Shadowing Tutorial","BBC Learning English","https://www.youtube.com/watch?v=tjaLn7URdlA"],["How to Stop Translating in Your Head","Learn English with Bob the Canadian","https://www.youtube.com/watch?v=ko9OGHeGNsg"],["IELTS Speaking - Better Connectors, Better Fluency","English Speaking Success","https://www.youtube.com/watch?v=eig1L1OMZmY"],["Why do we, like, hesitate when we, um, speak?","TED-Ed","https://www.youtube.com/watch?v=FsMWbVrjucg"]],
+ [["The BIGGEST Pronunciation Challenges For Arabic Speakers","Accent's Way English with Hadar","https://www.youtube.com/watch?v=58EgqymcT8Y"],["4 Most Common Grammar Mistakes by Arabic Speakers","IELTS Energy TV","https://www.youtube.com/watch?v=FgQsqH0uDBg"],["How to pronounce P vs B (without confusing them)","Accent's Way English with Hadar","https://www.youtube.com/watch?v=THbJJio-jdM"],["English Tips for Arabic Speakers","Business English Benjamin · engVid","https://www.youtube.com/watch?v=HZS1ItQFM3U"],["English Sounds - F and V","Rachel's English","https://www.youtube.com/watch?v=nR-K3mrHFv0"],["English Pronunciation for Arabic Speakers - Part One","VOA Learning English","https://www.youtube.com/watch?v=fk0LNkGF9h0"]],
+ [["How to Answer 'Tell Me About Yourself' - Spoken English Lesson","Oxford Online English","https://www.youtube.com/watch?v=rc-M4PtgYug"],["How To Talk About Your Strengths and Weaknesses","Rachel's English","https://www.youtube.com/watch?v=Vq99rxftBWQ"],["2 Quick Methods for the IELTS Speaking 1-Minute Preparation Time","E2 IELTS","https://www.youtube.com/watch?v=wTePj4_qGLE"],["Tell Me About Yourself - A Good Answer to This Interview Question","Linda Raynier","https://www.youtube.com/watch?v=kayOhGRcNt4"],["3 Steps to a Perfect IELTS Speaking Part 2 Answer","English Speaking Success","https://www.youtube.com/watch?v=N3x1cvJoy38"]],
+ [["Connected speech in English - why do we need it?","Accent's Way English with Hadar","https://www.youtube.com/watch?v=Z5QZoua4DLw"],["English Phrases for Daily Conversation (Practice Small Talk!)","mmmEnglish","https://www.youtube.com/watch?v=0I12mA0EejE"],["Native English Speakers NEVER USE These 16 Phrases","English with Lucy","https://www.youtube.com/watch?v=zzvbUEULKtk"],["How to connect English words to sound like a native speaker","AccurateEnglish","https://www.youtube.com/watch?v=6fcdSQEon7E"]]
+];
+const CONF_VIDEOS=[
+ ["Your Body Language May Shape Who You Are (Amy Cuddy)","TED","https://www.youtube.com/watch?v=Ks-_Mh1QhMc"],
+ ["How to Speak So That People Want to Listen (Julian Treasure)","TED","https://www.youtube.com/watch?v=eIho2S0ZahI"],
+ ["Scared to speak English? 6 Minute English","BBC Learning English","https://www.youtube.com/watch?v=YAsDeXcYyTg"],
+ ["How I started speaking English without fear (as a non-native speaker)","linguamarina","https://www.youtube.com/watch?v=p9KWSh06Wuo"],
+ ["English Anxiety? How to Overcome the Fear of Speaking","Accent's Way English with Hadar","https://www.youtube.com/watch?v=lEG4jn4Zfj4"],
+ ["5 Techniques to Speak English with Confidence","Oxford Online English","https://www.youtube.com/watch?v=T15_JtNQdFo"],
+ ["Speaking Up Without Freaking Out (Matt Abrahams)","TEDx Talks","https://www.youtube.com/watch?v=XIXvKKEQQJo"],
+ ["How to THINK in English: No More Translating in Your Head!","Rachel's English","https://www.youtube.com/watch?v=SJOnhWiJArM"],
+ ["How can I speak English more fluently?","BBC Learning English","https://www.youtube.com/watch?v=LDkvRFCm8No"]
+];
+const RESOURCES=[
+ ["Listening and shadowing",[
+  ["BBC Learning English","https://www.bbc.co.uk/learningenglish","Courses, grammar and pronunciation lessons.","Free"],
+  ["6 Minute English","https://www.bbc.co.uk/learningenglish/english/features/6-minute-english","Short episodes with transcripts. Your daily shadowing.","Free"],
+  ["6 Minute English (YouTube playlist)","https://www.youtube.com/playlist?list=PLcetZ6gSk96-FECmH9l7Vlx5VDigvgZpt","The same episodes on YouTube.","Free"],
+  ["VOA Learning English","https://learningenglish.voanews.com","Slow, clear news to read and listen to.","Free"],
+  ["ELLLO","https://www.elllo.org","Short real conversations in many accents, with scripts.","Free"],
+  ["English Speaking Practice: Speak with me (Shadowing)","https://www.youtube.com/watch?v=N20jOJDYyYA","English with Lucy: shadow along with her.","Free"],
+  ["Listen and Repeat: SPEAK with me in English","https://www.youtube.com/watch?v=PDsye3fxcZA","Speak English With Vanessa.","Free"],
+  ["The 5-Day Shadowing Challenge (playlist)","https://www.youtube.com/playlist?list=PLzMXToX8KzqiATq_p6P9jvR2kyQAnvBW7","English with Lucy.","Free"],
+  ["All Ears English (podcast)","https://www.allearsenglish.com","Natural conversational American English.","Free"],
+  ["TED-Ed","https://ed.ted.com","Short animated talks. Listen, then summarize out loud.","Free"]]],
+ ["Speaking practice with people",[
+  ["Claude (your account)","https://claude.ai","Voice mode + the prompts in this tab. Your daily examiner.","Free"],
+  ["Tandem","https://www.tandem.net","Language exchange: practice with native English speakers.","Free tier"],
+  ["HelloTalk","https://www.hellotalk.com","Voice and text exchange; people correct your messages.","Free tier"],
+  ["Speechling","https://speechling.com","Record sentences, a human coach gives feedback.","Free tier"],
+  ["italki","https://www.italki.com","One-to-one tutors for mock speaking tests (about $4–10 for 30 minutes with community tutors).","Paid"],
+  ["Preply","https://preply.com","One-to-one tutors ($3–50 per lesson).","Paid"]]],
+ ["Words, idioms and pronunciation",[
+  ["Cambridge Dictionary","https://dictionary.cambridge.org","Meanings, US and UK audio, example sentences.","Free"],
+  ["YouGlish","https://youglish.com","Hear any word or phrase spoken in real YouTube videos.","Free"],
+  ["Forvo","https://forvo.com","Native speakers pronouncing single words.","Free"],
+  ["Anki","https://apps.ankiweb.net","Flashcards that repeat at the right time. Add each day's words.","Free (Android, PC)"],
+  ["Quizlet","https://quizlet.com","Flashcard sets and games.","Free tier"],
+  ["Language Reactor","https://www.languagereactor.com","Chrome extension: two subtitles and pause-per-line on YouTube and Netflix.","Free tier"],
+  ["EnglishClub Idioms","https://www.englishclub.com/ref/Idioms/","Idioms with meanings and examples.","Free"],
+  ["The Idioms","https://www.theidioms.com","Idiom dictionary.","Free"],
+  ["20 English idioms to sound like a native","https://www.youtube.com/watch?v=kmxoPFPvveQ","English with Lucy (video).","Free"],
+  ["12 Important Phrasal Verbs for Everyday Conversation","https://www.youtube.com/watch?v=om6PsDQkk8A","mmmEnglish (video).","Free"],
+  ["Piece of Cake, As Easy As Pie","https://www.youtube.com/watch?v=_2qES239iOI","Shaw English Online (video).","Free"]]],
+ ["Grammar and writing",[
+  ["Perfect English Grammar","https://www.perfect-english-grammar.com","Clear explanations and exercises for every tense.","Free"],
+  ["EnglishPage","https://www.englishpage.com","Verb tense tutorials and exercises.","Free"],
+  ["British Council LearnEnglish","https://learnenglish.britishcouncil.org","Grammar, listening and speaking exercises.","Free with sign-up"],
+  ["Cambridge Write & Improve","https://writeandimprove.com","Instant feedback on your writing.","Free"],
+  ["LanguageTool","https://languagetool.org","Grammar check for what you write.","Free tier"],
+  ["Espresso English","https://www.espressoenglish.net","Short lessons on everyday English.","Free lessons"]]],
+ ["Tests and tracking",[
+  ["EF SET","https://www.efset.org","Free English level test (reading and listening). Take it in week 1 and week 12 to see your progress.","Free"],
+  ["Luke's English Podcast","https://teacherluke.co.uk","Longer British English listening for later weeks.","Free"]]]
+];
+const CONF30=["Record a 30-second voice note introducing yourself. Listen once. Don't judge it.","Say 5 sentences out loud about what you can see around you.","Talk to yourself in English for 5 minutes while cooking or cleaning.","Answer one question for 1 minute while smiling.","Watch the Amy Cuddy talk and do the 2-minute power pose before practice.","Record a 1-minute answer and send it to Nour.","Use one expression of the week in a real conversation.","Describe your day to Claude in voice mode for 5 minutes without stopping.","Read a paragraph out loud slowly, pausing at commas, like a presenter.","Make a mistake on purpose, fix it (“Sorry, I mean…”), and keep going.","Ask Claude 3 questions in English by voice.","Watch yourself on camera answering one question. Write 2 things you did well.","Speak for 1 minute about something you love. Let your energy show.","Send one voice message to a partner on Tandem or HelloTalk.","Say each rescue phrase out loud 5 times.","Answer 3 random questions with no preparation.","Shadow a speaker for 5 minutes. Copy their confidence and tone, not just the words.","Teach Claude one idiom you learned this week, in English.","Record “Tell me about yourself” standing up, then sitting. Notice the difference.","Speak for 2 minutes about a topic you know nothing about.","Have a 10-minute voice conversation in English with a person.","Write 3 things you're proud of in English and read them out loud.","Answer a question looking straight into the camera the whole time.","Do a 5-question mock test with a timer and no notes.","Send a voice message in English to someone for a real reason.","Answer one question at a slower, calmer speed than usual.","Record a 90-second story about a happy memory.","Explain what a medical interpreter does to someone, in English, for 1 minute.","Do a full mock test on camera. Celebrate finishing, not perfection.","Watch your Day 1 recording and today's. See how far you've come."];
+
+const JOBS=[
+ {g:"now",name:"Universal Language Service",role:"Arabic Video Interpreter, remote from Egypt (contractor)",pay:"USD, rate not published",fit:"Very close to Multilingual. Their posting says “work from home in Egypt”. You pass their own test instead of needing a certificate.",
+  how:["Email your CV to the address below with a short message (use the email template at the bottom of this tab).","Subject: Application – Arabic–English Video Interpreter – Safa Mohamed Ahmed","Mention that you passed a medical interpretation assessment with a US interpreting company."],
+  link:"https://universallanguageservice.com/interpreter-translator-opportunities/",email:"recruiter@ulsonline.net",note:"Established US agency (Bellevue, Washington). Needs a private room, wired internet and a plain blue or green backdrop."},
+ {g:"now",name:"Language Services Associates (LSA)",role:"International video and phone interpreter (freelance)",pay:"You state your own hourly rate (USD)",fit:"Accepts interpreters outside the US. Experience is preferred, not required.",
+  how:["Open the link and press “Apply for this job”.","Upload your CV and fill in “country of residence: Egypt”.","For the rate, a fair starting point for Egypt is $8–12 per hour."],
+  link:"https://jobs.lever.co/lsaweb/29203c90-55c0-4f17-84bb-c45943fa1e5f",note:"US company running for decades. Their Arabic-only posting is closed for now; check jobs.lever.co/lsaweb again later."},
+ {g:"now",name:"Propio Language Services",role:"Remote contract interpreter (phone and video)",pay:"USD contractor (one Arabic listing showed $18–27/hr, not confirmed)",fit:"Higher pay, but harder tests: a recorded mock interpretation, a medical terminology test and an English level check.",
+  how:["Apply through the form at the link.","Choose Egypt as your country of residence.","Do this after a few weeks of the English Plan, because their English check is strict."],
+  link:"https://job-boards.greenhouse.io/propiolanguageservices/jobs/4370124009",note:"Their tests are like the ones you already practiced in the Multilingual tab."},
+ {g:"now",name:"One World Global Services",role:"Interpreter, all languages (phone and video)",pay:"Per minute or fixed, paid monthly in USD",fit:"Experience is “desirable”, not required.",
+  how:["Open the careers page and fill in the general application.","Mention Arabic (Egyptian, plus the dialects you understand)."],
+  link:"https://www.oneworldglobalservices.com/careers",note:"They hire in Cairo for other languages. Arabic from Egypt is not confirmed yet."},
+ {g:"now",name:"TP (Teleperformance) Language Solutions",role:"Interpreter, work from home (Arabic to English)",pay:"Not published, plus night-shift bonus",fit:"Big international company with real training. Asks for C1 English and permanent night shifts.",
+  how:["Search LinkedIn for “TP interpreter Arabic Egypt” and apply to the newest posting.","TP recruiters only email from @teleperformance.com addresses."],
+  link:"https://jo.linkedin.com/jobs/view/interpreter-work-from-home-arabic-to-english-at-tp-4460309212",note:"The posting we found is in Jordan. Apply when an Egypt posting appears, after the English Plan."},
+ {g:"now",name:"Day Interpreting",role:"Interpreter (interest form, then screening and training)",pay:"Not published",fit:"They train new interpreters.",
+  how:["Fill in the interest form on the careers page."],
+  link:"https://dayinterpreting.com/careers",note:"Which countries they accept is not stated."},
+ {g:"now",name:"Kalam (Future Group)",role:"Arabic <> English OPI/VRI interpreter, Alexandria preferred",pay:"About $4 per logged-in hour reported",fit:"Your interview is on Tuesday. Everything is in the Kalam Interview tab.",
+  how:["Interview Tuesday, Oct 20.","Then EF SET English test (C1), documents, 13 days of training, ALTA test."],
+  link:"https://kalam.freshteam.com/jobs/seVMC39TFvZ8/arabic-english-opi-vri-interpretation-vacancy-remote",note:"Apply only through kalam.freshteam.com or jobs.kalam.cx. Copies with a personal WhatsApp number are suspicious."},
+ {g:"now",name:"Multilingual Interpreters & Translators",role:"Full-time Arabic–English OPI/VRI interpreter",pay:"$7 per logged-in hour",fit:"You passed their interpretation test. Retake the English test in mid-January.",
+  how:["Follow the English Plan.","Mid-January: send Nada the email in the Multilingual tab."],
+  link:"https://multilingualint.com",email:"nada.ahmed@multilingualint.com",note:"The best-paying offer so far."},
+
+ {g:"ai",name:"Mercor: Arabic Law Expert",role:"Write legal questions in Arabic to train AI models",pay:"$24–35 per hour",fit:"Best fit for your law degree. They prefer 2+ years of legal practice and strong written English, so it's a stretch, but worth trying.",
+  how:["Create a profile at work.mercor.com and search “Arabic”.","Apply to the Arabic Law Expert role.","Expect an AI video interview, then weeks of waiting."],
+  link:"https://work.mercor.com/jobs/list_AAABn7uReOobVXw0zppDg4Sz",note:"Pays weekly by Stripe to a bank account in your own name."},
+ {g:"ai",name:"Outlier (Scale AI)",role:"Write and rate AI answers in Egyptian Arabic",pay:"Up to $7.50 per hour + bonuses, weekly",fit:"Easiest to start. Mostly Arabic work.",
+  how:["Sign up at the link, verify your ID and phone.","Pass the skills test."],
+  link:"https://outlier.ai/languages/ar-eg",note:"Paid by PayPal or Airtm. Work can stop for weeks; don't depend on it alone."},
+ {g:"ai",name:"Welo Data (Welocalize)",role:"Arabic AI trainer: fact-checking, audio annotation, quality checks",pay:"About $9–14 per hour on recent Egypt projects",fit:"Fact-checking suits your research skills from law.",
+  how:["Apply to the Arabic talent network at the link.","They contact you when a project fits."],
+  link:"https://jobs.lever.co/weloglobal/a905b7ef-1a1f-4470-ac7a-26de46b06d08",note:"Talent pool, not a fixed job."},
+ {g:"ai",name:"Lionbridge",role:"Arabic transcriber (audio and annotation)",pay:"$15–23 per hour",fit:"No experience needed. Egypt is listed. Mostly Arabic.",
+  how:["Open the link and apply.","Shifts are at least 4 hours."],
+  link:"https://jobs.eu.lever.co/lionbridge/61e88b6c-56ff-46bc-af9c-62375d011c84",note:"Best paid beginner option we found."},
+ {g:"ai",name:"Prolific",role:"Paid research studies and AI tasks",pay:"At least $8 per hour",fit:"Small side income, no experience needed.",
+  how:["Join the participant pool at the link."],
+  link:"https://www.prolific.com/participant-pool",note:"Few studies target Egypt."},
+ {g:"ai",name:"Uber AI Solutions",role:"Chatbot rating, translation, data collection",pay:"Shown per task, paid weekly",fit:"No degree or experience needed.",
+  how:["Sign up at the link. There may be a waiting list."],
+  link:"https://earn-uberaisolutions.uber.com/",note:"Availability in Egypt is not confirmed."},
+ {g:"ai",name:"Appen / CrowdGen",role:"Egyptian voice recording, translation evaluation",pay:"Low and uneven ($2–12 per hour)",fit:"Extra small income only.",
+  how:["Apply to the Egypt projects at the link."],
+  link:"https://jobs.lever.co/appen/3d2acf23-96bc-473a-9869-e69b4c71e5c3",note:"Some projects need a specific phone."},
+ {g:"ai",name:"OneForma",role:"Editing machine translation into Arabic",pay:"Per word, by Payoneer",fit:"Uses your translation skills.",
+  how:["Create a profile at oneforma.com and take the project tests."],
+  link:"https://www.oneforma.com",note:"Many small projects."},
+
+ {g:"later",name:"BIG Language Solutions",role:"Arabic medical interpreter (phone and video)",pay:"About $6 per hour",fit:"Needs 1 year of experience.",how:["Apply after you have about a year of work, or volunteering hours."],link:"https://recruit.biglanguage.com",note:""},
+ {g:"later",name:"ContactLink Solutions",role:"Arabic–English healthcare interpreter",pay:"Guaranteed monthly USD",fit:"Needs 3+ years.",how:["Apply later through the link."],link:"https://contactlinksolutions.applytojob.com/apply/HqKGzHSCW2/Arabic-English-Interpreters",note:""},
+ {g:"later",name:"Reviver Global",role:"Arabic consecutive interpreter",pay:"Not shown",fit:"Needs 1 year or 3,000 hours.",how:["Apply later through the link."],link:"https://reviver.applytojob.com/apply/s1y07B5Ibh/Arabic-Consecutive-Interpreter",note:""},
+ {g:"later",name:"Jeenie",role:"Global contract interpreter",pay:"USD",fit:"Needs 2+ years and HIPAA training.",how:["Apply later through the link."],link:"https://jeenie.hiringplatform.com/list/becomealinguist",note:""},
+ {g:"later",name:"Welocalize interpretation pool",role:"Freelance interpreter",pay:"USD",fit:"Needs 3–5 years.",how:["Apply later through the link."],link:"https://jobs.lever.co/weloglobal/2d3aafa0-ea91-4e47-8ddd-10fcd175dc06",note:""},
+
+ {g:"build",name:"Tarjimly",role:"Volunteer live Arabic interpreting for refugees (phone app)",pay:"Unpaid",fit:"Real interpreting hours you can put on your CV. This is how you get past “1 year of experience”.",how:["Download the Tarjimly app and register as an Arabic–English interpreter.","Log every session (date, minutes, type) in a notebook."],link:"https://www.tarjimly.org",note:""},
+ {g:"build",name:"CLEAR Global (Translators without Borders)",role:"Volunteer translator",pay:"Unpaid",fit:"Adds verified translation work to your CV.",how:["Fill in the volunteer form."],link:"https://translatorswithoutborders.org/volunteer/",note:""},
+ {g:"build",name:"ALTA medical interpreter training (40 hours)",role:"Certificate course",pay:"Costs money",fit:"A 40-hour certificate helps with the experience filter at many companies.",how:["Consider it once you have your first salary."],link:"https://learn.altalang.com/arabic-medical-interpreter-training/",note:""}
+];
+const JOB_GROUPS={now:"Apply now: interpreting jobs like Multilingual and Kalam",ai:"AI companies paying in USD for Arabic work",later:"Later: these need 1+ years of experience",build:"Build your experience now"};
+
+
+/* ---------- English Plan: 12 weeks × 7 days ---------- */
+const EPW_START=new Date(2026,9,21);
+const epwState=store.get("epw",{});
+SYNC_HOOKS.epw=()=>{for(const k in epwState)delete epwState[k];Object.assign(epwState,store.get("epw",{}));renderEPW()};
+const epwIdxToday=()=>Math.floor((Date.now()-EPW_START.getTime())/864e5);
+let epwWeek=(()=>{const d=epwIdxToday();return d<0?0:Math.min(11,Math.floor(d/7))})();
+const DAYNAMES=["Learn","Shadow","Speak","Write","Talk","Test","Review"];
+function epDate(w,d){const t=new Date(EPW_START);t.setDate(t.getDate()+w*7+d);return t}
+const fmtD=t=>t.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+const SAY=t=>`<button class="say" data-say="${esc(t)}" aria-label="Hear ${esc(t)}"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 4V5L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4z"/></svg></button>`;
+function dayTasks(W,wi,di){
+ const v=EP_VIDEOS[wi]||[];const vid=k=>v[k]?`Watch “${v[k][0]}” (${v[k][1]})`:"Watch one video from this week's list";const q=W.qs;const full=[3,7,10].includes(wi);
+ switch(di){
+  case 0:return[vid(0)+" and write down 3 sentences you heard. (15 min)","Grammar: read this week's grammar box, then write 5 true sentences about yourself using it. (10 min)","Today's words, expression and phrasal verb: press Hear, repeat each one 3 times, and make your own sentence. (10 min)",`Speak: “${q[0]}” for 1 minute, recorded. Listen once, then answer again, better. (15 min)`,"Claude voice mode: paste the “English examiner” prompt and answer 3 questions on this week's topic. (10 min)"];
+  case 1:return["Shadowing: one BBC Learning English “6 Minute English” episode. Play a sentence, pause, and repeat it with the same rhythm. (15 min)","Today's words, expression and phrasal verb. (10 min)",`Speak: “${q[1]}” and “${q[2]}”, 1 minute each, recorded. Use today's expression in one of them. (15 min)`,"Read one short article out loud from VOA Learning English. (10 min)","Claude voice mode: 2 questions. (10 min)"];
+  case 2:{const t=[vid(1)+". (15 min)","Today's words, expression and phrasal verb. (10 min)",`Speak: “${q[3]}”, 1 minute, recorded. Use the 4 steps: answer, reason, example, close. (15 min)`,`Paraphrase drill: answer “${q[0]}” again, in completely different words. (10 min)`,"Write 3 mistakes from today's recordings in your mistake log. (10 min)"];if(wi===10)t.unshift("Full mock #1: Mock Test → English speaking test, all 22 questions, on camera. (35 min)");return t}
+  case 3:return[`Writing: ${W.writing} (20 min)`,"Paste it into Claude with the “Writing correction” prompt. Read the corrected version out loud 3 times. (10 min)","Today's words, expression and phrasal verb. (10 min)","Say the corrected paragraph from memory, recorded. (10 min)","Shadowing: 10 minutes of any video from this week. (10 min)"];
+  case 4:return[`Conversation: 20 minutes in Claude voice mode or with a language partner (Tandem or HelloTalk). Topic: ${W.convo}. (20 min)`,"Use at least 3 of this week's words in the conversation.","Today's words, expression and phrasal verb. (10 min)",`Speak: “${q[4]}”, recorded. (10 min)`,(v[2]?vid(2):"Shadowing: 10 minutes of any video from this week")+". (15 min)"];
+  case 5:return[full?"Full test: Mock Test → English speaking test, all 22 questions, on camera, with text and timer off. (35 min)":"Mini test: Mock Test → English speaking test. Answer the first 5 questions, then press Exit. Record yourself. (15 min)","Watch your recording: count your “umm”s and check that every answer ends with a closing line. (10 min)","Today's words, expression and phrasal verb. (10 min)","Write your 3 weakest answers in your mistake log, then answer them again. (15 min)"];
+  default:return["Review: say all of this week's words, expressions and phrasal verbs out loud with the Hear buttons. (15 min)","Read your mistake log out loud. (5 min)","Claude: paste the “Weekly check” prompt with this week's mistakes. (15 min)",`Checkpoint: ${W.checkpoint}`,"Rest. You finished a week!"];
+ }
+}
+function renderEPW(){
+ $("#epw-chips").innerHTML=EPW.map((W,i)=>`<button class="chip" data-epw="${i}" aria-pressed="${i===epwWeek}">Week ${i+1}</button>`).join("");
+ let total=0,n=0;EPW.forEach((w,a)=>w.days.forEach((d,b)=>dayTasks(w,a,b).forEach((t,c)=>{total++;if(epwState[`${a}-${b}-${c}`])n++})));
+ $("#epbar").style.width=(100*n/total)+"%";$("#epcount").textContent=`${n} of ${total} tasks done · ${Math.round(100*n/total)}%`;
+ const W=EPW[epwWeek],wi=epwWeek,v=EP_VIDEOS[wi]||[],ti=epwIdxToday();
+ let h=`<div class="card stack ep-head"><span class="label">Week ${wi+1} · ${fmtD(epDate(wi,0))} → ${fmtD(epDate(wi,6))}</span><h2>${esc(W.focus)}</h2><p><b>Goal:</b> ${esc(W.goal)}</p></div>`;
+ h+=`<div class="grid2"><div class="card stack"><h3>${esc(W.grammar.title)}</h3><ul class="clean">${W.grammar.rules.map(r=>`<li>${esc(r)}</li>`).join("")}</ul><p class="label">Examples</p><ul class="clean">${W.grammar.examples.map(x=>`<li>${SAY(x)} ${esc(x)}</li>`).join("")}</ul></div>`;
+ h+=`<div class="card stack"><h3>This week's videos</h3>${v.length?`<ul class="clean">${v.map(x=>`<li><a href="${esc(x[2])}" target="_blank" rel="noopener">${esc(x[0])}</a> <span class="muted">· ${esc(x[1])}</span></li>`).join("")}</ul>`:`<p class="muted">Use any video from the Resources list below.</p>`}<h3>This week's questions</h3><ul class="clean">${W.qs.map(q=>`<li>${SAY(q)} ${esc(q)}</li>`).join("")}</ul></div></div>`;
+ h+=W.days.map((D,di)=>{const isT=ti===wi*7+di;const tasks=dayTasks(W,wi,di);const dn=tasks.filter((t,c)=>epwState[`${wi}-${di}-${c}`]).length;
+  return `<details class="ep-day ${isT?"today":""}" ${isT||(ti<0&&wi===0&&di===0)?"open":""}><summary><b>Day ${di+1} · ${DAYNAMES[di]}</b> <span class="muted">${fmtD(epDate(wi,di))}</span>${isT?' <span class="pill">Today</span>':""} <span class="muted ep-n">${dn}/${tasks.length}</span></summary>
+  <div class="stack">${tasks.map((t,c)=>{const id=`t-${wi}-${di}-${c}`,on=!!epwState[`${wi}-${di}-${c}`];return `<label class="check ${on?"done":""}" for="${id}"><input type="checkbox" id="${id}" ${on?"checked":""}><span>${esc(t)}</span></label>`}).join("")}
+  <div class="tablewrap"><table><tr><th>New word</th><th style="text-align:right">Arabic</th><th>Example</th></tr>${D.w.map(w=>`<tr><td>${SAY(w[0])} <b>${esc(w[0])}</b></td><td class="ar" dir="rtl" lang="ar">${esc(w[1])}</td><td>${SAY(w[2])} ${esc(w[2])}</td></tr>`).join("")}</table></div>
+  <div class="grid2"><div class="ep-idiom"><span class="label">Expression of the day</span><p>${SAY(D.i[0])} <b>“${esc(D.i[0])}”</b> = ${esc(D.i[1])} <span class="ar" dir="rtl" lang="ar">(${esc(D.i[2])})</span></p><p class="muted">${SAY(D.i[3])} ${esc(D.i[3])}</p></div>
+  <div class="ep-idiom"><span class="label">Phrasal verb</span><p>${SAY(D.p[0])} <b>${esc(D.p[0])}</b> = ${esc(D.p[1])}</p><p class="muted">${SAY(D.p[2])} ${esc(D.p[2])}</p></div></div></div></details>`}).join("");
+ $("#epw").innerHTML=h;
+}
+$("#epw-chips").addEventListener("click",e=>{const b=e.target.closest("[data-epw]");if(!b)return;epwWeek=+b.dataset.epw;renderEPW()});
+$("#epw").addEventListener("change",e=>{const c=e.target;if(c.type!=="checkbox"||!c.id.startsWith("t-"))return;const k=c.id.slice(2);if(c.checked)epwState[k]=true;else delete epwState[k];store.set("epw",epwState);c.closest(".check").classList.toggle("done",c.checked);const det=c.closest("details");if(det){const all=det.querySelectorAll('input[type=checkbox]');det.querySelector(".ep-n").textContent=`${[...all].filter(x=>x.checked).length}/${all.length}`}renderEPWbar()});
+function renderEPWbar(){let total=0,n=0;EPW.forEach((w,a)=>w.days.forEach((d,b)=>dayTasks(w,a,b).forEach((t,c)=>{total++;if(epwState[`${a}-${b}-${c}`])n++})));$("#epbar").style.width=(100*n/total)+"%";$("#epcount").textContent=`${n} of ${total} tasks done · ${Math.round(100*n/total)}%`}
+renderEPW();
+$("#epres").innerHTML=RESOURCES.map(g=>`<div class="card stack"><h3>${esc(g[0])}</h3><ul class="clean">${g[1].map(r=>`<li><a href="${esc(r[1])}" target="_blank" rel="noopener"><b>${esc(r[0])}</b></a>${r[3]?` <span class="pill soft">${esc(r[3])}</span>`:""}<br><span class="muted">${esc(r[2])}</span></li>`).join("")}</ul></div>`).join("");
+
+/* ---------- Confidence tab ---------- */
+$("#conf-videos").innerHTML=CONF_VIDEOS.map(x=>`<li><a href="${esc(x[2])}" target="_blank" rel="noopener">${esc(x[0])}</a> <span class="muted">· ${esc(x[1])}</span></li>`).join("");
+const confState=store.get("conf",{});
+SYNC_HOOKS.conf=()=>{for(const k in confState)delete confState[k];Object.assign(confState,store.get("conf",{}));renderConf()};
+function renderConf(){let n=0;$("#conf30").innerHTML=CONF30.map((t,i)=>{const on=!!confState[i];if(on)n++;return `<label class="check ${on?"done":""}" for="cf${i}"><input type="checkbox" id="cf${i}" ${on?"checked":""}><span><b>Day ${i+1}.</b> ${esc(t)}</span></label>`}).join("");$("#confcount").textContent=`${n} of ${CONF30.length} challenges done`}
+$("#conf30").addEventListener("change",e=>{const c=e.target;if(c.type!=="checkbox")return;const i=c.id.slice(2);if(c.checked)confState[i]=true;else delete confState[i];store.set("conf",confState);renderConf()});
+renderConf();
+
+/* ---------- Jobs tab ---------- */
+const jobsState=store.get("jobs",{});
+SYNC_HOOKS.jobs=()=>{for(const k in jobsState)delete jobsState[k];Object.assign(jobsState,store.get("jobs",{}));renderJobs()};
+function renderJobs(){
+ const applied=Object.values(jobsState).filter(x=>x&&x.applied).length;
+ $("#jobcount").textContent=`${applied} applied so far`;
+ $("#jobs").innerHTML=Object.entries(JOB_GROUPS).map(([g,title])=>`<div class="stack"><h2>${esc(title)}</h2><div class="grid2">${JOBS.filter(j=>j.g===g).map(j=>{const s=jobsState[j.name]||{};const id="jb-"+j.name.replace(/[^a-z0-9]/gi,"");
+  return `<div class="card stack job ${s.applied?"applied":""}"><div class="mk-top"><h3>${esc(j.name)}</h3>${s.applied?`<span class="pill">Applied ${esc(s.date||"")}</span>`:""}</div><p><b>${esc(j.role)}</b></p><p><span class="label">Pay</span> ${esc(j.pay)}</p><p>${esc(j.fit)}</p><p class="label">How to apply</p><ol class="clean">${j.how.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>${j.email?`<p>Email: <b class="sel">${esc(j.email)}</b></p>`:""}${j.note?`<p class="muted">${esc(j.note)}</p>`:""}<div class="mk-btns"><a class="btn" href="${esc(j.link)}" target="_blank" rel="noopener">Open</a><label class="check" for="${id}" style="padding:6px 10px"><input type="checkbox" id="${id}" data-job="${esc(j.name)}" ${s.applied?"checked":""}><span>I applied</span></label></div></div>`}).join("")}</div></div>`).join("");
+}
+$("#jobs").addEventListener("change",e=>{const c=e.target.closest("[data-job]");if(!c)return;const n=c.dataset.job;if(c.checked)jobsState[n]={applied:true,date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"})};else delete jobsState[n];store.set("jobs",jobsState);renderJobs()});
+renderJobs();
+$("#jobmail-copy").onclick=async e=>{const el=$("#jobmail");const b=e.currentTarget;try{await navigator.clipboard.writeText(el.innerText);b.textContent="Copied"}catch(err){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected: press Ctrl+C"}setTimeout(()=>b.textContent="Copy",2500)};
+
 })();
 </script>
 
