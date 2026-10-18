@@ -1691,6 +1691,7 @@ const FB_URL="https://safas-corner-default-rtdb.europe-west1.firebasedatabase.ap
  connect();
 })();
 const $=s=>document.querySelector(s);
+if(window.claude&&window.claude.use)document.querySelectorAll(".trk a[download]").forEach(x=>x.remove());
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
 
