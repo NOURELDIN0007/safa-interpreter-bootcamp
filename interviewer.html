@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbf1ef">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Interviewer Mode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+/* Interviewer mode for Nour: run a realistic Kalam mock interview with Safa over a call, score each answer, share a summary. */
+:root{
+  --bg:#fbf1ef;--blush-2:#f6e3e1;--rose:#c86b85;--rose-deep:#a14a6a;--rose-soft:#f3d9df;--accent:#b4567a;
+  --ink:#3b2530;--muted:#7b5f69;--line:rgba(169,79,107,.14);--ok:#2f7a4f;--ok-soft:#eaf6ef;
+  --serif:"Cormorant Garamond",Georgia,serif;--script:"Great Vibes",cursive;--body:"Plus Jakarta Sans",system-ui,sans-serif;--ar:"IBM Plex Sans Arabic","Segoe UI",sans-serif;
+  --shadow:0 1px 2px rgba(120,50,70,.04),0 14px 30px -24px rgba(120,50,70,.35);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(600px 420px at 100% 0%,rgba(243,217,223,.65),transparent 70%),radial-gradient(520px 420px at 0% 100%,rgba(246,227,225,.8),transparent 70%)}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0 10px}
+.brand{font:400 28px/1 var(--script);color:var(--rose-deep);text-decoration:none}
+.tag{font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--rose-deep);background:#fff;border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+h1{font:500 clamp(36px,8vw,52px)/1.04 var(--serif);margin:18px 0 4px;color:var(--ink)}
+h1 span{display:block;font:400 1.1em/1.1 var(--script);color:var(--rose)}
+h2{font:500 28px/1.15 var(--serif);margin:0;color:var(--ink)}
+h3{font:600 20px/1.2 var(--serif);margin:0;color:var(--ink)}
+p{margin:0}
+.muted{color:var(--muted)}
+.label{font:700 11px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--rose-deep)}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.stack-lg{display:flex;flex-direction:column;gap:22px}
+ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+ol.steps li::marker{color:var(--rose-deep);font-weight:700}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid rgba(169,79,107,.25);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font:600 14px/1 var(--body);cursor:pointer;min-height:42px}
+.chip[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;background:var(--accent);color:#fff;font:700 13px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:15px 24px;cursor:pointer;min-height:50px;box-shadow:0 12px 22px -16px rgba(169,79,107,.9)}
+.btn:hover{background:var(--rose-deep)}
+.btn.ghost{background:#fff;color:var(--rose-deep);border:1.5px solid var(--rose);box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.prog{height:6px;border-radius:99px;background:#f1dfe0;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,#e2a0b2,var(--rose-deep));transition:width .4s}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.say{font:500 clamp(24px,5.4vw,32px)/1.3 var(--serif);color:var(--ink)}
+.say.ar{font:600 clamp(20px,5vw,26px)/1.8 var(--ar);direction:rtl;text-align:right}
+.hint{font-size:14px;color:var(--muted);background:var(--bg);border-radius:12px;padding:10px 12px}
+.listen{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.listen li::marker{color:var(--rose)}
+.fu{border-left:3px solid var(--rose);padding:8px 12px;background:#fffafb;border-radius:0 12px 12px 0}
+.fu b{font:600 18px/1.35 var(--serif)}
+.timer{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.clock{font:600 34px/1 var(--serif);font-variant-numeric:tabular-nums;min-width:86px}
+.clock.short{color:#b7791f}.clock.good{color:var(--ok)}.clock.long{color:#b42318}
+.scores{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.sc{display:flex;align-items:center;gap:10px;border:1px solid rgba(169,79,107,.22);background:#fff;border-radius:14px;padding:12px;cursor:pointer;font:600 14.5px/1.25 var(--body);text-align:left;color:var(--ink)}
+.sc small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+.sc .box{flex:0 0 auto;width:24px;height:24px;border-radius:50%;border:1.5px solid #e0bcc6;display:grid;place-items:center;color:transparent;font-size:13px}
+.sc[aria-pressed="true"]{border-color:var(--ok);background:var(--ok-soft)}
+.sc[aria-pressed="true"] .box{background:var(--ok);border-color:var(--ok);color:#fff}
+textarea{width:100%;min-height:64px;border:1px solid rgba(169,79,107,.22);border-radius:14px;padding:10px 12px;font:15px/1.5 var(--body);color:var(--ink);background:#fff;resize:vertical}
+.big{font:500 64px/1 var(--serif);color:var(--rose-deep)}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+td,th{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:700 11px/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep)}
+.dots{white-space:nowrap;letter-spacing:2px;color:var(--ok)}
+.dots .no{color:#e3b7c3}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font:600 14px/1 var(--body);opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.on{opacity:1}
+:focus-visible{outline:2px solid var(--rose-deep);outline-offset:2px}
+[hidden]{display:none!important}
+@media (max-width:420px){.scores{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><a class="brand" href="./">Safa's Corner</a><span class="tag">For Nour only</span></header>
+
+  <!-- SETUP -->
+  <section id="setup" class="stack-lg">
+    <div>
+      <h1>Interviewer mode<span>you're Sarah from Kalam</span></h1>
+      <p class="muted">Run a real practice interview with Safa over a call. She can't see these notes, so the follow-up questions will surprise her, just like the real interview.</p>
+    </div>
+    <div class="card stack">
+      <span class="label">How to run it</span>
+      <ol class="steps">
+        <li>Call her on WhatsApp (audio first, like the phone screening). Switch to video for part two, like Zoom.</li>
+        <li>Read each question out loud, then press <b>Start timer</b> when she begins answering.</li>
+        <li>Ask the <b>follow-up</b> when she finishes. Real interviewers do this.</li>
+        <li>Tick what she did well, add a short note, then press <b>Next</b>.</li>
+        <li>Don't correct her during the call. At the end, share the summary and go through her 3 weakest answers together.</li>
+      </ol>
+    </div>
+    <div class="card stack">
+      <span class="label">Length</span>
+      <div class="opts" id="len">
+        <button class="chip" data-len="short" aria-pressed="true">Short · 15 questions · ~20 min</button>
+        <button class="chip" data-len="full" aria-pressed="false">Full · 25 questions · ~35 min</button>
+      </div>
+      <span class="label" style="margin-top:6px">Options</span>
+      <div class="opts">
+        <button class="chip" id="opt-mix" aria-pressed="true">Mix the Zoom questions</button>
+        <button class="chip" id="opt-fu" aria-pressed="true">Include follow-ups</button>
+      </div>
+    </div>
+    <div class="row"><button class="btn" id="start">Start the interview</button><button class="btn ghost" id="resume" hidden>Continue last interview</button></div>
+  </section>
+
+  <!-- QUESTION -->
+  <section id="run" class="stack-lg" hidden>
+    <div class="stack">
+      <div class="qhead"><span class="label" id="partlbl"></span><span class="muted" id="count"></span></div>
+      <div class="prog"><i id="bar"></i></div>
+    </div>
+    <div class="card stack">
+      <span class="label">Say this</span>
+      <p class="say" id="q"></p>
+      <p class="hint" id="hint" hidden></p>
+    </div>
+    <div class="card stack">
+      <div class="timer"><span class="clock" id="clock">0:00</span><button class="btn ghost" id="tbtn">Start timer</button><span class="muted" id="tgoal"></span></div>
+    </div>
+    <div class="card stack">
+      <span class="label">Listen for</span>
+      <ul class="listen" id="listen"></ul>
+      <div class="fu" id="fuwrap"><span class="label">Then ask</span><br><b id="fu"></b></div>
+    </div>
+    <div class="card stack">
+      <span class="label">She did well on</span>
+      <div class="scores" id="scores"></div>
+      <textarea id="note" placeholder="Short note (optional): what to fix"></textarea>
+    </div>
+    <div class="row"><button class="btn ghost" id="back">Back</button><button class="btn" id="next">Next question</button></div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section id="done" class="stack-lg" hidden>
+    <div>
+      <h1>Well done<span>here's how she did</span></h1>
+    </div>
+    <div class="card stack" style="align-items:flex-start">
+      <span class="label">Overall</span>
+      <span class="big" id="pct"></span>
+      <p class="muted" id="pctnote"></p>
+    </div>
+    <div class="card stack">
+      <span class="label">Practice these 3 again</span>
+      <ol class="steps" id="weak"></ol>
+      <p class="muted">In the app: Kalam tab → the same question numbers, with Hear answer buttons.</p>
+    </div>
+    <div class="card stack">
+      <span class="label">Every answer</span>
+      <div style="overflow-x:auto"><table id="tbl"></table></div>
+    </div>
+    <div class="row"><button class="btn" id="copy">Copy summary for WhatsApp</button><button class="btn ghost" id="again">New interview</button></div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* n = question number in the app's Kalam tab. listen = what a good answer includes. fu = surprise follow-up. */
+const Q=[
+ {n:1,part:1,text:"Hello, this is Sarah from Kalam. Thank you for applying. Could you please introduce yourself?",listen:["Name, city, law degree (Alexandria University, English Section, 2025)","Arabic is her native language, studied law in English","Passed a medical interpretation assessment","Wants a full-time interpreting job"],fu:"Why interpreting, and not a job in law?"},
+ {n:2,part:1,text:"Are you okay with working one extra hour if we ask you?",listen:["A clear yes","Understands some calls run long","Available full-time"],fu:"And if we need you on a weekend?"},
+ {n:3,part:1,text:"What time are you available?",listen:["Exact hours, not \"anytime\"","Knows US daytime means evening and night in Egypt","Full-time and reliable"],fu:"Can you work night shifts in Egypt time?"},
+ {n:4,part:1,text:"Do you have a Windows computer, a wired USB headset, and a wired internet connection?",listen:["Windows version, RAM, processor","Wired USB headset with a microphone","Ethernet cable, with real speed numbers","Quiet, private room"],fu:"What is your exact download and upload speed?"},
+ {n:5,part:1,text:"Do you have any previous interpreting experience?",listen:["Honest: informal so far","One real example","Passed the assessment, trains on terminology and ethics"],fu:"Tell me about one time you interpreted for someone."},
+ {n:6,part:1,text:"Do you have any interpreting certificates?",listen:["Honest: not yet","Passed a medical interpretation assessment","Ready to take ALTA after training"],fu:"Would you be open to a certification course?"},
+ {n:7,part:2,text:"Welcome to the interview. Please introduce yourself, and tell me why you want to work with Kalam.",listen:["Short introduction (not the full phone version)","Knows Kalam: phone and video interpreting, healthcare","Wants to help patients talk to their doctors"],fu:"What do you know about our company?"},
+ {n:8,part:2,text:"Why do you want to be an interpreter?",listen:["Loves languages and helping people","Law background = accuracy and confidentiality","A personal reason"],fu:"What do you think is the hardest part of this job?"},
+ {n:9,part:2,text:"What do you know about OPI and VRI?",listen:["OPI = over the phone, VRI = video","Both are consecutive: listen, then interpret","Used a lot in healthcare"],fu:"Which one would you prefer, and why?"},
+ {n:10,part:2,text:"Tell me about your daily routine.",listen:["Organized day","Practices English and terminology","Shows she is available and reliable"],fu:"What do you do to relax after a long day?"},
+ {n:11,part:2,text:"Which Arabic dialects do you understand?",listen:["Egyptian (native) and Modern Standard Arabic","Understands Levantine and Gulf","Asks for clarification if a dialect is hard"],fu:"What would you do with a Moroccan patient you can't understand?"},
+ {n:12,part:2,text:"If a doctor and a patient are talking back and forth, how will you transfer the details?",listen:["Interpret everything, add nothing, leave nothing out","First person (\"I have a headache\", not \"she says\")","Notes for numbers, medicines and dates","Asks people to pause; asks for clarification instead of guessing"],fu:"Show me: the patient says \"I have a headache.\" What exactly do you say?"},
+ {n:13,part:2,text:"What would you do if a patient asks for your personal opinion?",listen:["Politely says she can't give advice as the interpreter","Interprets the question to the doctor","Stays neutral"],fu:"And if the patient keeps insisting?"},
+ {n:14,part:2,text:"How will you manage university or your other commitments with your calls?",listen:["Already graduated","Diploma has no daily classes, studies on days off","Full focus on the job"],fu:"Do you plan to keep studying next year?"},
+ {n:15,part:2,text:"What does confidentiality mean for an interpreter?",listen:["Never share anything from a call","Private, quiet room, no one listening","Destroys notes after the call (HIPAA)"],fu:"Could you tell your family about an interesting call, without names?"},
+ {n:16,part:2,text:"What would you do if you didn't understand something during an interpretation?",listen:["Never guess","\"The interpreter requests clarification\"","Tells both sides what she asked"],fu:"What are the exact words you would say?"},
+ {n:17,part:2,text:"A patient tells you: please don't tell the doctor what I just said. What do you do?",listen:["Explains politely that she must interpret everything","Then interprets it","Stays calm and neutral"],fu:"What if the patient gets angry with you?"},
+ {n:18,part:2,text:"What would you do if a patient says something about hurting themselves?",listen:["Interprets it immediately and exactly","Safety first","Follows the company's emergency steps"],fu:"Do you add your own warning to the doctor?"},
+ {n:19,part:2,text:"How do you handle stress and back-to-back calls during a long shift?",listen:["Breathing, water, short breaks","One call at a time","A real example of staying calm"],fu:"Tell me about a stressful time you handled well."},
+ {n:20,part:2,text:"Could you please spell your full name for me, and tell me your date of birth?",listen:["Spells with letter words (S as in Sierra…)","Clear and slow","Date of birth in month, day, year"],fu:"Now spell your email address, please."},
+ {n:21,part:3,text:"Now let's do a short interpretation. Please interpret into Arabic. Take one tablet twice a day after meals for seven days. If you get a rash or trouble breathing, stop the medicine and call us right away.",listen:["1 tablet · twice a day · after meals · 7 days","Rash or trouble breathing → stop and call right away","First person, nothing missing"],fu:"Repeat only the warning part, please."},
+ {n:22,part:3,lang:"ar",text:"يا دكتور، أنا عندي سكر من عشر سنين، وبقالي أسبوع رجلي بتنمّل بالليل ومش عارفة أنام.",hint:"Read this in Arabic, like a patient. She interprets into English.",listen:["Diabetes for 10 years","Feet numb at night for one week","Can't sleep","First person: \"I have had…\""],fu:""},
+ {n:23,part:3,text:"One more. Interpret into Arabic. Are you taking anything for your blood pressure? Any chest pain or shortness of breath?",listen:["Blood pressure medicine?","Chest pain?","Shortness of breath?","Both questions, nothing missing"],fu:""},
+ {n:24,part:3,lang:"ar",text:"باخد حباية الضغط الصبح، بس ساعات بنساها.",hint:"Read this in Arabic, like a patient. She interprets into English.",listen:["Blood pressure pill in the morning","Sometimes forgets it","First person"],fu:""},
+ {n:25,part:4,text:"Thank you. Do you have any questions for us?",listen:["Asks 2–3 real questions","Training: how long, is it paid?","Pay rate, payment, contract before training"],fu:"Anything else you'd like to know?"}
+];
+const SHORT=[1,2,3,4,5,7,9,12,13,15,16,17,21,22,25];
+const PARTS={1:"Part 1 · Phone screening",2:"Part 2 · Zoom interview",3:"Part 3 · Short interpretation",4:"Closing"};
+const SCORES=[["clear","Clear","easy to understand"],["calm","Calm pace","slow, no rushing"],["full","Complete","covered the key points"],["conf","Confident","smiled, no long pauses"]];
+const KEY="interviewer-session";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}};
+let S=null,tick=null;
+
+// setup
+const opt={len:"short",mix:true,fu:true};
+$("#len").addEventListener("click",e=>{const b=e.target.closest("[data-len]");if(!b)return;opt.len=b.dataset.len;document.querySelectorAll("[data-len]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+["mix","fu"].forEach(k=>$("#opt-"+k).addEventListener("click",e=>{opt[k]=!opt[k];e.currentTarget.setAttribute("aria-pressed",opt[k])}));
+const prev=load();if(prev&&prev.i<prev.order.length)$("#resume").hidden=false;
+$("#resume").onclick=()=>{S=prev;showQ()};
+$("#start").onclick=()=>{
+  let qs=Q.filter(q=>opt.len==="full"||SHORT.includes(q.n));
+  if(opt.mix){const z=qs.filter(q=>q.part===2&&q.n!==7);for(let i=z.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[z[i],z[j]]=[z[j],z[i]]}
+    qs=[...qs.filter(q=>q.part===1),...qs.filter(q=>q.n===7),...z,...qs.filter(q=>q.part>=3)]}
+  S={order:qs.map(q=>q.n),i:0,fu:opt.fu,res:{},started:new Date().toISOString()};save();showQ()};
+
+// one question
+const byN=n=>Q.find(q=>q.n===n);
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function goal(q){return q.part===3?[8,40]:(q.n===2||q.n===6||q.n===20||q.n===25?[10,45]:[30,75])}
+function paintClock(sec,q){const c=$("#clock"),[lo,hi]=goal(q);c.textContent=fmt(sec);c.className="clock "+(sec===0?"":sec<lo?"short":sec<=hi?"good":"long")}
+function stopTimer(){if(tick){clearInterval(tick);tick=null}$("#tbtn").textContent="Start timer"}
+function showQ(){
+  stopTimer();$("#setup").hidden=true;$("#done").hidden=true;$("#run").hidden=false;
+  const n=S.order[S.i],q=byN(n),r=S.res[n]||(S.res[n]={s:[],sec:0,note:""});
+  $("#partlbl").textContent=PARTS[q.part];$("#count").textContent=`${S.i+1} of ${S.order.length} · Q${n}`;
+  $("#bar").style.width=(100*S.i/S.order.length)+"%";
+  const qe=$("#q");qe.textContent=q.text;qe.className="say"+(q.lang==="ar"?" ar":"");qe.lang=q.lang==="ar"?"ar":"en";
+  $("#hint").hidden=!q.hint;$("#hint").textContent=q.hint||"";
+  $("#listen").innerHTML=q.listen.map(x=>`<li>${esc(x)}</li>`).join("");
+  $("#fuwrap").hidden=!(S.fu&&q.fu);$("#fu").textContent=q.fu||"";
+  const [lo,hi]=goal(q);$("#tgoal").textContent=`Aim: ${lo}–${hi} seconds`;paintClock(r.sec,q);
+  $("#scores").innerHTML=SCORES.map(([k,l,s])=>`<button class="sc" data-sc="${k}" aria-pressed="${r.s.includes(k)}"><span class="box" aria-hidden="true">✓</span><span>${l}<small>${s}</small></span></button>`).join("");
+  $("#note").value=r.note;$("#back").disabled=S.i===0;
+  $("#next").textContent=S.i===S.order.length-1?"Finish":"Next question";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+const cur=()=>S.res[S.order[S.i]];
+$("#tbtn").onclick=()=>{const q=byN(S.order[S.i]),r=cur();
+  if(tick){stopTimer();save();return}
+  r.sec=0;paintClock(0,q);$("#tbtn").textContent="Stop";const t0=Date.now();
+  tick=setInterval(()=>{r.sec=Math.round((Date.now()-t0)/1000);paintClock(r.sec,q)},250)};
+$("#scores").addEventListener("click",e=>{const b=e.target.closest("[data-sc]");if(!b)return;const r=cur(),k=b.dataset.sc;
+  r.s=r.s.includes(k)?r.s.filter(x=>x!==k):[...r.s,k];b.setAttribute("aria-pressed",r.s.includes(k));save()});
+$("#note").addEventListener("input",e=>{cur().note=e.target.value;save()});
+$("#back").onclick=()=>{if(S.i>0){S.i--;save();showQ()}};
+$("#next").onclick=()=>{stopTimer();if(S.i<S.order.length-1){S.i++;save();showQ()}else{S.i=S.order.length;save();showDone()}};
+
+// summary
+function showDone(){
+  stopTimer();$("#run").hidden=true;$("#setup").hidden=true;$("#done").hidden=false;window.scrollTo({top:0});
+  const rows=S.order.map(n=>({q:byN(n),r:S.res[n]||{s:[],sec:0,note:""}}));
+  const got=rows.reduce((a,x)=>a+x.r.s.length,0),max=rows.length*4,pct=Math.round(100*got/max);
+  $("#pct").textContent=pct+"%";
+  $("#pctnote").textContent=pct>=80?"Ready. Keep it fresh with one more voice-note run.":pct>=60?"Close. Practice the 3 answers below twice each, out loud.":"Good start. Practice the 3 answers below, then try a short interview again tomorrow.";
+  const weak=[...rows].sort((a,b)=>a.r.s.length-b.r.s.length||(b.r.note.length-a.r.note.length)).slice(0,3);
+  $("#weak").innerHTML=weak.map(x=>`<li><b>Question ${x.q.n}</b>: ${esc(x.q.text.length>80?x.q.text.slice(0,78)+"…":x.q.text)}${x.r.note?`<br><span class="muted">${esc(x.r.note)}</span>`:""}</li>`).join("");
+  $("#tbl").innerHTML="<tr><th>#</th><th>Score</th><th>Time</th><th>Note</th></tr>"+rows.map(x=>`<tr><td>${x.q.n}</td><td class="dots">${SCORES.map(([k])=>x.r.s.includes(k)?"●":'<span class="no">●</span>').join("")}</td><td>${x.r.sec?fmt(x.r.sec):"–"}</td><td>${esc(x.r.note)}</td></tr>`).join("");
+  S.summary=[`Kalam practice interview: ${pct}%`,"",`Practice these again:`,...weak.map(x=>`• Question ${x.q.n}${x.r.note?`: ${x.r.note}`:""}`),"","Every answer (clear / calm / complete / confident):",...rows.map(x=>`Q${x.q.n}: ${SCORES.map(([k])=>x.r.s.includes(k)?"✓":"·").join(" ")}${x.r.sec?`  ${fmt(x.r.sec)}`:""}${x.r.note?`  ${x.r.note}`:""}`),"","Open the app → Kalam tab to hear good answers to these questions."].join("\n");
+  save();
+}
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("on");setTimeout(()=>el.classList.remove("on"),2000)}
+$("#copy").onclick=async()=>{try{await navigator.clipboard.writeText(S.summary);toast("Copied. Paste it in WhatsApp.")}catch(e){const ta=document.createElement("textarea");ta.value=S.summary;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Copied. Paste it in WhatsApp.")}catch(_){toast("Couldn't copy, select the table instead")}ta.remove()}};
+$("#again").onclick=()=>{try{localStorage.removeItem(KEY)}catch(e){}S=null;$("#done").hidden=true;$("#setup").hidden=false;$("#resume").hidden=true;window.scrollTo({top:0})};
+</script>
+</body>
+</html>
