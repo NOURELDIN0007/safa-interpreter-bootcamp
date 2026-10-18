@@ -1607,7 +1607,7 @@ const SYNC_KEYS=new Set(["plan-kalam","epw","jobs","known","conf"]);
 const SYNC_HOOKS={};
 let syncRef=null,syncExists=false,syncQ={},syncT=null,syncBusy=false;
 const _set=store.set;
-store.set=(k,v)=>{_set(k,v);if(SYNC_KEYS.has(k)&&syncRef){syncQ[k]=v;clearTimeout(syncT);syncT=setTimeout(syncFlush,700)}};
+store.set=(k,v)=>{_set(k,v);if(SYNC_KEYS.has(k)&&window.__fbQueue)window.__fbQueue(k,v);if(SYNC_KEYS.has(k)&&syncRef){syncQ[k]=v;clearTimeout(syncT);syncT=setTimeout(syncFlush,700)}};
 function syncState(t,ok){const el=document.getElementById("syncstate");if(el){el.textContent=t;el.classList.toggle("on",!!ok)}}
 async function syncFlush(){if(syncBusy){clearTimeout(syncT);syncT=setTimeout(syncFlush,500);return}const q=syncQ;syncQ={};if(!Object.keys(q).length||!syncRef)return;syncBusy=true;syncState("Saving…",true);
  try{if(syncExists)await syncRef.update(q);else{await syncRef.set(q);syncExists=true}syncState("Saved for both of you",true)}
@@ -1617,6 +1617,57 @@ async function syncFlush(){if(syncBusy){clearTimeout(syncT);syncT=setTimeout(syn
  ref.onSnapshot(s=>{const first=!syncRef;syncRef=ref;syncExists=s.exists;const d=(s.exists&&s.data())||{};
   SYNC_KEYS.forEach(k=>{if(k in syncQ)return;if(k in d){const nv=JSON.stringify(d[k]);let cur=null;try{cur=localStorage.getItem(k)}catch(e){}if(cur!==nv){try{localStorage.setItem(k,nv)}catch(e){}SYNC_HOOKS[k]&&SYNC_HOOKS[k]()}}else if(first){const v=store.get(k,null);if(v!=null)syncQ[k]=v}});
   if(first&&Object.keys(syncQ).length)syncFlush();syncState("Saved for both of you",true)},()=>syncState("Saved on this device only",false))}catch(e){}})();
+/* Shared saving outside claude.ai (GitHub Pages): Firebase Realtime Database over plain REST + live stream.
+   Each synced key is stored as a JSON string so Firebase never reshapes empty objects or arrays.
+   Writes merge item by item against the latest copy, so two phones ticking different boxes never undo each other. */
+const FB_URL="https://safas-corner-default-rtdb.europe-west1.firebasedatabase.app";
+(function(){
+ if(window.claude&&window.claude.use)return;
+ if(!FB_URL||FB_URL.startsWith("__")||typeof EventSource==="undefined")return;
+ const base=FB_URL.replace(/\/+$/,"")+"/safa/progress";
+ const remote={},synced={},queue={};let timer=null,busy=false,live=false;
+ const parse=s=>{try{return JSON.parse(s)}catch(e){return null}};
+ const isObj=v=>v&&typeof v==="object"&&!Array.isArray(v);
+ function merge(theirs,from,to){
+  if(Array.isArray(to)){const was=new Set(Array.isArray(from)?from:[]),now=new Set(to),out=new Set(Array.isArray(theirs)?theirs:[]);
+   was.forEach(x=>{if(!now.has(x))out.delete(x)});now.forEach(x=>{if(!was.has(x))out.add(x)});return[...out]}
+  if(isObj(to)){const was=isObj(from)?from:{},out=Object.assign({},isObj(theirs)?theirs:{});
+   Object.keys(was).forEach(k=>{if(!(k in to))delete out[k]});Object.keys(to).forEach(k=>{if(JSON.stringify(to[k])!==JSON.stringify(was[k]))out[k]=to[k]});return out}
+  return to}
+ function apply(k,str){
+  if(typeof str!=="string")return;remote[k]=str;
+  if(k in queue)return;
+  let cur=null;try{cur=localStorage.getItem(k)}catch(e){}
+  synced[k]=parse(str);
+  if(cur!==str){try{localStorage.setItem(k,str)}catch(e){}SYNC_HOOKS[k]&&SYNC_HOOKS[k]()}}
+ async function flush(){
+  if(busy){clearTimeout(timer);timer=setTimeout(flush,500);return}
+  const keys=Object.keys(queue);if(!keys.length)return;busy=true;syncState("Saving…",true);
+  const body={};keys.forEach(k=>{const v=merge(remote[k]!=null?parse(remote[k]):undefined,synced[k],queue[k]);body[k]=JSON.stringify(v)});
+  try{const r=await fetch(base+".json",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+   if(!r.ok)throw new Error("HTTP "+r.status);
+   keys.forEach(k=>{delete queue[k];remote[k]=body[k];synced[k]=parse(body[k]);
+    let cur=null;try{cur=localStorage.getItem(k)}catch(e){}if(cur!==body[k]){try{localStorage.setItem(k,body[k])}catch(e){}SYNC_HOOKS[k]&&SYNC_HOOKS[k]()}});
+   syncState("Saved for both of you",true)}
+  catch(e){syncState("Offline: saved on this device, will retry",false);clearTimeout(timer);timer=setTimeout(flush,5000)}
+  busy=false}
+ window.__fbQueue=(k,v)=>{queue[k]=v;clearTimeout(timer);timer=setTimeout(flush,600)};
+ let first=true;
+ function connect(){
+  const es=new EventSource(base+".json");
+  const onData=(isPut,ev)=>{const m=parse(ev.data);if(!m)return;const p=m.path||"/";
+   if(p==="/"){const d=m.data||{};
+    if(isPut){Object.keys(d).forEach(k=>SYNC_KEYS.has(k)&&apply(k,d[k]));
+     if(first){first=false;SYNC_KEYS.forEach(k=>{if(!(k in d)){const v=store.get(k,null);if(v!=null&&(!isObj(v)||Object.keys(v).length)&&(!Array.isArray(v)||v.length))window.__fbQueue(k,v)}})}}
+    else Object.keys(d).forEach(k=>SYNC_KEYS.has(k)&&apply(k,d[k]))}
+   else{const k=p.split("/")[1];if(SYNC_KEYS.has(k))apply(k,m.data)}
+   if(!live){live=true;syncState("Saved for both of you",true)}};
+  es.addEventListener("put",ev=>onData(true,ev));
+  es.addEventListener("patch",ev=>onData(false,ev));
+  es.onerror=()=>{live=false;syncState("Offline: saved on this device",false)};
+ }
+ connect();
+})();
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
