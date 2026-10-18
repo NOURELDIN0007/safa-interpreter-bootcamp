@@ -714,6 +714,14 @@ html[data-style="pin"] .cv-list svg{stroke:#111}
 @keyframes flash{0%,40%{box-shadow:0 0 0 4px var(--rose-soft),var(--shadow)}100%{box-shadow:var(--shadow)}}
 html[data-style="pin"] .go{background:var(--pin-grey);border-color:transparent;color:#111}
 html[data-style="pin"] .go:hover{background:#111;color:#fff}
+.audio-card{background:linear-gradient(135deg,#fff 0%,var(--blush) 100%)}
+.trk{display:grid;grid-template-columns:1fr;gap:10px;padding:14px 0;border-top:1px solid var(--blush-2)}
+.trk > div > b{display:block;font:600 20px/1.2 var(--serif);color:var(--plum);margin-bottom:2px}
+.trk .muted{display:block;font-size:14.5px}
+.trk audio{width:100%;height:44px}
+.trk .chip{justify-self:start;min-height:34px;padding:6px 14px;font-size:13px}
+html[data-style="pin"] .audio-card{background:var(--pin-mod)}
+html[data-style="pin"] .trk > div > b{font:700 17px/1.25 var(--f-display);color:#111}
 </style>
 
 <div class="wrap">
@@ -845,6 +853,11 @@ html[data-style="pin"] .go:hover{background:#111;color:#fff}
   <div class="stack">
     <header class="pg-head"><div class="pg-text"><span class="cv-eyebrow">Kalam interview <svg class="cv-heart sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></span><h2 class="pg-title">Tuesday, Oct 20<span class="pg-script">phone, then Zoom</span></h2></div><div class="pg-art" aria-hidden="true"><div class="pg-arch"><img src="img/desk.jpg" alt="" loading="lazy"></div><svg class="cv-spark s1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg><svg class="cv-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg><svg class="pg-sprig" viewBox="0 0 120 260" aria-hidden="true"><path d="M60 258C58 190 64 120 86 10"/><path d="M62 210c-18-8-30-24-34-42 18 4 30 18 34 42z"/><path d="M63 170c16-10 26-26 28-44-16 6-26 22-28 44z"/><path d="M66 130c-16-8-26-22-30-40 16 4 28 18 30 40z"/><path d="M71 92c14-10 22-24 24-40-14 6-22 20-24 40z"/><path d="M77 58c-12-6-20-18-22-32 12 4 20 14 22 32z"/></svg></div></header>
     <p class="intro">Two parts: a short <b>phone screening</b>, then a <b>Zoom meeting</b>. The questions below include the ones you were told about plus the ones they are likely to add. Answers use simple, clear English on purpose: easy to remember, easy to say with confidence.</p>
+    <div class="card stack audio-card" id="k-audio"><span class="label">Voice notes to practice with</span><h3>Listen anywhere, even with the screen off</h3>
+      <div class="trk"><div><b>1 · Listen and repeat</b><span class="muted">All 25 questions, each followed by a good answer. Pause and say it after her. About 11 minutes.</span></div><audio controls preload="none" src="audio/practice/kalam-listen.mp3"></audio><a class="chip" href="audio/practice/kalam-listen.mp3" download="Kalam - listen and repeat.mp3">Download</a></div>
+      <div class="trk"><div><b>2 · Your turn</b><span class="muted">Each question, a beep, then quiet time for <b>you</b> to answer out loud. Then a good answer to compare. About 22 minutes.</span></div><audio controls preload="none" src="audio/practice/kalam-your-turn.mp3"></audio><a class="chip" href="audio/practice/kalam-your-turn.mp3" download="Kalam - your turn.mp3">Download</a></div>
+      <p class="muted">The voice uses example numbers for the laptop and internet speed. Say your real ones. Every question below also has <b>Hear question</b> and <b>Hear answer</b> buttons.</p>
+    </div>
     <div class="grid2">
       <div class="card stack"><h3>About Kalam (say this if asked)</h3>
         <p><b>Kalam CX</b> is part of <b>Future Group</b>, a language company that started in Egypt in 1994. Kalam itself was founded in 2019 and is based in Dubai, with sites in Egypt and other countries. It offers <b>OPI</b> (phone), <b>VRI</b> (video) and sign-language interpreting in <b>200+ languages</b>, mainly for <b>healthcare</b> and legal clients, plus customer-service work.</p>
@@ -1739,10 +1752,12 @@ const PLAN=[
   ["must","Your introduction (Questions 1 and 7): say it out loud 5 times, then record it once. (15 min)","kalam#kq-1"],
   ["must","Phone screening (Questions 2–6): say each answer out loud 3 times. (20 min)","kalam#kq-2"],
   ["must","Interpreter questions (12, 13, 15, 16, 17, 18): say each answer out loud 3 times. (25 min)","kalam#kq-12"],
-  ["imp","The other Zoom questions (8, 9, 10, 11, 14, 19, 25): read each answer out loud once. (20 min)","kalam#kq-8"]]},
+  ["imp","The other Zoom questions (8, 9, 10, 11, 14, 19, 25): read each answer out loud once. (20 min)","kalam#kq-8"],
+  ["imp","Voice note “Listen and repeat”: play it once tonight, even while doing something else. (11 min)","kalam#k-audio"]]},
  {date:"2026-10-19",day:"Monday, Oct 19",title:"Practice like the real thing",time:"about 1 hour 30 min",items:[
   ["must","Mock Test → Kalam interview, start to finish, recording yourself. (30 min)","mock:kalam"],
   ["must","Watch it once, then redo only your 3 weakest answers. (20 min)","kalam#kq-1"],
+  ["imp","Voice note “Your turn”: answer every question out loud after the beep. (22 min)","kalam#k-audio"],
   ["must","Short interpretation (Questions 21–24): interpret each one out loud 3 times. (15 min)","kalam#kq-21"],
   ["must","Zoom test at zoom.us/test: camera, headset, internet cable, light in front of you. (15 min)","url:https://zoom.us/test"],
   ["imp","Question 20: spell your name with the letter words (S as in Sierra…). (5 min)","kalam#kq-20"],
@@ -2002,7 +2017,7 @@ function speakDevice(text){
  tts.speak(u);
 }
 /* recorded human-like voices (Microsoft neural, generated once and packed in audio/*.mp3) */
-const V={emma:"en-US-EmmaNeural",andrew:"en-US-AndrewNeural",salma:"ar-EG-SalmaNeural",shakir:"ar-EG-ShakirNeural"};
+const V={ava:"en-US-AvaNeural",emma:"en-US-EmmaNeural",andrew:"en-US-AndrewNeural",salma:"ar-EG-SalmaNeural",shakir:"ar-EG-ShakirNeural"};
 const EN_MALE=/^(Doctor|Pharmacy agent|Pharmacist|Scheduler)/;
 const RP_MALE=[1,2,5,6,8];
 function voiceFor(who,lang,call){return lang==="ar"?((call!=null&&RP_MALE.includes(call))?V.shakir:V.salma):(EN_MALE.test(who||"")?V.andrew:V.emma)}
@@ -2442,6 +2457,9 @@ function mkDone(){
   <div class="mk-btns"><button class="btn" id="mk-again">Try again</button></div>`);
  $("#mk-again").onclick=()=>{const k=mk.key;mkWelcome(k)};
 }
+const KSAY_FIX=[["[10 or 11]","11"],["[8 or more]","8"],["[Intel Core i3 / i5]","Intel Core i5"],["[X]","50"],["[Y]","20"],["[real situations, for example family members at a clinic or on phone calls]","family members at the clinic and on phone calls"],[" My date of birth is [month, day, year].",""]];
+const kSay=m=>KSAY_FIX.reduce((s,[a,b])=>s.split(a).join(b),m).replace(/\[If [^:\]]*: ([^\]]*)\]/g,"$1").replace(/\[([^\]]*)\]/g,"$1");
+const ansVoice=m=>/[\u0600-\u06ff]/.test(m)&&!/[a-zA-Z]/.test(m)?V.salma:V.ava;
 function fmtModel(q){const m=q.model;if(/[؀-ۿ]/.test(m)&&!/[a-zA-Z]/.test(m))return AR(m);if(/[؀-ۿ]/.test(m)){const i=m.search(/[؀-ۿ]/);const cut=m.lastIndexOf("(",i);const k=cut>0?cut:i;return esc(m.slice(0,k))+"<br>"+esc(m.slice(k,m.indexOf(")",k)+1))+" "+AR(m.slice(m.indexOf(")",k)+1).trim())}return esc(m)}
 
 /* ---------- test answers tab ---------- */
@@ -2467,8 +2485,8 @@ renderAns("med",$("#ans-m-med"));
 (function(){
  let last="";
  $("#kalam").innerHTML=MOCK.kalam.qs.map((q,i)=>{const head=q.part!==last?`<h3>${esc(q.part)}</h3>`:"";last=q.part;
-  return head+`<div class="ans-q" id="kq-${i+1}"><span class="label">Question ${i+1}</span><p><b>${q.lang==="ar"?AR(q.text):esc(q.text)}</b></p><div class="mk-btns"><button class="btn ghost" data-kplay="${i}">Hear question</button></div><div class="ans-say"><span class="label">${q.lang==="ar"||/interpret into/.test(q.text)?"Model interpretation":"What to say"}</span><p>${fmtModel(q)}</p></div>${q.tip?`<p class="tip">${esc(q.tip)}</p>`:""}</div>`}).join("");
- $("#kalam").addEventListener("click",e=>{const b=e.target.closest("[data-kplay]");if(!b)return;const q=MOCK.kalam.qs[+b.dataset.kplay];playLine(q.who,q.lang,q.text,null)});
+  return head+`<div class="ans-q" id="kq-${i+1}"><span class="label">Question ${i+1}</span><p><b>${q.lang==="ar"?AR(q.text):esc(q.text)}</b></p><div class="mk-btns"><button class="btn ghost" data-kplay="${i}">Hear question</button><button class="btn ghost" data-kans="${i}">Hear answer</button></div><div class="ans-say"><span class="label">${q.lang==="ar"||/interpret into/.test(q.text)?"Model interpretation":"What to say"}</span><p>${fmtModel(q)}</p></div>${q.tip?`<p class="tip">${esc(q.tip)}</p>`:""}</div>`}).join("");
+ $("#kalam").addEventListener("click",e=>{const a=e.target.closest("[data-kans]");if(a){const q=MOCK.kalam.qs[+a.dataset.kans],t=kSay(q.model),vn=ansVoice(q.model);playClip(vn,t).then(r=>{if(r===false)(vn===V.salma?speakArDevice:speakDevice)(t)});return}const b=e.target.closest("[data-kplay]");if(!b)return;const q=MOCK.kalam.qs[+b.dataset.kplay];playLine(q.who,q.lang,q.text,null)});
 })();
 
 /* ---------- English Plan tab ---------- */
