@@ -170,7 +170,9 @@ export default function Settings() {
 
     {/* ---------- data: fill it, bring things over, back it up, wipe it ---------- */}
     <Section title={t('Data')}>
-      <Row icon="sparkles" iconTint="var(--acc)" title={t('Load starter plan (PPL)')} accessory="chevron" onClick={loadStarterPlan} />
+      <Row icon="heart" iconTint="var(--acc)" title={t('Load my trainer plan')} subtitle={t('Lower · Upper · Lower, cardio, core, mobility & stretching')} accessory="chevron"
+        onClick={() => confirmSheet({ title: t('Load trainer plan?'), message: t('Replaces your routines and week schedule with the trainer’s plan. Your workouts and body weight stay.'), confirmText: t('Load'), onConfirm: () => { useStore.getState().loadSafsfPlan(); nav('/plan'); toast(t('Trainer plan loaded ❤️')) } })} />
+      <Row icon="sparkles" iconTint="var(--teal)" title={t('Load starter plan (PPL)')} accessory="chevron" onClick={loadStarterPlan} />
       <Row icon="shuffle" iconTint="var(--teal)" title={t('Import from another app')}
         subtitle={t('FitNotes, Strong, Hevy — or body weight from Apple Health')}
         accessory="chevron" onClick={() => importRef.current.click()} />

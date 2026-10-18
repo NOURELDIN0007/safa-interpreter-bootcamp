@@ -10,6 +10,7 @@ import { nav } from './lib/nav.js'
 import { starterRoutines } from './lib/starter.js'
 import Media, { Thumb } from './components/Media.jsx'
 import Stepper from './components/Stepper.jsx'
+import { SF_NOTES, SF_VIDEOS } from './lib/safsf-extra.js'
 import Icon from './components/Icon.jsx'
 import { Button, Slider, Switch, Segmented, SelectRow, Row } from './components/ui.jsx'
 import { glyphOf, GLYPH_GROUPS, DEFAULT_GLYPH } from './lib/glyphs.js'
@@ -293,7 +294,9 @@ function ExerciseDetail({ ex, close }) {
       <span className="tag"><Icon name="dumbbell" />{t(ex.eq)}</span>
       {(ex.sm || []).slice(0, 3).map((s, i) => <span key={i} className="tag">{t(s)}</span>)}
     </div>
-    {ex.desc && <div className="exnote">{ex.desc}</div>}
+    {ex.desc && <div className="exnote" dir="auto">{ex.desc}</div>}
+    {SF_NOTES[ex.id] && <div className="exnote" dir="auto">{SF_NOTES[ex.id]}</div>}
+    {SF_VIDEOS[ex.id] && <a className="vidlink" href={SF_VIDEOS[ex.id]} target="_blank" rel="noopener"><Icon name="play" />{t('Watch the trainer’s video')}</a>}
     {best > 0 && <div className="small row" style={{ marginBottom: 6, gap: 5 }}><Icon name="trophy" style={{ fontSize: 14, color: 'var(--yellow)' }} />{t('Best:')} <b className="accent">{fmtNum(best)} {st.unit}</b>{last ? ` · ${t('last')} ${fmtDate(last.d)}: ${last.sets.map(s => setLabel(ex.id, s, last.target)).join(', ')}` : ''}</div>}
     <Button variant="primary" icon="plus" style={{ margin: '10px 0 4px' }} onClick={() => addToRoutineSheet(ex)}>{t('Add to my plan')}</Button>
     {ex.custom && <div className="row" style={{ gap: 8, marginTop: 8 }}>
@@ -530,7 +533,9 @@ function ExConfig({ ex, existing, onSave, onDelete, close, routine }) {
       {cardio && <span className="tag acc"><Icon name="figureRun" />{t('Cardio')}</span>}
       <span className="tag">{t(ex.tg || ex.bp)}</span><span className="tag">{t(ex.eq)}</span>
     </div>
-    {ex.desc && <div className="exnote">{ex.desc}</div>}
+    {ex.desc && <div className="exnote" dir="auto">{ex.desc}</div>}
+    {SF_NOTES[ex.id] && <div className="exnote" dir="auto">{SF_NOTES[ex.id]}</div>}
+    {SF_VIDEOS[ex.id] && <a className="vidlink" href={SF_VIDEOS[ex.id]} target="_blank" rel="noopener"><Icon name="play" />{t('Watch the trainer’s video')}</a>}
     {!cardio && <div style={{ marginBottom: 14 }}>
       <Segmented className="seg-range" value={mode} onChange={setMode}
         options={[{ value: 'reps', label: t('Reps') }, { value: 'time', label: t('Time') }]} />

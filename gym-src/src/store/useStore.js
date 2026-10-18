@@ -3,6 +3,7 @@ import { api } from '../lib/api.js'
 import { localTZ } from '../lib/format.js'
 import { registerCustom } from '../lib/exercises.js'
 import { DEMO } from '../lib/demo.js'
+import { safsfPlan } from '../lib/safsf-plan.js'
 import { MOBILE, nativeLoad, nativeSave, syncReminder } from '../lib/mobile.js'
 
 const KEY = 'gym_state_v1'
@@ -145,6 +146,12 @@ export const useStore = create((set, get) => {
       persist(Object.assign(clone(DEF), buildDemoState()), false)
     },
 
+    // Her trainer's program: replaces the routines and the week schedule, keeps all history.
+    loadSafsfPlan() {
+      const { routines, week } = safsfPlan()
+      get().update(s => { s.routines = routines; s.week = week; s.dayPlan = {}; s.restSec = 60 })
+    },
+
     // Boot: ask the server who we are, then pull.
     async boot() {
       // Mobile build: no backend either — restore from the file mirror (the durable copy;
@@ -165,6 +172,10 @@ export const useStore = create((set, get) => {
       // Static build (GitHub Pages): no backend — data lives on the phone; the welcome screen
       // switches to local mode on first launch.
       if (DEMO) {
+        if (!localStorage.getItem('safsf_plan_v1')) {
+          localStorage.setItem('safsf_plan_v1', '1')
+          if (!(get().S.routines || []).length) get().loadSafsfPlan()
+        }
         set({ ready: true })
         return
       }

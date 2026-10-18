@@ -1,5 +1,10 @@
 import { EXDB } from './exercises-data.js'
+import { SF_EX } from './safsf-extra.js'
 import { t } from './i18n.js'
+
+EXDB.push(...SF_EX)
+// Her app: drop the dataset's "(male)" tag from names.
+EXDB.forEach(e => { e.n = e.n.replace(/ \(male\)$/, '') })
 
 export { EXDB }
 export const EXIDX = {}
@@ -31,8 +36,10 @@ export const allExercises = st => [...(st.customEx || []), ...EXDB]
 // shipping ~140 MB of images into the deployment.
 const IMG_BASE = import.meta.env.VITE_IMG_BASE || 'img/'
 const GIF_BASE = import.meta.env.VITE_GIF_BASE || 'gif/'
-export const imgSrc = ex => IMG_BASE + ex.img
-export const gifSrc = ex => GIF_BASE + ex.gif
+// Media bundled with the app (Safsf's extra exercises) is addressed by its own path.
+const own = f => f.startsWith('ex/')
+export const imgSrc = ex => (own(ex.img) ? '' : IMG_BASE) + ex.img
+export const gifSrc = ex => (own(ex.gif) ? '' : GIF_BASE) + ex.gif
 
 // Cardio exercises log time + speed instead of weight × reps.
 export const isCardio = idOrEx => (typeof idOrEx === 'string' ? EXIDX[idOrEx] : idOrEx)?.bp === 'cardio'
