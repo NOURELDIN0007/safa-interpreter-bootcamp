@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}img{max-width:100%}</style></head><body><title>Safa's Corner</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}img{max-width:100%}</style></head><body><script>try{if(JSON.parse(localStorage.getItem("ui-style"))==="pin")document.documentElement.dataset.style="pin"}catch(e){}</script><title>Safa's Corner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -567,6 +567,145 @@ section.panel:not(.cover)::after{content:"one beautiful step at a time";display:
 #plan .block.past{opacity:.55}
 #plan .block-head .pill{vertical-align:4px;margin-left:6px;font-family:var(--f-body)}
 </style>
+<style id="style-pin">
+/* ===== Style: Pinterest (menu → Style). White canvas, near-black type, Pinterest red only on the main action,
+   grey pills, black for "selected", no decoration, and the home page as a masonry pin feed. ===== */
+.setbtn{margin-left:8px;flex:0 0 auto;width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--rose-deep);display:grid;place-items:center;cursor:pointer}
+@media (max-width:1023px){.topbar-title{margin-left:auto}}
+@media (min-width:1024px){.setbtn{margin-left:4px}}
+.style-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 14px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.style-row b{display:block;font-size:15.5px}
+.style-row small{color:var(--muted);font-size:13px}
+.style-seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--blush)}
+.sheet-grid .style-seg button{width:auto;padding:9px 14px;border-radius:999px;font:700 13px/1 var(--f-body);color:var(--muted);background:none;display:block}
+.sheet-grid .style-seg button[aria-pressed="true"]{background:var(--rose);color:#fff}
+.pin-feed{display:none}
+
+html[data-style="pin"]{
+  --pin-red:#e60023;--pin-red-2:#ad081b;--pin-grey:#e9e9e9;--pin-grey-2:#e2e2e2;--pin-mod:#f1f1f1;
+  --bg:#ffffff;--tint:#f1f1f1;--surface:#ffffff;--ink:#111111;--ink-2:#333333;--muted:#5f5f5f;--line:#e9e9e9;--line-2:#dadada;
+  --accent:#e60023;--accent-strong:#111111;--accent-soft:#e9e9e9;--accent-tint:#f1f1f1;--ar-bg:#f1f1f1;--warn:#111;--warn-soft:#f1f1f1;
+  --blush:#f1f1f1;--blush-2:#e9e9e9;--rose:#e60023;--rose-deep:#111111;--rose-soft:#e9e9e9;--plum:#111111;
+  --f-display:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-body:var(--f-display);--serif:var(--f-display);--script:var(--f-display);
+  --r:24px;--r-sm:16px;--shadow:none;--shadow-up:0 8px 24px -10px rgba(0,0,0,.2);
+}
+html[data-style="pin"] body,html[data-style="pin"] body[data-tab="home"]{background:#fff;color:#111;letter-spacing:0}
+html[data-style="pin"] body::before{display:none}
+html[data-style="pin"] a{color:#111}
+
+/* top bar: white, bold red wordmark, black pills for the current section */
+html[data-style="pin"] .topbar,html[data-style="pin"] body[data-tab="home"] .topbar{background:#fff;border-image:none;border-bottom:0}
+html[data-style="pin"] .brand{font:800 22px/1 var(--f-display);color:var(--pin-red);letter-spacing:-.02em}
+html[data-style="pin"] .topbar-title{font:700 16px/1 var(--f-display);color:#111}
+html[data-style="pin"] .tabrow button{font:600 15px/1 var(--f-display);letter-spacing:0;text-transform:none;color:#111;border-radius:999px;padding:12px 14px;box-shadow:none!important}
+html[data-style="pin"] .tabrow button:hover{background:var(--pin-mod)!important}
+html[data-style="pin"] .tabrow button[aria-selected="true"]{background:#111!important;color:#fff}
+html[data-style="pin"] .setbtn{color:#111}
+html[data-style="pin"] .setbtn:hover{background:var(--pin-mod)}
+@media (max-width:1023px){
+  html[data-style="pin"] .bnav{background:#fff;border-top:0;box-shadow:0 -1px 0 #efefef;backdrop-filter:none;-webkit-backdrop-filter:none;font-size:0;padding-top:10px}
+  html[data-style="pin"] .bnav button{font-size:0;gap:0;color:#8e8e8e;min-height:46px}
+  html[data-style="pin"] .bnav button svg{width:27px;height:27px}
+  html[data-style="pin"] .bnav .ico{background:none!important;width:auto;height:auto}
+  html[data-style="pin"] .bnav button[aria-current="page"]{color:#111}
+  html[data-style="pin"] .bnav button[aria-current="page"] svg{stroke-width:2.8}
+}
+html[data-style="pin"] .sheet{background:rgba(0,0,0,.4)}
+html[data-style="pin"] .sheet-grid{background:#fff;border-radius:32px 32px 0 0}
+html[data-style="pin"] .sheet-grid b{font:700 16px/1.25 var(--f-display)}
+html[data-style="pin"] .sheet-grid .ico{background:var(--pin-mod);color:#111;border-radius:50%}
+html[data-style="pin"] .sheet-grid button:hover,html[data-style="pin"] .sheet-grid button.on{background:var(--pin-mod)}
+html[data-style="pin"] .sheet-grid button.on .ico{background:#111;color:#fff}
+html[data-style="pin"] .style-seg{background:none}
+html[data-style="pin"] .sheet-grid .style-seg button{background:var(--pin-grey);color:#111;font:600 15px/1 var(--f-display);padding:11px 16px}
+html[data-style="pin"] .sheet-grid .style-seg button[aria-pressed="true"]{background:#111;color:#fff}
+
+/* type: one sans, heavy, sentence case; script and serif accents become plain */
+html[data-style="pin"] h1,html[data-style="pin"] h2,html[data-style="pin"] h3{font-family:var(--f-display);color:#111}
+html[data-style="pin"] .pg-title,html[data-style="pin"] .cv-title{font:700 clamp(30px,8vw,44px)/1.1 var(--f-display)!important;letter-spacing:-.02em!important;color:#111!important}
+html[data-style="pin"] .pg-script,html[data-style="pin"] .cv-script,html[data-style="pin"] .cv-l2{font:inherit;font-size:1em;color:#111;margin:0}
+html[data-style="pin"] section.panel:not(.cover) h2,html[data-style="pin"] .cv-h2{font:700 24px/1.2 var(--f-display)!important;letter-spacing:-.01em!important;color:#111}
+html[data-style="pin"] .cv-h2 em{font-style:normal;color:#111}
+html[data-style="pin"] section.panel:not(.cover) h2::before{display:none}
+html[data-style="pin"] section.panel:not(.cover) h3,html[data-style="pin"] .mk-card b,html[data-style="pin"] .wc-top b,html[data-style="pin"] .ep-ex b,html[data-style="pin"] ol.rules b,html[data-style="pin"] .date b{font:700 18px/1.25 var(--f-display);color:#111}
+html[data-style="pin"] .label,html[data-style="pin"] .cv-hello,html[data-style="pin"] .cv-eyebrow{font:600 14px/1.2 var(--f-display);letter-spacing:0;text-transform:none;color:#5f5f5f}
+html[data-style="pin"] .cv-heart{stroke:var(--pin-red)}
+html[data-style="pin"] .intro,html[data-style="pin"] .cv-sub{color:#5f5f5f}
+html[data-style="pin"] .fc .front{font:700 clamp(26px,7vw,34px)/1.2 var(--f-display)}
+html[data-style="pin"] .ep-ar{color:#111}
+
+/* decoration off */
+html[data-style="pin"] .cv-note,html[data-style="pin"] .cv-spark,html[data-style="pin"] .cv-sprig,html[data-style="pin"] .pg-sprig,html[data-style="pin"] .pg-art .cv-spark,html[data-style="pin"] .cv-hero-art,html[data-style="pin"] .pg-art{display:none!important}
+html[data-style="pin"] section.panel:not(.cover)::after{display:none}
+html[data-style="pin"] .cv-hero{min-height:0;grid-template-columns:1fr;padding-block:20px 8px}
+html[data-style="pin"] .pg-head{grid-template-columns:1fr;border-bottom:0}
+html[data-style="pin"] .cv-arch,html[data-style="pin"] .pg-arch,html[data-style="pin"] .cv-card-img,html[data-style="pin"] .cv-about-img img,html[data-style="pin"] .cv-close img{border-radius:16px!important;outline:0;box-shadow:none}
+html[data-style="pin"] .cv-badge{box-shadow:none;background:#fff}
+html[data-style="pin"] .cv-badge b{font:700 20px/1 var(--f-display);color:#111}
+html[data-style="pin"] .cv-feats div{font:600 13px/1.3 var(--f-display);letter-spacing:0;text-transform:none;color:#111;border-left-color:#e9e9e9}
+html[data-style="pin"] .cv-feats svg,html[data-style="pin"] .cv-band svg,html[data-style="pin"] .cv-list svg{stroke:#111}
+html[data-style="pin"] .cv-band{background:var(--pin-mod);border-radius:24px;margin-inline:0}
+html[data-style="pin"] .cv-about,html[data-style="pin"] .cv-close{border-top-color:#efefef}
+
+/* surfaces: flat light-grey modules, no borders, no shadows */
+html[data-style="pin"] .card,html[data-style="pin"] .seg,html[data-style="pin"] .ans-q,html[data-style="pin"] details,html[data-style="pin"] .tablewrap,html[data-style="pin"] .pair,html[data-style="pin"] .fc,html[data-style="pin"] .mk-card,html[data-style="pin"] .opt,html[data-style="pin"] .mk-text,html[data-style="pin"] .check,html[data-style="pin"] ol.rules li,html[data-style="pin"] .vid,html[data-style="pin"] .wc,html[data-style="pin"] .date{background:var(--pin-mod);border-color:transparent;box-shadow:none;border-radius:24px}
+html[data-style="pin"] .ep-head,html[data-style="pin"] .plan-top{background:var(--pin-mod)}
+html[data-style="pin"] .ep-idiom,html[data-style="pin"] .ep-exprs .ep-idiom,html[data-style="pin"] .tip,html[data-style="pin"] .pair > div + div{background:#fff;border-color:transparent}
+html[data-style="pin"] .ep-day.today{border-color:#111;box-shadow:none}
+html[data-style="pin"] .date.hot{background:#111;color:#fff}
+html[data-style="pin"] .date.hot b{color:#fff}
+html[data-style="pin"] .callout,html[data-style="pin"] .callout.warn,html[data-style="pin"] .callout.ok{background:var(--pin-mod);border-color:transparent;box-shadow:none}
+html[data-style="pin"] th{background:var(--pin-grey);color:#111;letter-spacing:0;text-transform:none}
+html[data-style="pin"] ol.rules li::before{font:700 15px/1 var(--f-display);color:#fff;background:#111}
+html[data-style="pin"] .check.done{background:var(--pin-mod)}
+html[data-style="pin"] .check input{border-color:#767676}
+html[data-style="pin"] .check input:checked{background:#111;border-color:#111}
+html[data-style="pin"] .progress{background:var(--pin-grey)}
+html[data-style="pin"] .progress i{background:var(--pin-red)}
+html[data-style="pin"] .tag,html[data-style="pin"] .pill,html[data-style="pin"] .prio.imp{background:var(--pin-grey);color:#111}
+html[data-style="pin"] .pill.soft,html[data-style="pin"] .prio.opt{background:#fff;color:#5f5f5f}
+html[data-style="pin"] .prio.must{background:var(--pin-red);color:#fff}
+
+/* controls: red for the main action, grey pills, black when selected */
+html[data-style="pin"] .btn,html[data-style="pin"] .cv-btn{background:var(--pin-red);border-color:var(--pin-red);color:#fff;border-radius:999px;font:600 16px/1 var(--f-display);letter-spacing:0;text-transform:none;box-shadow:none;padding:14px 20px}
+html[data-style="pin"] .btn:hover,html[data-style="pin"] .cv-btn:hover{background:var(--pin-red-2);border-color:var(--pin-red-2);transform:none}
+html[data-style="pin"] .cv-arrow{display:none}
+html[data-style="pin"] .btn.ghost,html[data-style="pin"] .cv-btn.ghost{background:var(--pin-grey);border-color:var(--pin-grey);color:#111}
+html[data-style="pin"] .btn.ghost:hover{background:var(--pin-grey-2)}
+html[data-style="pin"] .cv-link{font:600 16px/1 var(--f-display);letter-spacing:0;text-transform:none;color:#111;border-bottom:0;background:var(--pin-grey);padding:14px 20px;border-radius:999px}
+html[data-style="pin"] .chip,html[data-style="pin"] .subtabs .tabrow button{background:var(--pin-grey)!important;border-color:transparent;color:#111;font:600 15px/1.2 var(--f-display);letter-spacing:0;text-transform:none}
+html[data-style="pin"] .chip[aria-pressed="true"],html[data-style="pin"] .subtabs .tabrow button[aria-selected="true"]{background:#111!important;border-color:#111;color:#fff}
+html[data-style="pin"] .say{background:var(--pin-grey);border-color:transparent;color:#111}
+html[data-style="pin"] .vid-play{background-color:var(--pin-grey)}
+html[data-style="pin"] .search{background:var(--pin-grey);border-color:transparent;border-radius:999px;min-height:48px}
+html[data-style="pin"] .mk-meter i{background:var(--pin-red)}
+html[data-style="pin"] :focus-visible{outline-color:#111}
+
+/* home: a masonry pin feed of every section */
+html[data-style="pin"] .pin-feed{display:block;columns:2;column-gap:12px;margin:18px 0 28px}
+@media (min-width:700px){html[data-style="pin"] .pin-feed{columns:3}}
+@media (min-width:1024px){html[data-style="pin"] .pin-feed{columns:5;column-gap:16px}}
+.pf{display:block;break-inside:avoid;margin:0 0 16px;text-decoration:none!important;color:#111}
+.pf-img{display:flex;align-items:center;justify-content:center;border-radius:16px;overflow:hidden;background:#f1f1f1}
+.pf-img img{display:block;width:100%;height:100%;object-fit:cover;transition:filter .2s}
+.pf:hover .pf-img img{filter:brightness(.85)}
+.pf b{display:block;font:600 14px/1.3 var(--f-display);margin:8px 4px 0;color:#111}
+.pf small{display:block;font-size:12.5px;color:#5f5f5f;margin:2px 4px 0}
+.pf-text .pf-img{background:var(--pin-red);padding:18px}
+.pf-text.dark .pf-img{background:#111}
+.pf-text em{font:800 26px/1.08 var(--f-display);font-style:normal;color:#fff;letter-spacing:-.02em;text-align:left}
+html[data-style="pin"] .cv-qmark{font:800 72px/.7 var(--f-display);color:var(--pin-red)}
+html[data-style="pin"] .cv-quote blockquote{font:600 clamp(20px,2.6vw,26px)/1.4 var(--f-display);color:#111}
+html[data-style="pin"] .cv-quote blockquote em{font-style:normal;color:#111}
+html[data-style="pin"] .cv-avatar{background:var(--pin-grey);color:#111;border:0;box-shadow:none;font:700 20px/1 var(--f-display)}
+html[data-style="pin"] .cv-from b{font-size:15px;letter-spacing:0;text-transform:none}
+html[data-style="pin"] .cv-from span{color:#5f5f5f}
+html[data-style="pin"] .cv-close-img{box-shadow:none;border-radius:16px}
+html[data-style="pin"] .cv-foot{background:var(--pin-mod);color:#111;font:600 14px/1.3 var(--f-display);letter-spacing:0;text-transform:none}
+html[data-style="pin"] .cv-foot a{color:#111;font:600 14px/1 var(--f-display);letter-spacing:0;text-transform:none;text-decoration:underline}
+html[data-style="pin"] .cv-list svg{stroke:#111}
+</style>
 
 <div class="wrap">
 <nav class="topbar" aria-label="Sections">
@@ -574,6 +713,7 @@ section.panel:not(.cover)::after{content:"one beautiful step at a time";display:
   <div class="tabrow" role="tablist" id="tabrow"></div>
   <span class="topbar-title" id="toptitle"></span>
   <button class="menubtn" id="menubtn" aria-label="More sections" aria-expanded="false"></button>
+  <button class="setbtn" id="setbtn" aria-label="Settings" title="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
 </nav>
 <div class="sheet" id="sheet" hidden><div class="sheet-grid" id="sheetgrid"></div></div>
 <nav class="bnav" id="bnav" aria-label="Main sections"></nav>
@@ -600,6 +740,18 @@ section.panel:not(.cover)::after{content:"one beautiful step at a time";display:
       <svg class="cv-spark s2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z"/></svg>
       <svg class="cv-sprig" viewBox="0 0 120 260" aria-hidden="true"><path d="M60 258C58 190 64 120 86 10"/><path d="M62 210c-18-8-30-24-34-42 18 4 30 18 34 42z"/><path d="M63 170c16-10 26-26 28-44-16 6-26 22-28 44z"/><path d="M66 130c-16-8-26-22-30-40 16 4 28 18 30 40z"/><path d="M71 92c14-10 22-24 24-40-14 6-22 20-24 40z"/><path d="M77 58c-12-6-20-18-22-32 12 4 20 14 22 32z"/></svg>
     </div>
+  </div>
+
+  <!-- pin feed (Pinterest style only) -->
+  <div class="pin-feed" aria-label="Sections">
+    <a class="pf" href="#plan" data-goto="plan"><span class="pf-img" style="aspect-ratio:2/3"><img src="img/hydrangea.jpg" alt="" loading="lazy"></span><b>This week’s plan</b><small>Checklist for Kalam</small></a>
+    <a class="pf" href="#eplan" data-goto="eplan"><span class="pf-img" style="aspect-ratio:1/1"><img src="img/vase.jpg" alt="" loading="lazy"></span><b>English Plan</b><small>12 weeks, day by day</small></a>
+    <a class="pf" href="#kalam" data-goto="kalam"><span class="pf-img" style="aspect-ratio:3/4"><img src="img/desk.jpg" alt="" loading="lazy"></span><b>Kalam interview</b><small>Tuesday prep</small></a>
+    <a class="pf pf-text" href="#mock" data-goto="mock"><span class="pf-img" style="aspect-ratio:4/5"><em>Practice the real test</em></span><b>Mock test</b><small>Timed, with a recording</small></a>
+    <a class="pf" href="#confidence" data-goto="confidence"><span class="pf-img" style="aspect-ratio:3/4.2"><img src="img/petals.jpg" alt="" loading="lazy"></span><b>Confidence</b><small>Speak without freezing</small></a>
+    <a class="pf" href="#multi" data-goto="multi"><span class="pf-img" style="aspect-ratio:2/3"><img src="img/peony.jpg" alt="" loading="lazy"></span><b>Multilingual</b><small>Tests and study material</small></a>
+    <a class="pf" href="#answers" data-goto="answers"><span class="pf-img" style="aspect-ratio:4/5"><img src="img/pen.jpg" alt="" loading="lazy"></span><b>Answers</b><small>Predicted questions</small></a>
+    <a class="pf pf-text dark" href="#jobs" data-goto="jobs"><span class="pf-img" style="aspect-ratio:1/1.1"><em>Other jobs to apply for</em></span><b>Jobs</b><small>Saved for later</small></a>
   </div>
 
   <!-- about -->
@@ -1485,6 +1637,12 @@ const sheet=$("#sheet");
 $("#bnav").innerHTML=PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
 $("#sheetgrid").innerHTML=panels.map(p=>{const id=p.id.slice(2);return `<button data-sheet="${id}"><span class="ico">${svgI(id)}</span><span><b>${esc(p.dataset.title)}</b><small>${esc(NAVSUB[id]||"")}</small></span></button>`}).join("");
 function closeSheet(){sheet.hidden=true}
+/* Style: Corner (default) or Pinterest. Saved on this device; applied before first paint by the inline script in <body>. */
+function applyStyle(v){if(v==="pin")document.documentElement.dataset.style="pin";else delete document.documentElement.dataset.style;document.querySelectorAll("[data-style-opt]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.styleOpt===v)));const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=v==="pin"?"#ffffff":"#fbf1ef"}
+$("#sheetgrid").insertAdjacentHTML("afterbegin",`<div class="style-row"><span><b>Style</b><small>How the whole site looks</small></span><div class="style-seg" role="group" aria-label="Style"><button type="button" data-style-opt="corner">Corner</button><button type="button" data-style-opt="pin">Pinterest</button></div></div>`);
+sheet.addEventListener("click",e=>{const o=e.target.closest("[data-style-opt]");if(o){store.set("ui-style",o.dataset.styleOpt);applyStyle(o.dataset.styleOpt)}});
+applyStyle(store.get("ui-style","corner"));
+$("#setbtn").addEventListener("click",()=>{sheet.hidden=!sheet.hidden});
 $("#bnav").addEventListener("click",e=>{const b=e.target.closest("[data-bnav]");if(!b)return;if(b.dataset.bnav==="more"){sheet.hidden=!sheet.hidden;return}closeSheet();show(b.dataset.bnav,true)});
 sheet.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");if(b)show(b.dataset.sheet,true);if(b||e.target===sheet)closeSheet()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sheet.hidden)closeSheet()});

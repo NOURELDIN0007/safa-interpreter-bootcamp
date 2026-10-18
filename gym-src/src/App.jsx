@@ -27,12 +27,14 @@ import Admin from './views/Admin.jsx'
 
 bindUI(useUI)   // lets the shared controls open sheets without importing the store at module scope
 
-function applyPrefs(theme, accent) {
+function applyPrefs(theme, accent, style) {
   const de = document.documentElement
   de.dataset.theme = theme === 'light' ? 'light' : 'dark'
   de.dataset.accent = ACCENTS[accent] ? accent : 'rose'
+  de.dataset.style = style === 'pin' ? 'pin' : 'corner'
+  const light = de.dataset.theme === 'light', pin = de.dataset.style === 'pin'
   const meta = document.querySelector('meta[name="theme-color"]')
-  if (meta) meta.content = de.dataset.theme === 'light' ? '#fbf1ef' : '#1d1218'
+  if (meta) meta.content = pin ? (light ? '#ffffff' : '#111111') : (light ? '#fbf1ef' : '#1d1218')
 }
 
 function Shell() {
@@ -42,7 +44,7 @@ function Shell() {
   const isGuest = useStore(s => s.isGuest())
   const langV = useLang()   // re-renders the whole shell when the language (pack) changes
   useEffect(() => { setNav(navigate) }, [navigate])
-  useEffect(() => { applyPrefs(S.theme, S.accent) }, [S.theme, S.accent])
+  useEffect(() => { applyPrefs(S.theme, S.accent, S.style) }, [S.theme, S.accent, S.style])
   useEffect(() => { setLang(S.lang || 'en') }, [S.lang])
   useEffect(() => { document.documentElement.lang = S.lang || 'en' }, [langV, S.lang])
   // every tab/route change starts at the top of the page

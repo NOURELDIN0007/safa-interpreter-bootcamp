@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
+import { Pin, PinGrid } from '../components/Pins.jsx'
+import { EXIDX } from '../lib/exercises.js'
+import { exerciseDetailSheet } from '../sheets.jsx'
 import { effectiveRoutine, effectiveRoutineId, streakWeeks, lastBW, setsDoneActive } from '../lib/history.js'
 import { fmtNum, fmtDate, todayISO, isoOf, weekKey, DAYS } from '../lib/format.js'
 import { t, dateLocale } from '../lib/i18n.js'
@@ -46,6 +49,10 @@ export default function Home() {
   const onToday = () => { if (S.active) nav('/workout'); else if (routine) startFlow(routine.id); else dayOverrideSheet(todayISO()) }
 
   return <div className="narrow">
+    {S.style === 'pin' && <div className="pin-head">
+      <div><h1>{t('Hi Safsf')}</h1><div className="sub">{routine ? routine.name : t('Rest day')} · {today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>
+      <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
+    </div>}
     <div className="hero">
       <button className="iconbtn gear" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
       <div>
@@ -134,5 +141,14 @@ export default function Home() {
         <Icon name="calendar" className="chev" style={{ fontSize: 20 }} />
       </div>
     </div>
+    {S.style === 'pin' && (() => {
+      const r = routine || S.routines.find(x => /stretch/i.test(x.name))
+      const list = r ? r.ex.map(e => EXIDX[e.id]).filter(Boolean) : []
+      if (!list.length) return null
+      return <>
+        <h4 className="sec">{routine ? t('Today’s workout') : t('Rest day ideas · {0}', r.name)}</h4>
+        <PinGrid>{list.map((ex, i) => <Pin key={ex.id + i} ex={ex} i={i} title={ex.n} sub={t(ex.tg || ex.bp)} onClick={() => exerciseDetailSheet(ex)} />)}</PinGrid>
+      </>
+    })()}
   </div>
 }

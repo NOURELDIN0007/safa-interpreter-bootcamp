@@ -140,6 +140,14 @@ export default function Settings() {
 
     {/* ---------- appearance ---------- */}
     <Section title={t('Appearance')} footer={DEMO || MOBILE ? undefined : t('synced with your profile')}>
+      <Row icon="sparkles" iconTint="var(--acc)" title={t('Style')}>
+        <Segmented
+          className="seg-inline"
+          options={[{ value: 'corner', label: t('Corner') }, { value: 'pin', label: 'Pinterest' }]}
+          value={S.style === 'pin' ? 'pin' : 'corner'}
+          onChange={v => update(s => { s.style = v })}
+        />
+      </Row>
       <Row icon="moon" iconTint="var(--indigo)" title={t('Theme')}>
         <Segmented
           className="seg-inline"

@@ -1057,3 +1057,123 @@ h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005e
 .arch img{border-radius:999px 999px 13px 13px}
 .script{white-space:nowrap}
 .hero .sub b{font-weight:700;color:var(--label)}
+
+/* ======================================================= Style: Pinterest --
+   Settings → Appearance → Style. White canvas, near-black type, Pinterest red only on the
+   main action, grey pill controls, black for "selected", no decoration, and the feed as a
+   two-column masonry of pins. */
+:root[data-style="pin"]{
+  --pin-red:#e60023; --pin-red-2:#ad081b; --pin-grey:#e9e9e9; --pin-grey-2:#e2e2e2;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  --serif:var(--sans); --script:var(--sans);
+  --bg:#111111; --bg-el:#111111; --surface:#1f1f1f; --surface-2:#2b2b2b; --surface-3:#3a3a3a;
+  --label:#ffffff; --label-2:#b5b5b5; --label-3:#8a8a8a; --label-4:#555;
+  --sep:#2e2e2e; --sep-op:#2e2e2e; --line:transparent; --card-shadow:none;
+  --acc:var(--pin-red); --acc-2:var(--pin-red-2); --on-acc:#fff; --acc-soft:rgba(255,255,255,.1);
+  --rose-soft:var(--surface-2); --rose-deep:var(--label); --ink:var(--label);
+  --pin-grey:#2b2b2b; --pin-grey-2:#353535; --pin-sel:#ffffff; --pin-on-sel:#111111;
+  --r-card:16px; --r-lg:24px;
+}
+:root[data-style="pin"][data-theme="light"]{
+  --bg:#ffffff; --bg-el:#ffffff; --surface:#ffffff; --surface-2:#f1f1f1; --surface-3:#e9e9e9;
+  --label:#111111; --label-2:#5f5f5f; --label-3:#8e8e8e; --label-4:#cdcdcd;
+  --sep:#e9e9e9; --sep-op:#e9e9e9; --acc-soft:#efefef;
+  --pin-grey:#e9e9e9; --pin-grey-2:#e2e2e2; --pin-sel:#111111; --pin-on-sel:#ffffff;
+}
+:root[data-style="pin"] body{background:var(--bg);font-family:var(--sans);letter-spacing:0}
+
+/* type: one sans, heavy titles, sentence case */
+:root[data-style="pin"] .hdr h1,:root[data-style="pin"] .pin-head h1{font:700 28px/1.15 var(--sans);letter-spacing:-.01em}
+:root[data-style="pin"] .hdr .sub,:root[data-style="pin"] .pin-head .sub{font-size:14px;color:var(--label-2)}
+:root[data-style="pin"] h3{font:700 24px/1.2 var(--sans)}
+:root[data-style="pin"] .card .big,:root[data-style="pin"] .tile .v,:root[data-style="pin"] .stat-v,:root[data-style="pin"] .wday .num{font-family:var(--sans);font-weight:700}
+:root[data-style="pin"] .wday .num{font-size:17px}
+:root[data-style="pin"] .sect-t,:root[data-style="pin"] h4.sec,:root[data-style="pin"] .card h2{font:600 18px/1.25 var(--sans);letter-spacing:0;text-transform:none;color:var(--label)}
+:root[data-style="pin"] h4.sec{margin:26px 0 12px}
+:root[data-style="pin"] .exnote[dir="auto"]{font-family:var(--arabic)}
+
+/* surfaces: flat grey modules, no borders, no shadows */
+:root[data-style="pin"] .card,:root[data-style="pin"] .sect-b,:root[data-style="pin"] .tile{background:var(--surface-2);border:0;box-shadow:none;border-radius:24px}
+:root[data-style="pin"] .item{background:var(--surface-2);border:0;box-shadow:none;border-radius:16px}
+:root[data-style="pin"] .thumb{border:0;border-radius:12px}
+:root[data-style="pin"] .lrow-i{background:transparent!important;color:var(--label)!important;font-size:22px}
+:root[data-style="pin"] .lrow.danger .lrow-i{color:var(--red)!important}
+:root[data-style="pin"] .iconbtn{background:transparent;border:0;box-shadow:none;font-size:22px}
+:root[data-style="pin"] .tag,:root[data-style="pin"] .tag.acc{background:var(--pin-grey);color:var(--label);border-radius:999px}
+:root[data-style="pin"] .exnote{background:var(--surface-2);border-radius:16px}
+
+/* controls: red = the one main action, grey pills for the rest, black when selected */
+:root[data-style="pin"] .btn{border-radius:999px;font:600 16px/1.2 var(--sans);letter-spacing:0;text-transform:none;background:var(--pin-grey);color:var(--label);box-shadow:none}
+:root[data-style="pin"] .btn:active{background:var(--pin-grey-2)}
+:root[data-style="pin"] .btn.primary{background:var(--pin-red);color:#fff;padding:15px 20px}
+:root[data-style="pin"] .btn.primary:active{background:var(--pin-red-2)}
+:root[data-style="pin"] .btn.tinted{background:var(--pin-grey);color:var(--label)}
+:root[data-style="pin"] .btn.ghost,:root[data-style="pin"] .btn.plain{background:none;color:var(--label);text-decoration:underline;text-underline-offset:3px}
+:root[data-style="pin"] .chip{background:var(--pin-grey);color:var(--label);border-radius:999px;font-weight:600}
+:root[data-style="pin"] .chip.on{background:var(--pin-sel);color:var(--pin-on-sel)}
+:root[data-style="pin"] .seg{background:transparent;gap:4px}
+:root[data-style="pin"] .seg-sel{background:var(--pin-sel);border-radius:999px;box-shadow:none}
+:root[data-style="pin"] .seg button[aria-pressed="true"],:root[data-style="pin"] .seg button.on{color:var(--pin-on-sel)}
+:root[data-style="pin"] .sw.on{background:var(--pin-sel)}
+:root[data-style="pin"] .sw.on .knob{background:var(--bg)}
+:root[data-style="pin"] .search .input,:root[data-style="pin"] .searchf .field{background:var(--pin-grey);border-radius:999px;height:48px;font-size:16px}
+:root[data-style="pin"] .wday.today .num{background:var(--pin-sel);color:var(--pin-on-sel);box-shadow:none;font-family:var(--sans)}
+:root[data-style="pin"] .wday .dot.done{background:var(--pin-red)}
+:root[data-style="pin"] a{color:var(--label);text-decoration:underline}
+:root[data-style="pin"] .vidlink{background:var(--pin-grey);color:var(--label);font:600 15px/1 var(--sans);letter-spacing:0;text-transform:none;text-decoration:none}
+:root[data-style="pin"] .vidlink .icn{background:var(--pin-red);color:#fff}
+
+/* tab bar: icons only, black when current, nothing floating */
+:root[data-style="pin"] #tabbar{background:var(--bg);border-top:0;box-shadow:0 -1px 0 var(--sep);backdrop-filter:none;-webkit-backdrop-filter:none;padding-top:10px}
+:root[data-style="pin"] #tabbar button span:not(.cir){display:none}
+:root[data-style="pin"] #tabbar button .icn{color:var(--label-3);font-size:27px;--icon-stroke:2}
+:root[data-style="pin"] #tabbar button:not(.start) .icn{width:auto;height:auto;padding:0;background:none!important}
+:root[data-style="pin"] #tabbar button.on .icn{color:var(--label)!important;--icon-stroke:2.7}
+:root[data-style="pin"] #tabbar button.start{margin-top:0}
+:root[data-style="pin"] #tabbar button.start .cir{width:auto;height:auto;background:none;box-shadow:none;color:var(--label)}
+:root[data-style="pin"] #tabbar button.start .cir .icn{color:var(--label);font-size:28px}
+:root[data-style="pin"] #tabbar button.start.rec .cir{background:none;color:var(--pin-red)}
+:root[data-style="pin"] #tabbar button.start.rec .cir .icn{color:var(--pin-red)}
+:root[data-style="pin"] #tabbar button.start.rec .cir::after{display:none}
+
+/* Corner-only decoration is switched off */
+:root[data-style="pin"] .hero,:root[data-style="pin"] .spark,:root[data-style="pin"] .welcome-art .note{display:none}
+:root:not([data-style="pin"]) .pin-head{display:none}
+.pin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:8px 0 18px}
+
+/* welcome in Pinterest style */
+:root[data-style="pin"] .brandmark{font:800 26px/1 var(--sans);color:var(--pin-red);letter-spacing:-.02em}
+:root[data-style="pin"] .eyebrow{font:600 15px/1.2 var(--sans);letter-spacing:0;text-transform:none;color:var(--label-2)}
+:root[data-style="pin"] .eyebrow .icn{color:var(--pin-red)}
+:root[data-style="pin"] .welcome h1{font:700 40px/1.1 var(--sans);letter-spacing:-.02em}
+:root[data-style="pin"] .script{font:inherit;color:var(--pin-red);font-size:1em;margin:0}
+:root[data-style="pin"] .pill{background:var(--pin-red);color:#fff;font:600 16px/1 var(--sans);letter-spacing:0;text-transform:none;box-shadow:none;padding:16px 24px}
+:root[data-style="pin"] .pill .arr{display:none}
+:root[data-style="pin"] .arch{border:0;padding:0;border-radius:16px;box-shadow:none}
+:root[data-style="pin"] .arch img{border-radius:16px}
+
+/* ---- pins & boards ---- */
+.pins{columns:2;column-gap:10px;margin-bottom:14px}
+.pin{break-inside:avoid;margin:0 0 14px;cursor:pointer}
+.pin-img{position:relative;border-radius:16px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;color:var(--label-2);font-size:34px}
+:root:not([data-theme="light"]) .pin-img{background:#fff}
+.pin-img:has(> .icn){background:var(--surface-2)}
+.pin-img img{width:100%;height:100%;object-fit:contain;padding:8px}
+.pin:active .pin-img{filter:brightness(.92)}
+.pin-t{font:600 14px/1.3 var(--sans);color:var(--label);margin:7px 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pin-s{font-size:12.5px;color:var(--label-2);margin:2px 4px 0;text-transform:capitalize}
+.pin-save{position:absolute;top:8px;right:8px;padding:10px 14px;border-radius:999px;background:var(--pin-red,#e60023);color:#fff;font:600 14px/1 var(--sans)}
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px}
+.board{cursor:pointer}
+.board-c{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:2px;aspect-ratio:1.45/1;border-radius:16px;overflow:hidden}
+.board-c>div{background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.board-c>div:empty{background:var(--surface-3)}
+.board-c .b0{grid-row:1 / 3}
+.board-c img{width:100%;height:100%;object-fit:contain;padding:4px}
+.board .pin-t{font-size:16px;font-weight:700}
+:root[data-style="pin"] #tabbar button:not(.start) .icn,:root[data-style="pin"] #tabbar button.start .cir .icn{width:1em;height:1em;font-size:27px}
+:root[data-style="pin"] #tabbar button{padding-top:4px;min-height:44px;justify-content:center}
+/* pins read as tiles: the white demo images are multiplied onto a soft grey card */
+.pin-img,.board-c>div{background:#f1f1f1}
+.pin-img img,.board-c img{mix-blend-mode:multiply}
+:root:not([data-theme="light"]) .pin-img,:root:not([data-theme="light"]) .board-c>div{background:#e8e8e8}
