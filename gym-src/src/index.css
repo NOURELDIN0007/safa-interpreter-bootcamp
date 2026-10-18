@@ -918,48 +918,142 @@ h4.sec{
   .hm-wrap{display:flex;flex-direction:column;align-items:center}
 }
 
-/* =============================================================== Safsf theme --
-   Blush light (default) and plum dark, a rose accent, softer cards and a rounded
-   display face for titles. Layered over the tokens above so upstream stays intact. */
+
+/* ======================================================= Safsf · Corner look --
+   Same visual language as her study site "Safa's Corner": blush paper, white cards with
+   a 1px blush rule, Cormorant serif titles with a Great Vibes script accent, Plus Jakarta
+   for everything you read, tracked uppercase eyebrows with a heart, rose pill buttons and
+   arched flower photos. Layered over the upstream tokens so the components stay untouched. */
 :root {
-  --bg:#160b12; --bg-el:#1e0f19; --surface:#2a1623; --surface-2:#3a2030; --surface-3:#4a2a3d;
-  --label:#fff0f5; --label-2:rgba(255,225,238,.64); --label-3:rgba(255,225,238,.34); --label-4:rgba(255,225,238,.18);
-  --sep:rgba(255,140,180,.22); --sep-op:rgba(255,140,180,.14);
-  --pink:#ff6f9c;
-  --r-card:20px; --r-lg:20px;
-  --display:'Quicksand','Nunito',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
-  --glow:radial-gradient(120% 55% at 50% -12%, rgba(255,111,156,.22) 0%, transparent 62%);
-  --card-shadow:0 8px 28px rgba(0,0,0,.28);
+  --blush:#fbf1ef; --blush-2:#f6e3e1; --rose:#c86b85; --rose-deep:#a94f6b; --rose-soft:#f3d9df; --plum:#3b2530;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --script:'Great Vibes','Brush Script MT',cursive;
+  --sans:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --arabic:'IBM Plex Sans Arabic','Noto Sans Arabic',Tahoma,sans-serif;
+  --r-card:18px; --r-lg:22px;
+  --line:#efe2e4;
+  --card-shadow:0 1px 2px rgba(59,37,48,.04), 0 10px 26px -18px rgba(120,50,70,.35);
+}
+/* plum night (dark) */
+:root {
+  --bg:#1d1218; --bg-el:#24161e; --surface:#2b1b24; --surface-2:#3a2531; --surface-3:#4a2f3e;
+  --label:#fbeef2; --label-2:rgba(251,226,234,.66); --label-3:rgba(251,226,234,.36); --label-4:rgba(251,226,234,.18);
+  --sep:rgba(214,140,165,.22); --sep-op:rgba(214,140,165,.14); --line:rgba(214,140,165,.16);
+  --pink:#e58aa4;
 }
 :root[data-theme="light"] {
-  --bg:#fff4f6; --bg-el:#fff8fa; --surface:#ffffff; --surface-2:#fde8ee; --surface-3:#f8d7e1;
-  --label:#3a1d2b; --label-2:rgba(90,40,62,.66); --label-3:rgba(90,40,62,.36); --label-4:rgba(90,40,62,.18);
-  --sep:rgba(214,110,145,.26); --sep-op:rgba(214,110,145,.16);
-  --pink:#e0457a;
-  --glow:radial-gradient(120% 55% at 50% -12%, #ffd3e0 0%, rgba(255,226,236,.6) 35%, transparent 65%);
-  --card-shadow:0 6px 22px rgba(224,69,122,.09), 0 1px 2px rgba(224,69,122,.06);
+  --bg:var(--blush); --bg-el:#fdf6f5; --surface:#ffffff; --surface-2:#fbeaed; --surface-3:var(--rose-soft);
+  --label:var(--plum); --label-2:rgba(59,37,48,.62); --label-3:rgba(59,37,48,.34); --label-4:rgba(59,37,48,.16);
+  --sep:#f0dfe2; --sep-op:#f3e4e6; --pink:var(--rose);
 }
-:root[data-accent="rose"] { --acc:#ff7aa2; --acc-2:#e0457a; --on-acc:#3a0a1f }
-:root[data-theme="light"][data-accent="rose"] { --acc:#e0457a; --acc-2:#c2185b; --on-acc:#fff }
+:root[data-accent="rose"] { --acc:#e58aa4; --acc-2:#c86b85; --on-acc:#2a0f1b }
+:root[data-theme="light"][data-accent="rose"] { --acc:var(--rose); --acc-2:var(--rose-deep); --on-acc:#fff }
 
-body{background:var(--glow) no-repeat, var(--bg)}
-:root[data-theme="light"] #tabbar{background:rgba(255,246,249,.82)}
-:root[data-theme="light"] .sheet{background:var(--bg-el)}
+body{font-family:var(--sans);letter-spacing:-.005em;
+  background:radial-gradient(110% 50% at 85% -8%, color-mix(in srgb,var(--rose-soft) 70%,transparent) 0%, transparent 60%) no-repeat, var(--bg)}
+:root:not([data-theme="light"]) body{background:radial-gradient(110% 50% at 85% -8%, rgba(200,107,133,.18) 0%, transparent 60%) no-repeat, var(--bg)}
 
-.card{box-shadow:var(--card-shadow)}
-.btn.primary{
-  background:linear-gradient(135deg, var(--acc) 0%, color-mix(in srgb, var(--acc) 72%, #b56cff) 100%);
-  box-shadow:0 6px 18px color-mix(in srgb, var(--acc) 35%, transparent);
-}
+/* titles: serif, like the site's headings */
+.hdr h1{font-family:var(--serif);font-weight:500;font-size:40px;letter-spacing:-.01em;line-height:1.02}
+.hdr .sub{font-size:14px}
+.card .big{font-family:var(--serif);font-weight:500;letter-spacing:-.005em}
+h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005em;line-height:1.08}
+
+/* eyebrows: tracked uppercase, rose-deep */
+.sect-t, h4.sec, .card h2{font:700 11.5px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep)}
+:root:not([data-theme="light"]) .sect-t, :root:not([data-theme="light"]) h4.sec, :root:not([data-theme="light"]) .card h2{color:var(--acc)}
+.sect-t{padding:0 4px 9px}
+.eyebrow{display:flex;align-items:center;gap:8px;font:700 12px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--label)}
+.eyebrow .icn{color:var(--acc);font-size:16px;--icon-stroke:2}
+
+/* surfaces: white card, one blush hairline, soft lift */
+.card,.sect-b,.item{border:1px solid var(--line);box-shadow:var(--card-shadow)}
+.card{border-radius:var(--r-lg);padding:18px}
+.thumb{border-radius:12px;border:1px solid var(--line)}
+.lrow-i{border-radius:9px}
+.tag{border-radius:999px;padding:4px 10px;background:var(--surface-2)}
+.tag.acc{background:var(--rose-soft);color:var(--rose-deep)}
+.iconbtn{border:1px solid var(--line);box-shadow:var(--card-shadow)}
+
+/* buttons: the site's rose pill with tracked caps */
+.btn{border-radius:999px}
+.btn.primary{background:var(--acc);font:700 13px/1 var(--sans);letter-spacing:.13em;text-transform:uppercase;padding:18px 22px;
+  box-shadow:0 14px 26px -16px rgba(169,79,107,.9)}
 .btn.primary:active{background:var(--acc-2)}
+.btn.tinted{background:var(--rose-soft);color:var(--rose-deep)}
+:root:not([data-theme="light"]) .btn.tinted{background:var(--acc-soft);color:var(--acc)}
+.btn.sm,.btn.xs{border-radius:999px}
 
-.hdr h1, h1.brand, .sect-t, .card h2, .card h3{font-family:var(--display)}
-.hdr h1{font-weight:700;letter-spacing:-.015em}
-h1.brand{font-size:30px;font-weight:700;letter-spacing:-.015em;
-  background:linear-gradient(120deg, var(--acc-2), var(--acc) 55%, #b56cff);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
-.brand-heart{-webkit-text-fill-color:initial;color:initial;font-size:.8em;display:inline-block;animation:beat 2.4s ease-in-out infinite}
-@keyframes beat{0%,100%{transform:scale(1)}8%{transform:scale(1.18)}16%{transform:scale(1)}24%{transform:scale(1.12)}32%{transform:scale(1)}}
-.welcome-logo{width:112px;height:112px;margin:0 auto;border-radius:28px;box-shadow:0 12px 34px rgba(224,69,122,.35)}
-.vidlink{display:inline-flex;align-items:center;gap:6px;margin:2px 0 10px;padding:8px 14px;border-radius:999px;
-  background:var(--acc-soft);color:var(--acc);font-size:15px;font-weight:600}
+/* week strip */
+.wday .lbl{font:700 10.5px/1 var(--sans);letter-spacing:.1em}
+.wday .num{font-family:var(--serif);font-size:22px;font-weight:500}
+.wday.today .num{width:36px;height:36px;font-family:var(--serif);font-size:21px;font-weight:600;box-shadow:0 8px 16px -10px rgba(169,79,107,.9)}
+
+/* tab bar: frosted white, active icon sits in a soft pill */
+#tabbar{border-top:1px solid var(--line)}
+:root[data-theme="light"] #tabbar{background:rgba(255,255,255,.92)}
+#tabbar button{font:600 10.5px/1.1 var(--sans);letter-spacing:0;color:var(--label-2)}
+#tabbar button .icn{color:var(--label-2)}
+#tabbar button:not(.start) .icn{width:52px;height:28px;padding:2px 13px;border-radius:999px;transition:background var(--med) var(--ease)}
+#tabbar button.on:not(.start) .icn{background:var(--rose-soft);color:var(--rose-deep)}
+:root:not([data-theme="light"]) #tabbar button.on:not(.start) .icn{background:var(--acc-soft);color:var(--acc)}
+#tabbar button.on{color:var(--acc)}
+#tabbar button.start .cir{box-shadow:0 14px 26px -12px rgba(169,79,107,.95), 0 0 0 5px var(--bg)}
+
+/* Arabic cues from the trainer */
+.exnote[dir="auto"]{font-family:var(--arabic);line-height:1.85;font-size:15.5px}
+.vidlink{display:inline-flex;align-items:center;gap:8px;margin:2px 0 12px;padding:9px 16px 9px 10px;border-radius:999px;
+  background:var(--rose-soft);color:var(--rose-deep);font:700 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase}
+.vidlink .icn{width:24px;height:24px;padding:5px;border-radius:50%;background:#fff;color:var(--rose-deep)}
+
+/* ---- Home hero: eyebrow, serif + script, arched photo (the site's cover) ---- */
+.hero{position:relative;display:grid;grid-template-columns:1fr 112px;gap:14px;align-items:end;margin:6px 0 22px}
+.hero h1{margin:14px 0 8px;font:500 36px/1.02 var(--serif);letter-spacing:-.01em;color:var(--label);display:flex;flex-direction:column}
+.script{font-family:var(--script);font-weight:400;color:var(--acc);font-size:1.32em;line-height:1.08;letter-spacing:0;margin-top:2px}
+.hero .sub{color:var(--label-2);font-size:14px}
+.hero .gear{position:absolute;top:0;right:0;z-index:2}
+.arch{aspect-ratio:3/4;border-radius:999px 999px 18px 18px;overflow:hidden;background:var(--blush-2);border:5px solid var(--surface);
+  box-shadow:0 22px 40px -26px rgba(120,50,70,.7)}
+.arch img{display:block;width:100%;height:100%;object-fit:cover}
+.hero .arch{margin-top:34px}
+.spark{position:absolute;width:16px;height:16px;fill:var(--acc);opacity:.75;animation:twinkle 3.2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{transform:scale(1) rotate(0);opacity:.75}50%{transform:scale(.6) rotate(20deg);opacity:.35}}
+
+/* ---- Welcome (first launch): the site's cover, gym edition ---- */
+.welcome{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:28px 4px 24px;color:var(--label)}
+.brandmark{font:400 32px/1 var(--script);color:var(--rose-deep);margin-bottom:28px}
+:root:not([data-theme="light"]) .brandmark{color:var(--acc)}
+.welcome h1{margin:18px 0 16px;font:500 46px/1.02 var(--serif);letter-spacing:-.01em;display:flex;flex-direction:column}
+.welcome p{color:var(--label-2);font-size:16px;line-height:1.65;max-width:34ch}
+.pill{display:inline-flex;align-items:center;gap:14px;align-self:flex-start;margin-top:26px;padding:7px 7px 7px 24px;border-radius:999px;
+  background:var(--acc);color:var(--on-acc);font:700 12.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;
+  box-shadow:0 14px 26px -16px rgba(169,79,107,.9);transition:background .25s,transform .25s var(--ease)}
+.pill:active{background:var(--acc-2);transform:scale(.98)}
+.pill .arr{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:var(--rose-deep);font-size:18px;--icon-stroke:2.2}
+.welcome-art{position:relative;width:min(78%,300px);margin:40px auto 0}
+.welcome-art .note{position:absolute;right:-22px;top:-34px;font:400 25px/1.05 var(--script);color:var(--rose-deep);transform:rotate(-8deg);text-align:right}
+:root:not([data-theme="light"]) .welcome-art .note{color:var(--acc)}
+.welcome-art .spark{left:-26px;top:38%}
+.privacy{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:13px;color:var(--label-2)}
+.privacy .icn{color:var(--acc)}
+.rise{animation:rise .9s var(--ease) both}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.18s}.rise.d3{animation-delay:.3s}.rise.d4{animation-delay:.45s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* one colour family: row icons are rose line-icons on a soft rose chip, like the site's */
+.lrow-i{background:var(--rose-soft)!important;color:var(--rose-deep)}
+.lrow.danger .lrow-i{background:color-mix(in srgb,var(--red) 14%,transparent)!important;color:var(--red)}
+:root:not([data-theme="light"]) .lrow-i{background:var(--acc-soft)!important;color:var(--acc)}
+/* Cormorant's default figures are old-style; numbers in a tracker should line up */
+.hdr h1,.card .big,.wday .num,.tile .v,.stat-v,h3,.hero h1,.welcome h1{font-variant-numeric:lining-nums tabular-nums}
+.tile{border:1px solid var(--line);box-shadow:var(--card-shadow);border-radius:var(--r-lg)}
+.tile .v,.stat-v{font-family:var(--serif);font-weight:600;font-size:38px;letter-spacing:-.01em}
+.tile .l .icn{color:var(--acc)}
+:root[data-theme="light"] .seg{background:var(--surface-2)}
+.seg,.seg button{border-radius:999px}
+/* arches: thin rose outline with an inset photo, as on the site's plan page */
+.arch{border:1px solid var(--rose-soft);padding:6px;background:transparent}
+:root:not([data-theme="light"]) .arch{border-color:rgba(229,138,164,.35)}
+.arch img{border-radius:999px 999px 13px 13px}
+.script{white-space:nowrap}
+.hero .sub b{font-weight:700;color:var(--label)}

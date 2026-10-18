@@ -56,14 +56,18 @@ export default function Login() {
 
   // Demo build: no backend to sign in against — the only way in is the local guest profile.
   if (DEMO) return (
-    <div className="narrow" style={wrap}>
-      {head}
-      <div className="muted" style={{ marginBottom: 30 }}>{t('Your plan, your lifts, your progress 💕')}</div>
-      <Button variant="primary" icon="heart" onClick={() => setGuest(true)}>{t('Let’s go, Safsf!')}</Button>
-      <div className="card small muted" style={{ textAlign: 'left', marginTop: 16, lineHeight: 1.5 }}>
-        {t('Plan your week, follow guided workouts, and every set, rep and weight gets saved — with charts of your progress and body weight. Everything stays private on this phone.')}
+    <div className="narrow welcome">
+      <div className="brandmark rise">Safsf’s Gym</div>
+      <div className="eyebrow rise d1">{t('Hey, Safsf')} <Icon name="heart" /></div>
+      <h1 className="rise d1">{t('Stronger every week,')}<span className="script">{t('your way')}</span></h1>
+      <p className="rise d2">{t('Your trainer’s plan, every set and weight you lift, and your progress over time — all in one place.')}</p>
+      <button className="pill rise d3" onClick={() => setGuest(true)}>{t('Start my plan')}<span className="arr"><Icon name="chevronRight" /></span></button>
+      <div className="privacy rise d3"><Icon name="lock" />{t('Private — everything stays on this phone.')}</div>
+      <div className="welcome-art rise d4">
+        <div className="note">{t('you’ve got this,')}<br />Safsf</div>
+        <svg className="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4.6 12 0Z" /></svg>
+        <div className="arch"><img src="deco/vase.jpg" alt="" /></div>
       </div>
-      <div className="dim small" style={{ marginTop: 22, lineHeight: 1.6 }}>{t('Made with love, just for you ❤️')}</div>
     </div>
   )
 

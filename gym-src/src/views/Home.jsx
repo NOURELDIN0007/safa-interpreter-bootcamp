@@ -46,9 +46,15 @@ export default function Home() {
   const onToday = () => { if (S.active) nav('/workout'); else if (routine) startFlow(routine.id); else dayOverrideSheet(todayISO()) }
 
   return <div className="narrow">
-    <div className="hdr">
-      <div><h1 className="brand">Safsf Gym Plan <span className="brand-heart">❤️</span></h1><div className="sub">{today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>
-      <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
+    <div className="hero">
+      <button className="iconbtn gear" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
+      <div>
+        <div className="eyebrow rise">{t('Hey, Safsf')} <Icon name="heart" /></div>
+        <h1 className="rise d1">{routine ? t('Today is') : t('Today is a')}<span className="script">{routine ? routine.name.split(' · ')[0] : t('rest day')}</span></h1>
+        <div className="sub rise d2">{routine && routine.name.includes(' · ') && <b>{routine.name.split(' · ').slice(1).join(' · ')} · </b>}{today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+      </div>
+      <div className="arch rise d3"><img src={routine ? 'deco/peony.jpg' : 'deco/hydrangea.jpg'} alt="" /></div>
+      <svg className="spark" style={{ right: 104, bottom: 120 }} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4.6 12 0Z" /></svg>
     </div>
 
     <div className="card">
