@@ -17,12 +17,12 @@ describe('activity log', () => {
       'treadmill: 2 min @ 8 km/h'])
     expect(logged.every(x => x[0] === 'gym')).toBe(true)
   })
-  it('logs body weight and measurements, nothing when unchanged', () => {
-    const a = { workouts: [], bodyweight: [], measures: [] }
+  it('logs body weight, nothing when unchanged', () => {
+    const a = { workouts: [], bodyweight: [] }
     logChanges(a, a, x => x)
     expect(logged).toEqual([])
-    logChanges(a, { ...a, bodyweight: [{ w: 61.4 }], measures: [{ d: '2026-10-19', waist: 68.5, hips: 96 }] }, x => x)
-    expect(logged.map(x => x[1])).toEqual(['Body weight: 61.4 kg', 'Measurements: waist 68.5 cm, hips 96 cm'])
+    logChanges(a, { ...a, bodyweight: [{ w: 61.4 }] }, x => x)
+    expect(logged.map(x => x[1])).toEqual(['Body weight: 61.4 kg'])
   })
   it('stays quiet when the cloud is off', () => {
     globalThis.window = {}

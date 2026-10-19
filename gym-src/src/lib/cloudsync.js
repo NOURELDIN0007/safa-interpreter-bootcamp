@@ -1,8 +1,8 @@
 // Cloud sync for the gym app, on top of window.SafsfCloud (../cloud.js, shared with the
 // study site). The whole training state is one document (gym/state) holding the JSON — it
 // stays far below Firestore's 1 MB limit for years of workouts, and a JSON string sidesteps
-// Firestore's no-nested-arrays rule. Newest _ts wins. Photos and notes are separate
-// collections so the state document stays small.
+// Firestore's no-nested-arrays rule. Newest _ts wins. Notes are a separate collection
+// so the state document stays small.
 const C = () => window.SafsfCloud
 
 let pushTm = null
@@ -30,7 +30,7 @@ export function startCloud(getS, applyRemote) {
         const local = getS()
         // A phone with nothing logged yet (just installed) always takes the cloud copy, even
         // though loading the plan made its own copy "newer".
-        const fresh = !((local.workouts || []).length || (local.bodyweight || []).length || (local.measures || []).length)
+        const fresh = !((local.workouts || []).length || (local.bodyweight || []).length)
         if ((first && fresh) || (d._ts || 0) > (local._ts || 0)) {
           clearTimeout(pushTm); pushTm = null
           try { lastJson = d.json; applyRemote(JSON.parse(d.json)) } catch (e) { /* bad doc */ }
@@ -78,6 +78,4 @@ export function logChanges(prev, next, exName) {
   })
   const bw = (next.bodyweight || []).length > (prev.bodyweight || []).length ? next.bodyweight[next.bodyweight.length - 1] : null
   if (bw) log(`Body weight: ${bw.w} kg`)
-  const m = (next.measures || []).length > (prev.measures || []).length ? next.measures[next.measures.length - 1] : null
-  if (m) log('Measurements: ' + Object.entries(m).filter(([k, v]) => k !== 'd' && v).map(([k, v]) => `${k} ${v} cm`).join(', '))
 }

@@ -5,7 +5,6 @@
      /safa/gym/state     the gym app's whole training log, as JSON
      /safa/log/<id>      activity log of both apps (who, when, what)
      /safa/notes/<id>    ❤️ and comments on workouts
-     /safa/photos_idx/<id> + /safa/photos_img/<id>   progress photos (list kept small)
    Writes that fail offline are kept in an outbox and sent when the phone is back online. */
 (function () {
   var DB = 'https://safas-corner-default-rtdb.europe-west1.firebasedatabase.app'

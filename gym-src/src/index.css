@@ -1178,7 +1178,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005e
 .pin-img img,.board-c img{mix-blend-mode:multiply}
 :root:not([data-theme="light"]) .pin-img,:root:not([data-theme="light"]) .board-c>div{background:#e8e8e8}
 
-/* ---- Safsf extras: fitness week, notes, measurements, photos ---- */
+/* ---- Safsf extras: fitness week, notes ---- */
 .fit-wk{font-size:14px;min-width:84px;text-align:center}
 .fitcard .iconbtn{width:32px;height:32px;font-size:15px}
 .fitcard .iconbtn:disabled{opacity:.3}
@@ -1193,17 +1193,6 @@ h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005e
 .heart-btn.on .icn{fill:currentColor}
 .wnote{font-size:15px;line-height:1.45;padding:6px 0;border-top:var(--hair) solid var(--sep)}
 .wnotes .input{min-width:0;padding:11px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
-.measure-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.measure-f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--label-2)}
-.measure-f .input{padding:12px 14px;border-radius:12px;background:var(--surface-2);font-size:17px}
-.ph-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.ph-compare figure{margin:0}
-.ph-compare img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;display:block}
-.ph-compare figcaption{font-size:12px;color:var(--label-2);margin-top:4px;text-align:center}
-.ph-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-.ph-grid img,.ph-grid .ph-wait{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;cursor:pointer}
-.ph-wait{background:var(--surface-2);display:block}
-.ph-compare .ph-wait{aspect-ratio:3/4;border-radius:14px}
 :root[data-style="pin"] .heart-btn{border:0;background:var(--pin-grey)}
 :root[data-style="pin"] .heart-btn.on{background:var(--pin-red);color:#fff}
 :root[data-style="pin"] .wnotes{border-radius:24px}
