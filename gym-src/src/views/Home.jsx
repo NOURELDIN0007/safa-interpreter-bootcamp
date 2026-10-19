@@ -4,22 +4,32 @@ import { useStore } from '../store/useStore.js'
 import { Pin, PinGrid } from '../components/Pins.jsx'
 import { FitnessCard } from '../components/Extras.jsx'
 import { EXIDX } from '../lib/exercises.js'
-import { exerciseDetailSheet } from '../sheets.jsx'
-import { effectiveRoutine, effectiveRoutineId, streakWeeks, lastBW, setsDoneActive } from '../lib/history.js'
+import { exerciseDetailSheet, workoutDetailSheet } from '../sheets.jsx'
+import PinHome from './PinHome.jsx'
+import { dayInfo } from '../lib/day.js'
+import { effectiveRoutine, effectiveRoutineId, streakWeeks, lastBW, setsDoneActive, exLine } from '../lib/history.js'
 import { fmtNum, fmtDate, todayISO, isoOf, weekKey, DAYS } from '../lib/format.js'
 import { t, dateLocale } from '../lib/i18n.js'
 import { bwSheet, goalSheet, dayOverrideSheet, calendarSheet, startFlow, loadStarterPlan, bwDeltaColor } from '../sheets.jsx'
 import LineChart from '../components/LineChart.jsx'
+import { Thumb } from '../components/Media.jsx'
 import Icon from '../components/Icon.jsx'
 import { Button } from '../components/ui.jsx'
 import { glyphOf } from '../lib/glyphs.js'
 
 // Home = what to do now + a quick glance. Deep charts & history live in Stats.
 export default function Home() {
+  const S = useStore(s => s.S)
+  return S.style === 'pin' ? <PinHome /> : <CornerHome />
+}
+
+function CornerHome() {
   const nav = useNavigate()
   const S = useStore(s => s.S)
   const user = useStore(s => s.user)
   const [weekOffset, setWeekOffset] = useState(0)
+  const [sel, setSel] = useState(todayISO())
+  const day = dayInfo(S, sel)
 
   const today = new Date()
   const routine = effectiveRoutine(S, todayISO())
@@ -36,7 +46,7 @@ export default function Home() {
     const iso = isoOf(d)
     const eff = effectiveRoutineId(S, iso), ovr = S.dayPlan[iso] !== undefined, done = doneDays.has(iso)
     const dot = done ? ' done' : ovr && eff ? ' ovr' : eff ? ' plan' : ''
-    strip.push(<div key={i} className={'wday' + (iso === todayISO() ? ' today' : '')} onClick={() => dayOverrideSheet(iso)}>
+    strip.push(<div key={i} className={'wday' + (iso === todayISO() ? ' today' : '') + (iso === sel ? ' sel' : '')} onClick={() => setSel(iso)}>
       <div className="lbl">{t(DAYS[d.getDay()])}</div><div className="num">{d.getDate()}</div><div className={'dot' + dot} /></div>)
   }
   const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6)
@@ -46,22 +56,16 @@ export default function Home() {
   const plannedPerWeek = Object.keys(S.week).filter(k => S.week[k]).length
   const bwPoints = S.bodyweight.slice(-30).map(b => ({ t: b.t || new Date(b.d).getTime(), y: b.w, d: b.d }))
 
-  // today's session shown right under the week strip
-  const onToday = () => { if (S.active) nav('/workout'); else if (routine) startFlow(routine.id); else dayOverrideSheet(todayISO()) }
 
   return <div className="narrow">
-    {S.style === 'pin' && <div className="pin-head">
-      <div><h1>{t('Hi Safsf')}</h1><div className="sub">{routine ? routine.name : t('Rest day')} · {today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div></div>
-      <button className="iconbtn" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
-    </div>}
     <div className="hero">
       <button className="iconbtn gear" onClick={() => nav('/settings')} aria-label={t('Settings')}><Icon name="gear" /></button>
       <div>
         <div className="eyebrow rise">{t('Hey, Safsf')} <Icon name="heart" /></div>
-        <h1 className="rise d1">{routine ? t('Today is') : t('Today is a')}<span className="script">{routine ? routine.name.split(' · ')[0] : t('rest day')}</span></h1>
-        <div className="sub rise d2">{routine && routine.name.includes(' · ') && <b>{routine.name.split(' · ').slice(1).join(' · ')} · </b>}{today.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+        <h1 className="rise d1">{(day.diff === 0 ? t('Today is') : t('{0} is', day.diff === 1 ? t('Tomorrow') : day.diff === -1 ? t('Yesterday') : day.d.toLocaleDateString(dateLocale(), { weekday: 'long' }))) + (day.routine ? '' : ' ' + t('a'))}<span className="script">{day.routine ? day.routine.name.split(' · ')[0] : t('rest day')}</span></h1>
+        <div className="sub rise d2">{day.routine && day.routine.name.includes(' · ') && <b>{day.routine.name.split(' · ').slice(1).join(' · ')} · </b>}{day.d.toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' })}</div>
       </div>
-      <div className="arch rise d3"><img src={routine ? 'deco/peony.jpg' : 'deco/hydrangea.jpg'} alt="" /></div>
+      <div className="arch rise d3"><img src={day.routine ? 'deco/peony.jpg' : 'deco/hydrangea.jpg'} alt="" /></div>
       <svg className="spark" style={{ right: 104, bottom: 120 }} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4.6 12 0Z" /></svg>
     </div>
 
@@ -72,20 +76,7 @@ export default function Home() {
         <button className="iconbtn" style={{ width: 30, height: 30, fontSize: 15 }} onClick={() => setWeekOffset(w => w + 1)} aria-label="Next week"><Icon name="chevronRight" /></button>
       </div>
       <div className="week">{strip}</div>
-      <div className="today-row" onClick={onToday}>
-        <div className="row" style={{ gap: 9, minWidth: 0 }}>
-          <span className="lrow-i" style={{ background: S.active ? 'var(--orange)' : routine ? 'var(--acc)' : 'var(--surface-3)' }}>
-            <Icon name={S.active ? 'timer' : routine ? glyphOf(routine.emoji) : 'moon'} />
-          </span>
-          <div style={{ minWidth: 0 }}>
-            <div className="lbl2">{t('Today')}</div>
-            <div className="ttl">{S.active ? t('{0} — in progress', S.active.name) : routine ? routine.name : t('Rest day')}{todayOvr && routine ? ' · ' + t('rescheduled') : ''}</div>
-          </div>
-        </div>
-        {S.active ? <span className="tag" style={{ color: 'var(--orange)', background: 'color-mix(in srgb,var(--orange) 16%,transparent)' }}>{t('Resume')}</span>
-          : routine ? <span className="tag acc">{t('Start')}</span>
-          : <Icon name="plus" className="chev" />}
-      </div>
+      <DayCard S={S} day={day} onBack={() => { setSel(todayISO()); setWeekOffset(0) }} />
     </div>
 
     {!S.routines.length && !S.active && (
@@ -143,14 +134,33 @@ export default function Home() {
       </div>
     </div>
     <FitnessCard />
-    {S.style === 'pin' && (() => {
-      const r = routine || S.routines.find(x => /stretch/i.test(x.name))
-      const list = r ? r.ex.map(e => EXIDX[e.id]).filter(Boolean) : []
-      if (!list.length) return null
-      return <>
-        <h4 className="sec">{routine ? t('Today’s workout') : t('Rest day ideas · {0}', r.name)}</h4>
-        <PinGrid>{list.map((ex, i) => <Pin key={ex.id + i} ex={ex} i={i} title={ex.n} sub={t(ex.tg || ex.bp)} onClick={() => exerciseDetailSheet(ex)} />)}</PinGrid>
-      </>
-    })()}
+  </div>
+}
+
+// What the selected day holds: its workout (or what was done), every exercise with its
+// sets × reps, and the actions for that day.
+export function DayCard({ S, day, onBack }) {
+  const nav = useNavigate()
+  const r = day.routine
+  const active = S.active && day.diff === 0
+  const exs = r ? r.ex.map(e => ({ e, ex: EXIDX[e.id] })).filter(x => x.ex) : []
+  const start = () => { if (S.active) nav('/workout'); else if (r) startFlow(r.id) }
+  return <div className="daycard">
+    <div className="row between" style={{ alignItems: 'flex-start' }}>
+      <div style={{ minWidth: 0 }}>
+        <div className="lbl2">{day.label}{day.moved && r ? ' · ' + t('moved') : ''}</div>
+        <div className="ttl">{active ? t('{0} — in progress', S.active.name) : r ? r.name : t('Rest day')}</div>
+        {r && <div className="small muted">{t(exs.length === 1 ? '{0} exercise' : '{0} exercises', exs.length)}{r.note ? ' · ' + r.note : ''}</div>}
+      </div>
+      {day.diff !== 0 && <button className="linkbtn" onClick={onBack}>{t('Back to today')}</button>}
+    </div>
+    {day.done.length > 0 && day.done.map(w => <div key={w.id} className="day-done" onClick={() => workoutDetailSheet(w)}>
+      <Icon name="checkCircle" /> {t('Done: {0}', w.name)} <Icon name="chevronRight" className="chev" /></div>)}
+    {exs.length > 0 && <div className="day-ex">{exs.map(({ e, ex }, i) => <div key={i} className="day-exrow" onClick={() => exerciseDetailSheet(ex)}>
+      <Thumb ex={ex} /><span className="capitalize grow">{ex.n}</span><span className="small muted nowrap">{exLine(e, S.unit)}</span></div>)}</div>}
+    <div className="row" style={{ gap: 8, marginTop: 12 }}>
+      {(r || active) && <Button variant="primary" icon={active ? 'play' : 'play'} onClick={start} style={{ flex: 2 }}>{active ? t('Resume') : day.diff === 0 ? t('Start') : t('Do it now')}</Button>}
+      <Button icon={r ? 'shuffle' : 'plus'} onClick={() => dayOverrideSheet(day.iso)} style={{ flex: 1 }}>{r ? t('Change') : t('Plan a workout')}</Button>
+    </div>
   </div>
 }

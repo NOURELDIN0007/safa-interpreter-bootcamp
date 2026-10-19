@@ -55,21 +55,7 @@ export default function Login() {
   const wrap = { display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '78vh', textAlign: 'center' }
 
   // Demo build: no backend to sign in against — the only way in is the local guest profile.
-  if (DEMO) return (
-    <div className="narrow welcome">
-      <div className="brandmark rise">Safsf’s Gym</div>
-      <div className="eyebrow rise d1">{t('Hey, Safsf')} <Icon name="heart" /></div>
-      <h1 className="rise d1">{t('Stronger every week,')}<span className="script">{t('your way')}</span></h1>
-      <p className="rise d2">{t('Your trainer’s plan, every set and weight you lift, and your progress over time — all in one place.')}</p>
-      <button className="pill rise d3" onClick={() => setGuest(true)}>{t('Start my plan')}<span className="arr"><Icon name="chevronRight" /></span></button>
-      <div className="privacy rise d3"><Icon name="lock" />{t('Private — everything stays on this phone.')}</div>
-      <div className="welcome-art rise d4">
-        <div className="note">{t('you’ve got this,')}<br />Safsf</div>
-        <svg className="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4.6 12 0Z" /></svg>
-        <div className="arch"><img src="deco/vase.jpg" alt="" /></div>
-      </div>
-    </div>
-  )
+  if (DEMO) return <Welcome onStart={() => setGuest(true)} />
 
   return (
     <div className="narrow" style={wrap}>
@@ -85,4 +71,46 @@ export default function Login() {
       <div className="dim small" style={{ marginTop: 26, lineHeight: 1.5 }}>{t('Passkeys use {0} — no passwords.', BIO)}<br />{t('Each profile keeps its own plan, workouts & body weight.')}</div>
     </div>
   )
+}
+
+// First launch. Instead of a slogan, it shows the thing she came for: her week from the trainer.
+const ORDER = [1, 2, 3, 4, 5, 6, 0]
+const DSHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+function Welcome({ onStart }) {
+  const S = useStore(s => s.S)
+  const pin = S.style === 'pin'
+  const days = ORDER.map(d => {
+    const r = S.routines.find(x => x.id === S.week[d])
+    return { d, name: r ? r.name.split(' · ')[0] : '', sub: r && r.name.includes(' · ') ? r.name.split(' · ')[1] : '' }
+  })
+  const n = days.filter(x => x.name).length
+  const week = <div className="w-week">{days.map(x => <div key={x.d} className={'w-day' + (x.name ? ' on' : '')}>
+    <span className="w-dn">{t(DSHORT[x.d])}</span>
+    {x.name ? <><b>{t(x.name)}</b><small>{x.sub}</small></> : <i>{t('rest')}</i>}
+  </div>)}</div>
+  if (pin) return <div className="welcome-pin">
+    <div className="wp-collage" aria-hidden="true">
+      {['deco/peony.jpg', 'deco/vase.jpg', 'deco/hydrangea.jpg', 'deco/petals.jpg', 'icon-512.png', 'deco/peony.jpg'].map((src, i) => <img key={i} src={src} alt="" className={'wp' + i} />)}
+    </div>
+    <div className="wp-card">
+      <div className="wp-mark">Safsf’s Gym</div>
+      <h1>{t('Your plan, pinned.')}</h1>
+      <p>{t('{0} training days a week from your trainer — every set and weight saved.', n)}</p>
+      {week}
+      <button className="wp-btn" onClick={onStart}>{t('Start my plan')}</button>
+    </div>
+  </div>
+  return <div className="narrow welcome2">
+    <div className="w-trip" aria-hidden="true">
+      <div className="arch a1"><img src="deco/hydrangea.jpg" alt="" /></div>
+      <div className="arch a2"><img src="deco/peony.jpg" alt="" /></div>
+      <div className="arch a3"><img src="deco/vase.jpg" alt="" /></div>
+    </div>
+    <div className="brandmark rise">Safsf’s Gym</div>
+    <h1 className="rise d1">{t('Your plan is')}<span className="script">{t('ready, Safsf')}</span></h1>
+    <p className="rise d2">{t('{0} training days a week from your trainer. Every set and weight you lift is saved, so you can see yourself getting stronger.', n)}</p>
+    <div className="rise d3">{week}</div>
+    <button className="pill rise d4" onClick={onStart}>{t('Open my plan')}<span className="arr"><Icon name="chevronRight" /></span></button>
+    <div className="privacy rise d4"><Icon name="heart" />{t('Made with love, just for you')}</div>
+  </div>
 }
