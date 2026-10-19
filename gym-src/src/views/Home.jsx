@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
 import { Pin, PinGrid } from '../components/Pins.jsx'
+import { FitnessCard } from '../components/Extras.jsx'
 import { EXIDX } from '../lib/exercises.js'
 import { exerciseDetailSheet } from '../sheets.jsx'
 import { effectiveRoutine, effectiveRoutineId, streakWeeks, lastBW, setsDoneActive } from '../lib/history.js'
@@ -141,6 +142,7 @@ export default function Home() {
         <Icon name="calendar" className="chev" style={{ fontSize: 20 }} />
       </div>
     </div>
+    <FitnessCard />
     {S.style === 'pin' && (() => {
       const r = routine || S.routines.find(x => /stretch/i.test(x.name))
       const list = r ? r.ex.map(e => EXIDX[e.id]).filter(Boolean) : []

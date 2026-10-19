@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fbf1ef"><meta name="apple-mobile-web-app-title" content="Safa's Corner"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"><link rel="manifest" href="manifest.webmanifest"><style>[hidden]{display:none!important}img{max-width:100%}</style></head><body><script>try{if(JSON.parse(localStorage.getItem("ui-style"))==="pin")document.documentElement.dataset.style="pin"}catch(e){}</script><title>Safa's Corner</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fbf1ef"><meta name="apple-mobile-web-app-title" content="Safa's Corner"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png"><link rel="manifest" href="manifest.webmanifest"><style>[hidden]{display:none!important}img{max-width:100%}</style></head><body><script src="cloud.js" defer></script><script>try{if(JSON.parse(localStorage.getItem("ui-style"))==="pin")document.documentElement.dataset.style="pin"}catch(e){}</script><title>Safa's Corner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -722,6 +722,21 @@ html[data-style="pin"] .go:hover{background:#111;color:#fff}
 .trk .chip{justify-self:start;min-height:34px;padding:6px 14px;font-size:13px}
 html[data-style="pin"] .audio-card{background:var(--pin-mod)}
 html[data-style="pin"] .trk > div > b{font:700 17px/1.25 var(--f-display);color:#111}
+.cloud-row{border-bottom:1px solid var(--line)}
+.act-days{display:flex;flex-direction:column;gap:22px;margin-top:8px}
+.act-day h3{margin-bottom:8px}
+.act-day ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.act-day li{display:grid;grid-template-columns:70px auto 1fr;gap:10px;align-items:baseline;padding:11px 14px;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45}
+.act-day li:first-child{border-top:0}
+.act-t{font:600 12.5px/1.45 var(--f-mono);color:var(--muted);white-space:nowrap}
+.act-app{font:700 10.5px/1 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--rose-deep);background:var(--rose-soft);padding:5px 8px;border-radius:999px;white-space:nowrap}
+.act-app.gym{background:#e7f3ec;color:#1f6b45}
+.act-x em{color:var(--muted);font-style:normal}
+html[data-style="pin"] .act-day ul{background:var(--pin-mod);border:0;border-radius:24px}
+html[data-style="pin"] .act-day li{border-top-color:#e2e2e2}
+html[data-style="pin"] .act-app{background:#111;color:#fff;letter-spacing:0;text-transform:none;font:600 12px/1 var(--f-display)}
+html[data-style="pin"] .act-app.gym{background:var(--pin-red)}
+@media (max-width:480px){.act-day li{grid-template-columns:70px 1fr}.act-app{grid-column:2;justify-self:start}.act-x{grid-column:1 / -1}}
 </style>
 
 <div class="wrap">
@@ -1615,6 +1630,17 @@ html[data-style="pin"] .trk > div > b{font:700 17px/1.25 var(--f-display);color:
  </div>
 </section>
 
+<!-- ACTIVITY (shared log of both apps) -->
+<section class="panel" id="p-activity" data-title="Activity" hidden>
+  <div class="stack">
+    <span class="label">Saved in the cloud</span>
+    <h2>Everything she did, as it happened</h2>
+    <p class="intro">Each ticked step, learned word and finished workout is saved here with the time, from both apps.</p>
+    <div class="rp-controls" id="act-filter"><button class="chip" data-af="all" aria-pressed="true">All</button><button class="chip" data-af="site" aria-pressed="false">English &amp; interview</button><button class="chip" data-af="gym" aria-pressed="false">Gym</button></div>
+    <div class="act-days" id="act-list"><p class="muted">Loading…</p></div>
+  </div>
+</section>
+
 
 
 
@@ -1693,6 +1719,9 @@ const FB_URL="https://safas-corner-default-rtdb.europe-west1.firebasedatabase.ap
  }
  connect();
 })();
+/* activity log (shared database): every step ticked or unticked, every word learned */
+document.addEventListener("change",e=>{const c=e.target;if(!c||c.type!=="checkbox"||!window.SafsfCloud)return;const p=c.closest("section.panel,section.subpanel");const box=c.closest("label,.check")||c.parentElement;let txt="";if(box){const cl=box.cloneNode(true);cl.querySelectorAll(".prio,.say,.pill,input,button,a").forEach(x=>x.remove());txt=(cl.textContent||"").trim().replace(/\s+/g," ")}if(!txt)return;SafsfCloud.log("site",(c.checked?"Done: ":"Undone: ")+txt.slice(0,180),{area:p?p.dataset.title:""})},true);
+{const _s2=store.set;store.set=(k,v)=>{if(k==="known"&&window.SafsfCloud){const before=new Set(store.get("known",[]));(v||[]).filter(x=>!before.has(x)).slice(0,5).forEach(x=>SafsfCloud.log("site","Learned: "+String(x).slice(0,120),{area:"Terms"}))}_s2(k,v)}}
 const $=s=>document.querySelector(s);
 if(window.claude&&window.claude.use)document.querySelectorAll(".trk a[download]").forEach(x=>x.remove());
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1713,10 +1742,10 @@ function goTo(spec){
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g){e.preventDefault();e.stopPropagation();goTo(g.dataset.go)}},true);
 document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if(a){e.preventDefault();show(a.dataset.goto,true)}});
 /* navigation: bottom bar (phones), More sheet, current title */
-const ICONS={home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
+const ICONS={home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.more}</svg>`;
-const NAVSUB={home:"Your cover page",plan:"This week's checklist",kalam:"Tuesday interview prep",eplan:"12 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers"};
-const SHORT={home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers"};
+const NAVSUB={home:"Your cover page",plan:"This week's checklist",kalam:"Tuesday interview prep",eplan:"12 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers",activity:"Her progress log, both apps"};
+const SHORT={home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers",activity:"Activity"};
 const PRIMARY=["home","plan","eplan","kalam"];
 const sheet=$("#sheet");
 $("#bnav").innerHTML=PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
@@ -1728,6 +1757,19 @@ $("#sheetgrid").insertAdjacentHTML("afterbegin",`<div class="style-row"><span><b
 sheet.addEventListener("click",e=>{const o=e.target.closest("[data-style-opt]");if(o){store.set("ui-style",o.dataset.styleOpt);applyStyle(o.dataset.styleOpt)}});
 applyStyle(store.get("ui-style","corner"));
 $("#setbtn").addEventListener("click",()=>{sheet.hidden=!sheet.hidden});
+/* who is using this phone (shown next to log entries and comments) */
+$("#sheetgrid").querySelector(".style-row").insertAdjacentHTML("afterend",`<div class="style-row cloud-row"><span><b>This phone is</b><small>So the log knows who did what</small></span><div class="style-seg" role="group" aria-label="This phone is"><button type="button" data-who="Safa">Safa</button><button type="button" data-who="Nour">Nour</button></div></div>`);
+function paintWho(){const w=window.SafsfCloud?SafsfCloud.who():"Safa";document.querySelectorAll("[data-who]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.who===w)))}
+sheet.addEventListener("click",e=>{const w=e.target.closest("[data-who]");if(w&&window.SafsfCloud){SafsfCloud.setWho(w.dataset.who);paintWho()}});
+addEventListener("load",paintWho);
+/* Activity page: the shared log, grouped by day */
+let actRows=null,actF="all";
+function renderAct(){const el=$("#act-list");if(actRows===null){el.innerHTML='<p class="muted">Loading…</p>';return}
+ const rows=actRows.filter(r=>actF==="all"||r.app===actF);if(!rows.length){el.innerHTML='<p class="muted">Nothing logged yet. Tick a step or finish a workout and it shows up here.</p>';return}
+ const by={};rows.forEach(r=>{const k=new Date(r.at).toDateString();(by[k]=by[k]||[]).push(r)});
+ el.innerHTML=Object.entries(by).map(([k,list])=>`<div class="act-day"><h3>${esc(new Date(k).toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}))}</h3><ul>${list.map(r=>`<li><span class="act-t">${new Date(r.at).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}</span><span class="act-app ${r.app==="gym"?"gym":""}">${r.app==="gym"?"Gym":esc(r.area||"Study")}</span><span class="act-x">${esc(r.text)}${r.who&&r.who!=="Safa"?` <em>— ${esc(r.who)}</em>`:""}</span></li>`).join("")}</ul></div>`).join("")}
+$("#act-filter").addEventListener("click",e=>{const b=e.target.closest("[data-af]");if(!b)return;actF=b.dataset.af;document.querySelectorAll("[data-af]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderAct()});
+addEventListener("load",()=>{renderAct();if(window.SafsfCloud&&!(window.claude&&window.claude.use))SafsfCloud.watch("log",r=>{actRows=r;renderAct()},{n:300});else{actRows=[];renderAct()}});
 $("#bnav").addEventListener("click",e=>{const b=e.target.closest("[data-bnav]");if(!b)return;if(b.dataset.bnav==="more"){sheet.hidden=!sheet.hidden;return}closeSheet();show(b.dataset.bnav,true)});
 sheet.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");if(b)show(b.dataset.sheet,true);if(b||e.target===sheet)closeSheet()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sheet.hidden)closeSheet()});

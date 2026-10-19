@@ -3,7 +3,9 @@ import { api } from '../lib/api.js'
 import { localTZ } from '../lib/format.js'
 import { registerCustom } from '../lib/exercises.js'
 import { DEMO } from '../lib/demo.js'
-import { safsfPlan } from '../lib/safsf-plan.js'
+import { safsfPlan, applyFitnessWeek } from '../lib/safsf-plan.js'
+import { startCloud, pushCloud, flushCloud, logChanges } from '../lib/cloudsync.js'
+import { EXIDX } from '../lib/exercises.js'
 import { MOBILE, nativeLoad, nativeSave, syncReminder } from '../lib/mobile.js'
 
 const KEY = 'gym_state_v1'
@@ -41,12 +43,14 @@ export const useStore = create((set, get) => {
     saveTm = setTimeout(() => { saveTm = null; nativeSave(get().S); syncReminder(get().S) }, 800)
   }
 
-  const persist = (S, push = true) => {
-    S._ts = Date.now()
+  const persist = (S, push = true, fromCloud = false) => {
+    const prev = get() && get().S
+    if (!fromCloud) S._ts = Date.now()
     registerCustom(S.customEx)
     localStorage.setItem(KEY, JSON.stringify(S))
     set({ S })
     if (MOBILE) nativePersist()
+    if (!fromCloud) { pushCloud(S); try { logChanges(prev, S, id => (EXIDX[id] || {}).n || id) } catch (e) { /* log is best-effort */ } }
     if (push && get().user) {
       clearTimeout(pushTm)
       pushTm = setTimeout(() => get().pushState(), 1500)
@@ -64,6 +68,7 @@ export const useStore = create((set, get) => {
       saveTm = null
       nativeSave(get().S)
     }
+    flushCloud(get().S)
     if (pushTm) {
       clearTimeout(pushTm)
       pushTm = null
@@ -149,7 +154,7 @@ export const useStore = create((set, get) => {
     // Her trainer's program: replaces the routines and the week schedule, keeps all history.
     loadSafsfPlan() {
       const { routines, week } = safsfPlan()
-      get().update(s => { s.routines = routines; s.week = week; s.dayPlan = {}; s.restSec = 60 })
+      get().update(s => { s.routines = routines; s.week = week; s.dayPlan = {}; s.restSec = 60; s.fitStart = null; applyFitnessWeek(s, true) })
     },
 
     // Boot: ask the server who we are, then pull.
@@ -172,10 +177,12 @@ export const useStore = create((set, get) => {
       // Static build (GitHub Pages): no backend — data lives on the phone; the welcome screen
       // switches to local mode on first launch.
       if (DEMO) {
+        startCloud(() => get().S, remote => persist(Object.assign(clone(DEF), remote), false, true))
         if (!localStorage.getItem('safsf_plan_v1')) {
           localStorage.setItem('safsf_plan_v1', '1')
           if (!(get().S.routines || []).length) get().loadSafsfPlan()
         }
+        { const S2 = clone(get().S); if (applyFitnessWeek(S2)) persist(S2, false) }
         set({ ready: true })
         return
       }

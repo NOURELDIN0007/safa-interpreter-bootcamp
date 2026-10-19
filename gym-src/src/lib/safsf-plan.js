@@ -36,22 +36,6 @@ const SPEC = [
     ['0597', 3, range(10, 12), 'b'],                 // hip abduction ─┐ superset
     ['2335', 3, range(10, 12), 'b']                  // seated calf    ─┘
   ] },
-  { key: 'tread', name: 'Cardio · Treadmill run/walk', emoji: 'figureRun', ex: [
-    ['3666', 3, cardio(2, 8)]                        // run 2 min Z2 / walk 1 min Z1
-  ] },
-  { key: 'bike', name: 'Cardio · Bike intervals', emoji: 'bike', ex: [
-    ['2138', 3, cardio(2, 20)]                       // 5' Z2 + 3 × 2' Z3 (1' easy) + 5' Z2
-  ] },
-  { key: 'coreA', name: 'Core A · knees, legs, bridge', emoji: 'abs', ex: [
-    ['3636', 3, { ...timed(20), side: true }],       // sprinter knee
-    ['0620', 3, timed(30)],                          // leg raises
-    ['3013', 3, range(10, 12)]                       // bridge
-  ] },
-  { key: 'coreB', name: 'Core B · wall sit, plank, dead bug', emoji: 'abs', ex: [
-    ['0624', 3, timed(30)],                          // wall sit
-    ['sf08', 3, range(10, 12)],                      // side plank leg raises
-    ['0276', 3, range(10, 12)]                       // dead bug
-  ] },
   { key: 'mobility', name: 'Mobility warm-up', emoji: 'stretch', prog: 'off', ex: [
     ['sf05', 3, 10], ['sf02', 3, 12], ['sf06', 3, 12], ['sf03', 3, 10], ['sf07', 3, 10], ['sf01', 3, 10]
   ] },
@@ -63,6 +47,77 @@ const SPEC = [
 
 // Weekly schedule from the trainer: Tue lower, Thu upper, Fri lower (getDay(): 0 = Sunday).
 const WEEK = { 2: 'lower1', 4: 'upper', 5: 'lower2' }
+
+// ---- Fitness program (cardio + core), 6 weeks, from the trainer's PDF -------------------
+// Four "Fitness" routines whose content follows the current week. The week is counted from
+// S.fitStart (set when the plan is first loaded) and the routines are rewritten on launch
+// when a new week begins — same routine ids, so history and charts carry on.
+const T = (sets, min, rec) => ({ kind: 'tread', sets, min, rec })
+const B = (sets, min, zone, extra) => ({ kind: 'bike', sets, min, zone, extra })
+const K = list => ({ kind: 'core', list })   // [exId, sets, cfg]
+const SK = (n, s) => ['3636', n, { ...timed(s), side: true }]   // sprinter knee
+const LR = (n, s) => ['0620', n, timed(s)]                       // leg raises
+const BR = (n, lo, hi) => ['3013', n, range(lo, hi)]              // bridge
+const WS = (n, s) => ['0624', n, timed(s)]                        // wall sit
+const SP = (n, lo, hi) => ['sf08', n, range(lo, hi)]              // side plank leg raises
+const DB = (n, lo, hi) => ['0276', n, range(lo, hi)]              // dead bug
+export const FIT = [
+  [T(3, 2, 1), B(3, 2, 'Z3'), K([SK(3, 20), LR(3, 30), BR(3, 10, 12)]), T(3, 3, 1)],
+  [T(3, 3, 1), B(3, 0.5, 'Z4', 'then 1 × 2 min Z3, 1 min easy · 3 min Z2 to finish'), K([WS(3, 30), SP(3, 10, 12), DB(3, 10, 12)]), T(4, 3, 1)],
+  [T(4, 3, 1), K([SK(4, 30), LR(4, 30), BR(4, 10, 12)]), B(4, 2, 'Z3'), T(3, 4, 2)],
+  [T(3, 2, 1), B(3, 2, 'Z3'), K([WS(3, 30), SP(3, 12, 15), BR(3, 12, 15)]), T(3, 3, 1)],
+  [T(3, 4, 2), K([SK(4, 30), LR(4, 30), BR(4, 10, 12)]), B(4, 2, 'Z3'), T(1, 20, 0)],
+  [T(3, 4, 2), K([WS(4, 45), SP(4, 12, 15), DB(4, 12, 15)]), B(3, 0.5, 'Z4', 'then 2 × 2 min Z3, 1 min easy · 5 min Z2 to finish'), T(3, 5, 2)]
+]
+const mm = m => (m < 1 ? m * 60 + ' s' : m + ' min')
+function fitDay(d) {
+  if (d.kind === 'tread') return {
+    title: 'Treadmill', emoji: 'figureRun', ex: [['3666', d.sets, cardio(d.min, 8)]],
+    note: d.rec ? `${d.sets} × (run ${mm(d.min)} Z2 + walk ${mm(d.rec)} Z1)` : `${mm(d.min)} steady in Z2`
+  }
+  if (d.kind === 'bike') return {
+    title: 'Bike', emoji: 'bike', ex: [['0798', 1, cardio(5, 20)], ['2138', d.sets, cardio(d.min, 25)]],
+    note: `5 min Z2 warm-up · ${d.sets} × ${mm(d.min)} ${d.zone} (1 min easy between)${d.extra ? ' · ' + d.extra : ' · 5 min Z2 to finish'}`
+  }
+  return { title: 'Core', emoji: 'abs', ex: d.list, note: 'Rest 1 min between sets' }
+}
+export const fitWeekOf = S => {
+  if (!S.fitStart) return 1
+  const days = Math.floor((Date.now() - new Date(S.fitStart + 'T00:00:00').getTime()) / 864e5)
+  return Math.min(6, Math.max(1, Math.floor(days / 7) + 1))
+}
+const mondayISO = () => { const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.toISOString().slice(0, 10) }
+const OLD_FIT = ['Cardio · Treadmill run/walk', 'Cardio · Bike intervals', 'Core A · knees, legs, bridge', 'Core B · wall sit, plank, dead bug']
+// Bring the four Fitness routines to the current week. Returns true when S changed.
+export function applyFitnessWeek(S, force) {
+  if (!(S.routines || []).length) return false
+  let changed = false
+  if (!S.fitStart) { S.fitStart = mondayISO(); changed = true }
+  // Older plans had four fixed cardio/core routines: swap them for the weekly ones.
+  if (!S.routines.some(r => r.fit)) {
+    const at = S.routines.findIndex(r => OLD_FIT.includes(r.name))
+    const removed = S.routines.filter(r => OLD_FIT.includes(r.name)).map(r => r.id)
+    S.routines = S.routines.filter(r => !OLD_FIT.includes(r.name))
+    Object.keys(S.week || {}).forEach(d => { if (removed.includes(S.week[d])) delete S.week[d] })
+    const fresh = [1, 2, 3, 4].map(n => ({ id: uid(), fit: n, name: 'Fitness ' + n, emoji: 'figureRun', prog: 'off', ex: [] }))
+    S.routines.splice(at < 0 ? 3 : at, 0, ...fresh)
+    S.fitWeek = 0
+    changed = true
+  }
+  const wk = fitWeekOf(S)
+  if (S.fitWeek === wk && !force) return changed
+  S.fitWeek = wk
+  FIT[wk - 1].forEach((d, i) => {
+    const r = S.routines.find(x => x.fit === i + 1)
+    if (!r) return
+    const f = fitDay(d)
+    r.name = `Fitness ${i + 1} · ${f.title}`
+    r.emoji = f.emoji
+    r.note = f.note
+    r.ex = f.ex.map(([exId, sets, cfg]) => ({ id: exId, sets, weight: 0, ...cfg }))
+  })
+  return true
+}
 
 export function safsfPlan() {
   const ids = {}
@@ -79,5 +134,7 @@ export function safsfPlan() {
   })
   const week = {}
   Object.entries(WEEK).forEach(([d, k]) => { week[d] = ids[k] })
+  // Fitness 1–4 go after the gym days; applyFitnessWeek fills them for the current week.
+  routines.splice(3, 0, ...[1, 2, 3, 4].map(n => ({ id: uid(), fit: n, name: 'Fitness ' + n, emoji: 'figureRun', prog: 'off', ex: [] })))
   return { routines, week }
 }

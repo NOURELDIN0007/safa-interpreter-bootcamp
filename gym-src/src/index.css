@@ -1177,3 +1177,34 @@ h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005e
 .pin-img,.board-c>div{background:#f1f1f1}
 .pin-img img,.board-c img{mix-blend-mode:multiply}
 :root:not([data-theme="light"]) .pin-img,:root:not([data-theme="light"]) .board-c>div{background:#e8e8e8}
+
+/* ---- Safsf extras: fitness week, notes, measurements, photos ---- */
+.fit-wk{font-size:14px;min-width:84px;text-align:center}
+.fitcard .iconbtn{width:32px;height:32px;font-size:15px}
+.fitcard .iconbtn:disabled{opacity:.3}
+.fit-day{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:var(--hair) solid var(--sep);cursor:pointer}
+.fit-day:first-of-type{border-top:0}
+.fit-day .tt{font-size:15.5px;font-weight:600}
+.fit-day .ss{font-size:13px;color:var(--label-2);margin-top:2px;line-height:1.35}
+.wnotes{margin:6px 0 16px;padding:14px;border-radius:var(--r-lg);background:var(--surface-2)}
+.heart-btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:999px;background:var(--surface);color:var(--label);font-weight:600;font-size:15px;border:1px solid var(--line)}
+.heart-btn .icn{font-size:18px}
+.heart-btn.on{background:var(--acc);color:var(--on-acc);border-color:transparent}
+.heart-btn.on .icn{fill:currentColor}
+.wnote{font-size:15px;line-height:1.45;padding:6px 0;border-top:var(--hair) solid var(--sep)}
+.wnotes .input{min-width:0;padding:11px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+.measure-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.measure-f{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--label-2)}
+.measure-f .input{padding:12px 14px;border-radius:12px;background:var(--surface-2);font-size:17px}
+.ph-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.ph-compare figure{margin:0}
+.ph-compare img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;display:block}
+.ph-compare figcaption{font-size:12px;color:var(--label-2);margin-top:4px;text-align:center}
+.ph-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ph-grid img,.ph-grid .ph-wait{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;cursor:pointer}
+.ph-wait{background:var(--surface-2);display:block}
+.ph-compare .ph-wait{aspect-ratio:3/4;border-radius:14px}
+:root[data-style="pin"] .heart-btn{border:0;background:var(--pin-grey)}
+:root[data-style="pin"] .heart-btn.on{background:var(--pin-red);color:#fff}
+:root[data-style="pin"] .wnotes{border-radius:24px}
+:root[data-style="pin"] .wnotes .input{border:0;background:#fff}

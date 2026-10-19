@@ -1,3 +1,4 @@
+import { MeasuresCard, PhotosCard } from '../components/Extras.jsx'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store/useStore.js'
@@ -255,6 +256,8 @@ export default function Stats() {
         </> : <div className="muted small">{t('Finish your first workout to see progress curves here.')}</div>}
       </div>
     </div>
+
+    <div className="cols"><MeasuresCard /><PhotosCard /></div>
 
     {S.workouts.length > 0 && <>
       <div className="row between" style={{ marginBottom: 10 }}>
