@@ -170,8 +170,18 @@ function ActiveWorkout() {
   const mutEntry = (idx, fn) => update(s => { fn(s.active.entries[idx]) }, true)
   // Clearing an optional field drops the key rather than storing null, so a set only carries
   // what was actually logged — in the session, in history and in a backup.
+  // Weight and reps carry down: changing set 1 from 0 to 20 kg also fills the sets below it
+  // that aren't done yet and still show the old value — a set changed by hand keeps its own.
+  const CARRY = ['w', 'r', 'sec', 'min', 'speed']
   const setField = (idx, i, field, v) => mutEntry(idx, e => {
+    const old = e.sets[i][field]
     if (v == null) delete e.sets[i][field]; else e.sets[i][field] = v
+    if (v == null || !CARRY.includes(field)) return
+    for (let j = i + 1; j < e.sets.length; j++) {
+      const s = e.sets[j]
+      if (s.done || s[field] !== old) break
+      s[field] = v
+    }
   })
   const modeAt = idx => modeOf({ ...(A.entries[idx].target || {}), id: A.entries[idx].id })
   const addSet = idx => mutEntry(idx, e => {
