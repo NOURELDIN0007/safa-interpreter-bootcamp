@@ -1,1 +1,218 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Shop</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fbf1ef;color:#3b2530;font:16px/1.6 system-ui,sans-serif;text-align:center;padding:20px}a{color:#a94f6b}</style></head><body><div><h1 style="font-family:Georgia,serif;font-weight:500">My Shop</h1><p>Your digital-products plan is being written. Check back soon.</p><p><a href="../">← All apps</a></p></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf1ef">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<title>My Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap">
+<style>
+:root{
+  --blush:#fbf1ef;--blush-2:#f6e3e1;--rose:#c86b85;--rose-deep:#a94f6b;--rose-soft:#f3d9df;--plum:#3b2530;--muted:#7b5f69;--line:rgba(169,79,107,.14);
+  --ok:#1f6b45;--ok-soft:#e7f3ec;
+  --serif:"Cormorant Garamond",Georgia,serif;--script:"Great Vibes","Brush Script MT",cursive;--sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);--shadow:0 1px 2px rgba(120,50,70,.04),0 18px 36px -28px rgba(120,50,70,.5);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--blush);color:var(--plum);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(620px 420px at 100% 0%,rgba(243,217,223,.7),transparent 70%),radial-gradient(520px 420px at 0% 100%,rgba(246,227,225,.85),transparent 70%)}
+a{color:var(--rose-deep);text-underline-offset:3px}
+.wrap{max-width:860px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top,0px)) 20px calc(48px + env(safe-area-inset-bottom,0px))}
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px}
+.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:700 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--plum);padding:10px 14px 10px 10px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.back svg{width:16px;height:16px;fill:none;stroke:var(--rose-deep);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.brand{font:400 26px/1 var(--script);color:var(--rose-deep);text-decoration:none}
+
+.hero{display:grid;grid-template-columns:1fr 170px;gap:22px;align-items:end;padding:22px 0 26px;border-bottom:1px solid var(--blush-2)}
+.eyebrow{font:700 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+h1{margin:12px 0 10px;font:500 clamp(40px,7.5vw,60px)/1.02 var(--serif);display:flex;flex-direction:column}
+h1 span{font:400 1.1em/1.05 var(--script);color:var(--rose)}
+.lead{margin:0;color:#6e5560;max-width:50ch}
+.arch{aspect-ratio:3/4;border-radius:999px 999px 18px 18px;overflow:hidden;outline:1px solid rgba(169,79,107,.28);outline-offset:5px;box-shadow:0 24px 44px -28px rgba(120,50,70,.6)}
+.arch img{display:block;width:100%;height:100%;object-fit:cover}
+
+section{padding-top:40px}
+h2{margin:0 0 14px;font:500 clamp(28px,5.4vw,36px)/1.12 var(--serif)}
+h2::before{content:"";display:inline-block;width:12px;height:12px;margin:0 10px 0 1px;vertical-align:.12em;background:var(--rose);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z'/%3E%3C/svg%3E") center/contain no-repeat}
+h3{margin:0;font:600 22px/1.2 var(--serif)}
+p{margin:0}
+.muted{color:var(--muted)}
+.label{font:700 11px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--rose-deep)}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.answer{border-left:0;box-shadow:inset 3px 0 0 var(--rose),var(--shadow)}
+.big{font:600 24px/1.2 var(--serif)}
+ul.clean{margin:4px 0 0;padding-inline-start:20px;display:flex;flex-direction:column;gap:6px}
+ul.clean li::marker{color:var(--rose)}
+.pill{align-self:flex-start;display:inline-block;padding:5px 10px;border-radius:999px;font:700 11.5px/1.2 var(--sans);background:var(--rose-soft);color:var(--rose-deep)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.soft{background:var(--blush);color:var(--muted)}
+.callout{padding:16px 18px;border-radius:18px;background:#fff;border:1px solid var(--rose-soft);box-shadow:inset 3px 0 0 var(--rose)}
+.callout strong{display:block;margin-bottom:2px}
+
+.tablewrap{overflow-x:auto;border-radius:18px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--blush-2);vertical-align:top}
+th{font:700 11px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--rose-deep);background:var(--blush)}
+tr:last-child td{border-bottom:0}
+
+.idea .price{font:600 15px/1.3 var(--sans);color:var(--rose-deep)}
+
+.week{margin-bottom:18px}
+.week-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.check{display:flex;gap:12px;align-items:flex-start;padding:13px 16px;background:#fff;border:1px solid var(--line);margin-top:-1px;cursor:pointer;transition:background .2s}
+.check:first-of-type{border-radius:14px 14px 0 0;margin-top:0}
+.check:last-of-type{border-radius:0 0 14px 14px}
+.check input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:22px;height:22px;margin:2px 0 0;border:1.5px solid #e0bcc6;border-radius:50%;background:#fff;cursor:pointer}
+.check input:checked{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat var(--rose);border-color:var(--rose)}
+.check.done{background:#fffaf9}
+.check.done span{color:var(--muted);text-decoration:line-through;text-decoration-color:#e3a9b9}
+.progress{height:8px;border-radius:99px;background:#f1dfe0;overflow:hidden;margin:6px 0 18px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e2a0b2,var(--rose-deep));transition:width .6s var(--ease)}
+ol.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;counter-reset:r}
+ol.rules li{counter-increment:r;position:relative;padding:16px 16px 16px 58px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+ol.rules li::before{content:counter(r);position:absolute;left:16px;top:15px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 17px/1 var(--serif);color:var(--rose-deep);background:var(--rose-soft)}
+ol.rules b{display:block;font:600 19px/1.25 var(--serif)}
+footer{margin-top:56px;text-align:center;font:400 30px/1.2 var(--script);color:var(--rose)}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+@media (max-width:640px){
+  .wrap{padding-inline:16px}
+  .hero{grid-template-columns:1fr 104px;gap:14px}
+  section{padding-top:32px}
+  .card{padding:18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="back" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>All apps</a>
+    <a class="brand" href="../">Safa's corner</a>
+  </div>
+
+  <header class="hero">
+    <div>
+      <span class="eyebrow">Future plan · 04</span>
+      <h1>My shop<span>digital products</span></h1>
+      <p class="lead">Make something once in Canva, sell it as a download many times. Here is what to sell, where, how you get paid in Egypt, and the first 30 days.</p>
+    </div>
+    <div class="arch" aria-hidden="true"><img src="../study/img/peony.jpg" alt=""></div>
+  </header>
+
+  <section>
+    <h2>Can I sell on Etsy from Egypt?</h2>
+    <div class="card answer">
+      <span class="pill ok">Yes, with Payoneer</span>
+      <p class="big">Egypt is on Etsy's list. You get paid through a free Payoneer account, then withdraw to your Egyptian bank in pounds.</p>
+      <ul class="clean">
+        <li>Your <b>name, address and ID must match exactly</b> on Etsy and Payoneer. If they don't, the shop can be put on hold.</li>
+        <li>Etsy keeps about <b>13% + $0.50</b> of each sale: $0.20 to list, 6.5% transaction fee, and about 6.5% + $0.30 for payment processing in Egypt. Payoneer also charges a small fee when you withdraw.</li>
+        <li>Some countries pay a one-time setup fee of about $15–29. Etsy shows it during signup, if it applies.</li>
+        <li>Sources: <a href="https://help.etsy.com/hc/articles/115015710408" target="_blank" rel="noopener">eligible countries</a> · <a href="https://help.etsy.com/hc/articles/16999319005207" target="_blank" rel="noopener">Payoneer with Etsy</a> · <a href="https://help.etsy.com/hc/en-us/articles/115014483627-" target="_blank" rel="noopener">Etsy fees</a>. Check the fee table again when you sign up.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where to sell</h2>
+    <div class="tablewrap"><table>
+      <tr><th>Where</th><th>Works from Egypt?</th><th>Use it for</th></tr>
+      <tr><td><b>Etsy</b></td><td><span class="pill ok">Yes</span> paid through Payoneer</td><td>International buyers. Your main shop.</td></tr>
+      <tr><td><b>Instagram + InstaPay / Vodafone Cash</b></td><td><span class="pill ok">Yes</span> instant, no fees</td><td>Arabic products for Egypt and the Gulf. You send the file yourself.</td></tr>
+      <tr><td><b>Payhip</b></td><td><span class="pill">Maybe</span> through PayTabs</td><td>Later: your own little store with your own link.</td></tr>
+      <tr><td><b>Gumroad</b></td><td><span class="pill">Check first</span> sources disagree</td><td>Look for Egypt in its payout settings before you build there.</td></tr>
+      <tr><td><b>Ko-fi, Stan Store, Shopify</b></td><td><span class="pill soft">No, for now</span> need Stripe or a monthly fee</td><td>Skip.</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>What to sell</h2>
+    <p class="muted" style="margin:-4px 0 14px">Picked for you: real Arabic (many sellers get the script wrong), your blush style, and your law degree.</p>
+    <div class="grid">
+      <div class="card idea"><span class="pill">Start here</span><h3>Bilingual Ramadan &amp; Islamic printables</h3><p class="muted">Kids' dua flashcards, an undated Ramadan planner, a good-deeds tracker, Eid gift tags. Arabic + English.</p><p class="price">$2–8 · bundles $12–20</p></div>
+      <div class="card idea"><span class="pill">Start here</span><h3>Blush study planners</h3><p class="muted">A narrow angle sells better: "Law student study planner", or "Muslimah daily planner" with prayers and habits.</p><p class="price">$6–12</p></div>
+      <div class="card idea"><span class="pill soft">Next</span><h3>Arabic wall art in blush tones</h3><p class="muted">Calligraphy-style quotes and names as printables. Your own designs, not AI art (Etsy is full of it, and AI must be disclosed).</p><p class="price">$3–8</p></div>
+      <div class="card idea"><span class="pill soft">Next</span><h3>Canva templates</h3><p class="muted">Bilingual Instagram kits for small Arab businesses, aesthetic CV templates, Arabic wedding or engagement invitations.</p><p class="price">$5–15</p></div>
+      <div class="card idea"><span class="pill soft">Later</span><h3>Bilingual freelancer contract templates</h3><p class="muted">Uses your LL.B. Keep them general and label them "educational, not legal advice".</p><p class="price">$8–20</p></div>
+    </div>
+    <div class="callout" style="margin-top:14px"><strong>Ramadan 2027 starts around February 8</strong>Ramadan listings need to be live by <b>December</b>, so they have time to get views and reviews.</div>
+  </section>
+
+  <section>
+    <h2>Your first 30 days</h2>
+    <p class="muted" id="count" style="margin-top:-4px"></p>
+    <div class="progress"><i id="bar"></i></div>
+    <div id="plan"></div>
+    <p class="muted" style="font-size:14px">Budget: about $3 for 15 listings ($0.20 each), plus a setup fee if Etsy shows one. Canva Free is enough. Only pay for Canva Pro (about $15/month) once you have sales.</p>
+  </section>
+
+  <section>
+    <h2>Rules that keep the shop safe</h2>
+    <ol class="rules">
+      <li><b>Only your own designs</b>No Disney, Sanrio, brand logos or celebrity names. Check that every font and graphic is allowed for commercial use.</li>
+      <li><b>Canva's licence</b>Printable PDFs: use only <b>Free</b> Canva elements. If a design uses Pro elements, sell it as a Canva template link, never as a PDF or PNG.</li>
+      <li><b>Your real details</b>Your own name and ID on Etsy and Payoneer. No VPN and no one else's account: both can get the shop closed.</li>
+      <li><b>Legal templates</b>"For educational use, not legal advice". Don't claim they are valid under one country's law.</li>
+      <li><b>Keep a sales record</b>Online income is taxable in Egypt. Write down every sale from day one, and ask an accountant once sales are regular.</li>
+      <li><b>Two channels</b>Etsy plus Instagram, so one platform never holds all your income.</li>
+    </ol>
+  </section>
+
+  <footer>one beautiful step at a time</footer>
+</div>
+
+<script src="../cloud.js"></script>
+<script>
+(function(){
+  var PLAN=[
+    {w:"Days 1–3",t:"Set up your accounts",items:[
+      "Open a free Payoneer account with your real name, address and national ID.",
+      "Open your Etsy shop with exactly the same details. Note whether a setup fee appears.",
+      "Choose a shop name (short, pretty, easy to spell) and make a logo in Canva.",
+      "Make an Instagram business account with the same name."]},
+    {w:"Days 4–7",t:"Research before you design",items:[
+      "Pick 2 niches: bilingual Ramadan kids' printables, and blush study planners.",
+      "Search each niche on Etsy. Write down the top 10 sellers' prices, titles and photos.",
+      "Type your product into Etsy's search box and copy the suggestions: these are your tags (13 per listing).",
+      "Make a free eRank account to check which keywords people search."]},
+    {w:"Days 8–21",t:"Make 10–15 listings, about one a day",items:[
+      "Design in Canva with Free elements only. Export each as a PDF in US Letter and A4.",
+      "Make 5+ images for each listing: cover, inside pages, sizes, and \"what you get\".",
+      "Title: start with the main keyword (e.g. \"Ramadan Planner for Kids Printable Arabic English\").",
+      "Use all 13 tags, fill in the attributes, and make the first 2 lines of the description clear.",
+      "Prices: printables $3–5, planners $6–12, bundles $12–20. Start with 20–30% off for launch.",
+      "Reach 10 listings live in Etsy. Then 15."]},
+    {w:"Days 22–30",t:"Let people find you",items:[
+      "Pinterest: 5 pins a day, each linking to one of your listings.",
+      "Instagram: 3 Reels showing how you make a product.",
+      "Offer the Arabic versions locally with InstaPay, and send the file after payment.",
+      "Check Etsy stats: make 2 more versions of whatever gets the most views.",
+      "Write down every sale (date, product, amount) for your records."]}
+  ];
+  var KEY="shop30",st={};
+  try{st=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}if(window.SafsfCloud)SafsfCloud.put("shop",{plan:JSON.stringify(st)})}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function render(){
+    var total=0,n=0;
+    document.getElementById("plan").innerHTML=PLAN.map(function(b,bi){
+      return '<div class="week"><div class="week-head"><h3>'+esc(b.w)+'</h3><span class="muted">'+esc(b.t)+'</span></div>'+b.items.map(function(t,ti){var id="s"+bi+"_"+ti;total++;if(st[id])n++;
+        return '<label class="check '+(st[id]?"done":"")+'" for="'+id+'"><input type="checkbox" id="'+id+'" '+(st[id]?"checked":"")+'><span>'+esc(t)+'</span></label>'}).join("")+'</div>'}).join("");
+    document.getElementById("count").textContent=n+" of "+total+" steps done";
+    document.getElementById("bar").style.width=(100*n/total)+"%";
+  }
+  document.getElementById("plan").addEventListener("change",function(e){var c=e.target;if(c.type!=="checkbox")return;if(c.checked)st[c.id]=true;else delete st[c.id];save();render();
+    if(c.checked&&window.SafsfCloud)SafsfCloud.log("shop","Shop plan: "+c.parentNode.textContent.slice(0,120),{area:"Shop",who:SafsfCloud.who()})});
+  render();
+  if(window.SafsfCloud)SafsfCloud.get("shop").then(function(d){if(d&&d.plan){try{st=JSON.parse(d.plan)||{};try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}render()}catch(e){}}});
+})();
+</script>
+</body>
+</html>
