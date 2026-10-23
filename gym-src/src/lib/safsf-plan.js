@@ -87,12 +87,15 @@ export const fitWeekOf = S => {
   return Math.min(6, Math.max(1, Math.floor(days / 7) + 1))
 }
 const mondayISO = () => { const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d.toISOString().slice(0, 10) }
+// Plan restart: week 1 of the fitness program begins again on this day (logged history is kept).
+export const FIT_RESTART = '2026-10-24'
 const OLD_FIT = ['Cardio · Treadmill run/walk', 'Cardio · Bike intervals', 'Core A · knees, legs, bridge', 'Core B · wall sit, plank, dead bug']
 // Bring the four Fitness routines to the current week. Returns true when S changed.
 export function applyFitnessWeek(S, force) {
   if (!(S.routines || []).length) return false
   let changed = false
   if (!S.fitStart) { S.fitStart = mondayISO(); changed = true }
+  if (S.fitStart < FIT_RESTART && S.fitRestart !== FIT_RESTART) { S.fitStart = FIT_RESTART; S.fitRestart = FIT_RESTART; S.fitWeek = 0; changed = true }
   // Older plans had four fixed cardio/core routines: swap them for the weekly ones.
   if (!S.routines.some(r => r.fit)) {
     const at = S.routines.findIndex(r => OLD_FIT.includes(r.name))

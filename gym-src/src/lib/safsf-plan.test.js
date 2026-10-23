@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { safsfPlan, applyFitnessWeek, fitWeekOf, FIT } from './safsf-plan.js'
+import { safsfPlan, applyFitnessWeek, fitWeekOf, FIT, FIT_RESTART } from './safsf-plan.js'
 
 const iso = daysAgo => { const d = new Date(); d.setDate(d.getDate() - daysAgo); return d.toISOString().slice(0, 10) }
 
@@ -45,6 +45,15 @@ describe('fitness weeks', () => {
     applyFitnessWeek(S)
     expect(S.routines.map(r => r.name)).toEqual(['Lower · Day 1', 'Fitness 1 · Treadmill', 'Fitness 2 · Bike', 'Fitness 3 · Core', 'Fitness 4 · Treadmill'])
     expect(S.week).toEqual({ 2: 'a' })
+  })
+  it('restarts once at week 1 on the restart day', () => {
+    const S = safsfPlan()
+    S.fitStart = '2026-10-05'
+    expect(applyFitnessWeek(S)).toBe(true)
+    expect(S.fitStart).toBe(FIT_RESTART)
+    S.fitStart = '2026-10-17'   // moved back by hand after the restart: respected
+    applyFitnessWeek(S)
+    expect(S.fitStart).toBe('2026-10-17')
   })
   it('has 6 weeks of 4 days', () => { expect(FIT.map(w => w.length)).toEqual([4, 4, 4, 4, 4, 4]) })
 })
