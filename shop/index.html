@@ -79,6 +79,19 @@ ol.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:r
 ol.rules li{counter-increment:r;position:relative;padding:16px 16px 16px 58px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
 ol.rules li::before{content:counter(r);position:absolute;left:16px;top:15px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 17px/1 var(--serif);color:var(--rose-deep);background:var(--rose-soft)}
 ol.rules b{display:block;font:600 19px/1.25 var(--serif)}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;counter-reset:f}
+.flow li{counter-increment:f;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 12px;box-shadow:var(--shadow);text-align:center;font-size:14px;line-height:1.4}
+.flow li::before{content:counter(f);display:grid;place-items:center;width:30px;height:30px;margin:0 auto 8px;border-radius:50%;background:var(--rose-soft);color:var(--rose-deep);font:600 18px/1 var(--serif)}
+.flow b{display:block;font:600 18px/1.2 var(--serif);margin-bottom:2px}
+.shots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.shots a{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:var(--shadow)}
+.shots img{display:block;width:100%;aspect-ratio:3/4;object-fit:contain}
+.wide{display:block;width:100%;border-radius:18px;border:1px solid var(--line);box-shadow:var(--shadow);background:#fff}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:999px;background:var(--rose-deep);color:#fff;text-decoration:none;font:700 13.5px/1 var(--sans)}
+.btn.ghost{background:#fff;color:var(--rose-deep);border:1px solid var(--rose-soft)}
+.course .meta{font-size:13.5px;color:var(--muted)}
+@media (max-width:640px){.flow{grid-template-columns:1fr 1fr}.flow li:last-child{grid-column:1/-1}.shots{grid-template-columns:1fr 1fr}}
 footer{margin-top:56px;text-align:center;font:400 30px/1.2 var(--script);color:var(--rose)}
 :focus-visible{outline:2px solid var(--rose);outline-offset:3px}
 @media (max-width:640px){
@@ -105,6 +118,40 @@ footer{margin-top:56px;text-align:center;font:400 30px/1.2 var(--script);color:v
     </div>
     <div class="arch" aria-hidden="true"><img src="../study/img/peony.jpg" alt=""></div>
   </header>
+
+  <section>
+    <h2>The idea</h2>
+    <p class="muted" style="margin:-4px 0 14px">You make a coloring book once. People in the US buy it as a download, print it at home, and you get paid every time. No stock, no shipping.</p>
+    <ol class="flow">
+      <li><b>Make</b>Pictures in Gemini with our ready prompts</li>
+      <li><b>Clean</b>Nour's tool turns them into a print-ready PDF</li>
+      <li><b>List</b>Put it on Etsy with the photos the tool makes</li>
+      <li><b>Sell</b>US buyers download it, again and again</li>
+      <li><b>Get paid</b>Etsy → Payoneer → your Egyptian bank</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>A real sample: our first book</h2>
+    <p class="muted" style="margin:-4px 0 14px">These 4 pages were made in Gemini for <b>Cozy Christmas Cottage</b>. The full book will have 30. Tap a page to see it big.</p>
+    <div class="shots">
+      <a href="sample/page-1.png" target="_blank"><img src="sample/page-1.png" alt="Snowy cottage coloring page" loading="lazy"></a>
+      <a href="sample/page-2.png" target="_blank"><img src="sample/page-2.png" alt="Hot cocoa and gingerbread coloring page" loading="lazy"></a>
+      <a href="sample/page-3.png" target="_blank"><img src="sample/page-3.png" alt="Armchair by the fireplace coloring page" loading="lazy"></a>
+      <a href="sample/page-4.png" target="_blank"><img src="sample/page-4.png" alt="Snowman with a lantern coloring page" loading="lazy"></a>
+    </div>
+    <p class="label" style="margin:22px 0 10px">What the buyer sees on Etsy</p>
+    <img class="wide" src="sample/01-cover.jpg" alt="Etsy listing photo: Cozy Christmas Cottage cover" loading="lazy">
+    <div class="grid" style="margin-top:12px">
+      <img class="wide" src="sample/02-what-you-get.jpg" alt="Etsy listing photo: what you get" loading="lazy">
+      <img class="wide" src="sample/04-how-it-works.jpg" alt="Etsy listing photo: how it works" loading="lazy">
+    </div>
+    <div class="btns">
+      <a class="btn" href="sample/cozy-christmas-cottage-sample.pdf" target="_blank">Open the sample PDF</a>
+      <a class="btn ghost" href="https://www.etsy.com/search?q=cozy%20christmas%20coloring%20pages%20printable" target="_blank" rel="noopener">See similar books on Etsy</a>
+    </div>
+    <div class="callout" style="margin-top:14px"><strong>What's inside the PDF</strong>A cover, a "how to use" page, a color-test page, the coloring pages with blank backs (markers don't bleed through), and a thank-you + license page. US Letter for American printers, A4 for everyone else.</div>
+  </section>
 
   <section>
     <h2>The plan in one line</h2>
@@ -161,6 +208,32 @@ footer{margin-top:56px;text-align:center;font:400 30px/1.2 var(--script);color:v
     <p class="muted" id="count" style="margin-top:-4px"></p>
     <div class="progress"><i id="bar"></i></div>
     <div id="plan"></div>
+  </section>
+
+  <section>
+    <h2>Learn it on Udemy</h2>
+    <p class="muted" style="margin:-4px 0 14px">Short video courses you watch on your phone, at your own speed. You keep them forever and get a certificate when you finish.</p>
+    <p class="label" style="margin-bottom:10px">For the shop</p>
+    <div class="grid">
+      <div class="card course"><span class="pill">Start here</span><h3>Create and Sell Coloring Books with AI</h3><p class="muted">Making coloring pages with AI and laying them out in Canva. The same work as our books, plus Amazon KDP for later.</p><p class="meta">4.7★ · updated Apr 2026 · small course, watch the free previews first</p><a href="https://www.udemy.com/course/create-and-sell-coloring-books-on-kdp-with-chatgpt-ai-tool/" target="_blank" rel="noopener">Open on Udemy</a></div>
+      <div class="card course"><span class="pill">Then</span><h3>Canva Masterclass: Beginner to Pro</h3><p class="muted">Covers, shop logo and banner, listing photos and mockups. Canva is free to start.</p><p class="meta">4.6★ bestseller · updated May 2026</p><a href="https://www.udemy.com/course/canva-masterclass-beginner-to-pro-graphic-design-in-canva/" target="_blank" rel="noopener">Open on Udemy</a></div>
+      <div class="card course"><span class="pill soft">Before launch</span><h3>Etsy Shop Setup, SEO &amp; Ads</h3><p class="muted">Opening the shop, titles and the 13 tags, how buyers find you. Watch setup and SEO first, ads later.</p><p class="meta">4.6★ · 27,000+ students · about 11 hours</p><a href="https://www.udemy.com/courses/search/?q=etsy%20shop%20setup%20seo%20ads%20hobart" target="_blank" rel="noopener">Find on Udemy</a></div>
+    </div>
+    <p class="label" style="margin:20px 0 10px">For the remote jobs</p>
+    <div class="grid">
+      <div class="card course"><span class="pill soft">AI jobs</span><h3>Training AI with Human Data</h3><p class="muted">The rating and labeling work that RWS, Welo Data and TELUS pay for. Helps with their tests.</p><a href="https://www.udemy.com/course/human-data-explained/" target="_blank" rel="noopener">Open on Udemy</a></div>
+      <div class="card course"><span class="pill soft">Translation</span><h3>Trados Studio 2024 Basic Training</h3><p class="muted">The translation software agencies use. Opens real translation jobs.</p><p class="meta">4.6★ · about 6 hours</p><a href="https://www.udemy.com/courses/search/?q=trados%20studio%202024%20basic%20training" target="_blank" rel="noopener">Find on Udemy</a></div>
+    </div>
+    <div class="callout" style="margin-top:14px"><strong>How to buy on Udemy</strong>
+      <ul class="clean">
+        <li><b>Never pay full price.</b> Udemy has sales almost every week (courses drop to about $10–15). Add the course to your wishlist and wait.</li>
+        <li>Watch the <b>free preview</b> lessons and read the newest reviews before you buy.</li>
+        <li>You have <b>30 days</b> to ask for a refund if a course is bad.</li>
+        <li>Use the <b>Udemy app</b>: download lessons and watch offline. Turn on subtitles (CC) and slow the speed to 0.75× if you need.</li>
+        <li>The certificate shows you <b>finished</b> a course. Put it on LinkedIn under "Licenses &amp; certifications".</li>
+      </ul>
+    </div>
+    <div class="btns"><a class="btn ghost" href="../study/#courses">See all courses (free ones too) →</a></div>
   </section>
 
   <section>
