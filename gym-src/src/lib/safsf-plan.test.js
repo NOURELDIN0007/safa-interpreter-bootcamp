@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { safsfPlan, applyFitnessWeek, fitWeekOf, FIT, FIT_RESTART } from './safsf-plan.js'
+import { safsfPlan, applyFitnessWeek, fitWeekOf, FIT, FIT_RESTART, applyWeekShift } from './safsf-plan.js'
 
 const iso = daysAgo => { const d = new Date(); d.setDate(d.getDate() - daysAgo); return d.toISOString().slice(0, 10) }
 
@@ -56,4 +56,17 @@ describe('fitness weeks', () => {
     expect(S.fitStart).toBe('2026-10-17')
   })
   it('has 6 weeks of 4 days', () => { expect(FIT.map(w => w.length)).toEqual([4, 4, 4, 4, 4, 4]) })
+})
+
+describe('week shift', () => {
+  it('moves this week to Sat / Mon / Wed once, keeping her own overrides', () => {
+    const S = safsfPlan(); S.dayPlan = { '2026-10-30': 'x' }
+    expect(applyWeekShift(S)).toBe(true)
+    expect(S.dayPlan['2026-10-24']).toBe(S.week[2])
+    expect(S.dayPlan['2026-10-26']).toBe(S.week[4])
+    expect(S.dayPlan['2026-10-28']).toBe(S.week[5])
+    expect(S.dayPlan['2026-10-27']).toBe('rest')
+    expect(S.dayPlan['2026-10-30']).toBe('x')
+    expect(applyWeekShift(S)).toBe(false)
+  })
 })

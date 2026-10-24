@@ -122,6 +122,21 @@ export function applyFitnessWeek(S, force) {
   return true
 }
 
+// One-week shift (week of Oct 24, 2026): Lower 1 Sat, Upper Mon, Lower 2 Wed, rest Tue/Thu/Fri.
+// Written as day overrides once, so the normal Tue/Thu/Fri week returns on Nov 3.
+export const WEEK_SHIFT = { id: 'shift-2026-10-24', days: { '2026-10-24': 2, '2026-10-26': 4, '2026-10-28': 5, '2026-10-27': 'rest', '2026-10-29': 'rest', '2026-10-30': 'rest' } }
+export function applyWeekShift(S) {
+  if (S.weekShift === WEEK_SHIFT.id || !(S.routines || []).length) return false
+  S.dayPlan = S.dayPlan || {}
+  Object.entries(WEEK_SHIFT.days).forEach(([iso, v]) => {
+    if (S.dayPlan[iso] !== undefined) return   // she already planned that day herself
+    const id = v === 'rest' ? 'rest' : (S.week || {})[v]
+    if (id) S.dayPlan[iso] = id
+  })
+  S.weekShift = WEEK_SHIFT.id
+  return true
+}
+
 export function safsfPlan() {
   const ids = {}
   const routines = SPEC.map(r => {

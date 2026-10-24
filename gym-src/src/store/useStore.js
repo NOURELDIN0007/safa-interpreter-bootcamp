@@ -3,7 +3,7 @@ import { api } from '../lib/api.js'
 import { localTZ } from '../lib/format.js'
 import { registerCustom } from '../lib/exercises.js'
 import { DEMO } from '../lib/demo.js'
-import { safsfPlan, applyFitnessWeek } from '../lib/safsf-plan.js'
+import { safsfPlan, applyFitnessWeek, applyWeekShift } from '../lib/safsf-plan.js'
 import { startCloud, pushCloud, flushCloud, logChanges } from '../lib/cloudsync.js'
 import { EXIDX } from '../lib/exercises.js'
 import { MOBILE, nativeLoad, nativeSave, syncReminder } from '../lib/mobile.js'
@@ -182,7 +182,7 @@ export const useStore = create((set, get) => {
           localStorage.setItem('safsf_plan_v1', '1')
           if (!(get().S.routines || []).length) get().loadSafsfPlan()
         }
-        { const S2 = clone(get().S); if (applyFitnessWeek(S2)) persist(S2, false) }
+        { const S2 = clone(get().S); const a = applyFitnessWeek(S2), b = applyWeekShift(S2); if (a || b) persist(S2, false) }
         set({ ready: true })
         return
       }
