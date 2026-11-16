@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf1ef">
+<title>Tutor · Safa's Corner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf1ef;--card:#fff;--ink:#2b2230;--muted:#7d6f78;--accent:#b5476b;--accent2:#e8a3b8;--line:#efdfe2;--hl:rgba(255,214,64,.42);--hlb:#f2b705;--ok:#2e8b57}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,system-ui,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.top h1{font-size:18px;margin:0;flex:1}
+.top .back{font-size:14px;text-decoration:none;white-space:nowrap}
+main{max-width:900px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:8px;margin:4px 0 14px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;color:var(--ink);cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.parts{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.part{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;cursor:pointer;text-align:right;font:inherit;color:inherit}
+.part h3{margin:0 0 4px;font-size:17px}
+.part p{margin:0;color:var(--muted);font-size:14px}
+.part .bar{height:6px;background:var(--line);border-radius:9px;margin-top:10px;overflow:hidden}
+.part .bar i{display:block;height:100%;background:var(--accent)}
+.part[disabled]{opacity:.55;cursor:default}
+.intro{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 14px}
+/* player */
+#player[hidden],#home[hidden]{display:none}
+.load{background:var(--card);border:1px dashed var(--accent2);border-radius:16px;padding:22px;text-align:center;line-height:1.8}
+.load input{display:none}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:12px;background:var(--accent);color:#fff;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--accent);border:1px solid var(--accent2)}
+.err{color:#b00020;font-weight:600}
+.pagewrap{position:relative;background:#fff;border-radius:12px;box-shadow:0 2px 14px rgba(80,30,50,.10);overflow:hidden;margin:0 auto}
+.pagewrap img{display:block;width:100%;height:100%}
+.hl{position:absolute;background:var(--hl);border-bottom:2px solid var(--hlb);border-radius:4px;pointer-events:none;transition:all .35s ease;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,183,5,.0)}50%{box-shadow:0 0 0 4px rgba(242,183,5,.25)}}
+.say{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom));margin:14px -16px -16px;box-shadow:0 -4px 16px rgba(80,30,50,.07);z-index:3}
+/* wide screens (tablet / laptop): PDF and tutor side by side */
+@media (min-width:900px){
+ main.wide{max-width:1400px}
+ #stage:not([hidden]){display:grid;grid-template-columns:minmax(330px,400px) 1fr;gap:18px;align-items:start}
+ #stage .say{grid-column:1;grid-row:1;position:sticky;top:70px;bottom:auto;margin:0;border:1px solid var(--line);border-radius:16px;box-shadow:0 2px 14px rgba(80,30,50,.08);padding:16px}
+ #stage .pagewrap{grid-column:2;grid-row:1}
+ #stage .say .txt{max-height:52vh}
+ .tutor-face{display:flex}
+}
+.tutor-face{display:none;align-items:center;gap:10px;margin-bottom:8px}
+.tutor-face .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#f6c1d1,#b5476b);display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;position:relative}
+.tutor-face .av.talk::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--accent2);animation:ring 1.2s ease-out infinite}
+@keyframes ring{from{opacity:1;transform:scale(.9)}to{opacity:0;transform:scale(1.25)}}
+.tutor-face b{display:block}.tutor-face small{color:var(--muted)}
+.codebox{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.codebox input{border:1px solid var(--accent2);border-radius:12px;padding:10px 12px;font:inherit;text-align:center;min-width:180px;direction:ltr}
+.say .meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);gap:8px}
+.say .kind{border-radius:999px;padding:2px 10px;font-weight:700;font-size:12px;background:var(--line);color:var(--accent)}
+.say .kind.core{background:#fff3c4;color:#8a6200}.say .kind.check{background:#dff3e8;color:var(--ok)}
+.say h2{font-size:17px;margin:6px 0 4px}
+.say .txt{font-size:16px;line-height:1.9;max-height:30vh;overflow:auto;margin:0}
+.ans{margin-top:8px}.ans p{background:#dff3e8;border-radius:10px;padding:8px 12px;margin:6px 0 0;line-height:1.8}
+.ctrls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.ctrls button{border:1px solid var(--line);background:var(--card);border-radius:12px;min-width:46px;height:44px;font:inherit;font-weight:700;color:var(--ink);cursor:pointer}
+.ctrls button.play{background:var(--accent);color:#fff;border-color:var(--accent);min-width:64px}
+.ctrls select{border:1px solid var(--line);border-radius:12px;height:44px;font:inherit;padding:0 8px;background:var(--card)}
+.prog{height:5px;background:var(--line);border-radius:9px;margin-top:8px;overflow:hidden}.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.small{font-size:12px;color:var(--muted)}
+label.auto{font-size:13px;display:flex;align-items:center;gap:4px}
+</style>
+</head>
+<body>
+<div class="top"><a class="back" href="./#diploma">→ Safa's Corner</a><h1 id="ttl">المذاكرة مع التيوتر</h1></div>
+<main>
+ <section id="home">
+  <p class="intro">اختاري المادة والجزء. هتلاقي الملزمة نفسها قدامك، والتيوتر جنبها بتعلّم على الكلام وتشرحه بالصوت خطوة خطوة.</p>
+  <div class="tabs" id="courses"></div>
+  <div class="parts" id="parts"></div>
+ </section>
+ <section id="player" hidden>
+  <div id="loadbox"></div>
+  <div id="stage" hidden>
+   <div class="pagewrap" id="pagewrap"><img id="pg" alt="صفحة من الملزمة"></div>
+   <div class="say">
+    <div class="tutor-face"><div class="av" id="av">م</div><div><b>ميس منى</b><small>التيوتر بتاعتك</small></div></div>
+    <div class="meta"><span><span class="kind" id="kind"></span> <span id="where"></span></span><label class="auto"><input type="checkbox" id="auto" checked> تشغيل تلقائي</label></div>
+    <h2 id="stitle"></h2>
+    <p class="txt" id="stext"></p>
+    <div class="ans" id="ans" hidden><button class="btn ghost" id="showans">وريني الإجابة</button><p id="atext" hidden></p></div>
+    <div class="ctrls">
+     <button id="next" aria-label="الخطوة الجاية">⟵</button>
+     <button id="play" class="play" aria-label="تشغيل">▶</button>
+     <button id="prev" aria-label="الخطوة اللي فاتت">⟶</button>
+     <button id="again" aria-label="عيدي">↺</button>
+     <select id="rate" aria-label="السرعة"><option value="0.85">أبطأ</option><option value="1" selected>عادي</option><option value="1.15">أسرع</option><option value="1.3">أسرع جدًا</option></select>
+    </div>
+    <div class="prog"><i id="pbar"></i></div>
+   </div>
+  </div>
+ </section>
+</main>
+<audio id="au" preload="auto"></audio>
+<script>
+const $=s=>document.querySelector(s);
+const COURSES=[
+ {id:"il",name:"القانون الدولي العام",parts:[{doc:"il1",name:"الجزء الأول",pages:27},{doc:"il2",name:"الجزء الثاني",pages:52}]},
+ {id:"pf",name:"الحريات العامة",parts:[{doc:"pf1",name:"الجزء الأول",pages:16},{doc:"pf2",name:"الجزء الثاني",pages:27}]}
+];
+const ls={get:(k,d)=>{try{const v=localStorage.getItem("tutor:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem("tutor:"+k,JSON.stringify(v))}catch(e){}}};
+/* IndexedDB: the PDFs live only on this phone */
+const idb=()=>new Promise((res,rej)=>{const r=indexedDB.open("tutor-pages",1);r.onupgradeneeded=()=>r.result.createObjectStore("pdf");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+async function pdfGet(k){try{const db=await idb();return await new Promise(res=>{const q=db.transaction("pdf").objectStore("pdf").get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}catch(e){return null}}
+async function pdfPut(k,buf){try{const db=await idb();await new Promise(res=>{const t=db.transaction("pdf","readwrite");t.objectStore("pdf").put(buf,k);t.oncomplete=res;t.onerror=res})}catch(e){}}
+let avail={};
+async function loadAvail(){for(const c of COURSES)for(const p of c.parts){try{const r=await fetch(`tutor/${p.doc}.json`,{method:"HEAD"});avail[p.doc]=r.ok}catch(e){avail[p.doc]=false}}}
+let curCourse=ls.get("course","il");
+function renderHome(){
+ $("#courses").innerHTML=COURSES.map(c=>`<button data-c="${c.id}" aria-pressed="${c.id===curCourse}">${c.name}</button>`).join("");
+ const c=COURSES.find(x=>x.id===curCourse);
+ $("#parts").innerHTML=c.parts.map(p=>{const pos=ls.get("pos:"+p.doc,null);const n=ls.get("n:"+p.doc,0);const pct=pos&&n?Math.round(100*(pos+1)/n):0;
+  return `<button class="part" data-doc="${p.doc}" ${avail[p.doc]?"":"disabled"}><h3>${p.name}</h3><p>${avail[p.doc]?(pct?`كملتي ${pct}%`:"ابدئي"):"قريبًا"} · ${p.pages} صفحة</p><div class="bar"><i style="width:${pct}%"></i></div></button>`}).join("")}
+$("#courses").addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;curCourse=b.dataset.c;ls.set("course",curCourse);renderHome()});
+$("#parts").addEventListener("click",e=>{const b=e.target.closest("[data-doc]");if(b&&!b.disabled)openDoc(b.dataset.doc)});
+/* player state */
+let D=null,M=null,KEY=null,idx=0,rendered=0,playing=false;
+const au=$("#au"),urls={};
+/* The notes are stored on the site as encrypted page images (they are paid notes and the site is public).
+   The key arrives once through Nour's link, is remembered on her phone, and opened pages are cached there. */
+const hex=h=>new Uint8Array(h.match(/../g).map(x=>parseInt(x,16)));
+async function deriveKey(code){
+ const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(code),"PBKDF2",false,["deriveKey"]);
+ return crypto.subtle.deriveKey({name:"PBKDF2",salt:hex(M.salt),iterations:M.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"])}
+async function pageURL(n){
+ const k=`${D.doc}:${n}`;if(urls[k])return urls[k];
+ let bytes=await pdfGet(k);
+ if(!bytes){const bin=new Uint8Array(await (await fetch(`tutor/pdf/${D.doc}/p${String(n).padStart(2,"0")}.bin`)).arrayBuffer());
+  bytes=await crypto.subtle.decrypt({name:"AES-GCM",iv:bin.slice(0,12)},KEY,bin.slice(12));pdfPut(k,bytes)}
+ return urls[k]=URL.createObjectURL(new Blob([bytes],{type:"image/webp"}))}
+async function openDoc(doc){
+ $("#home").hidden=true;$("#player").hidden=false;$("#stage").hidden=true;document.querySelector("main").classList.add("wide");
+ D=await (await fetch(`tutor/${doc}.json`)).json();ls.set("n:"+doc,D.steps.length);
+ M=await (await fetch(`tutor/pdf/${doc}/meta.json`)).json();
+ $("#ttl").textContent=`${D.course} · ${D.part}`;history.pushState({doc},"","#"+doc);
+ await unlock()}
+async function unlock(){
+ const code=ls.get("code",null);if(!code){askCode();return}
+ $("#loadbox").innerHTML=`<div class="load"><p>بفتح الملزمة…</p></div>`;
+ try{KEY=await deriveKey(code);const first=D.steps[Math.min(ls.get("pos:"+D.doc,0),D.steps.length-1)].page;
+  urls[`${D.doc}:${first}`]||await pageURL(first);
+  $("#loadbox").innerHTML="";$("#stage").hidden=false;idx=Math.min(ls.get("pos:"+D.doc,0),D.steps.length-1);rendered=0;await show(idx,false)}
+ catch(e){ls.set("code",null);askCode("اللينك ده مش شغال، اطلبي من نور يبعته تاني.")}}
+function askCode(msg){
+ $("#loadbox").innerHTML=`<div class="load"><p><b>افتحي لينك المذاكرة اللي نور بعتهولك</b><br>مرة واحدة بس من الموبايل ده، وبعد كده الملازم بتفتح لوحدها.</p>${msg?`<p class="err">${msg}</p>`:""}<details><summary class="small">أو اكتبي الكود</summary><div class="codebox"><input id="code" autocomplete="off" autocapitalize="none" placeholder="الكود"><button class="btn" id="go">افتحي</button></div></details></div>`;
+ const go=()=>{const v=$("#code").value.trim();if(!v)return;ls.set("code",v);unlock()};
+ $("#go").addEventListener("click",go);$("#code").addEventListener("keydown",e=>{if(e.key==="Enter")go()})}
+async function renderPage(n){
+ if(rendered===n)return;const img=$("#pg");const u=await pageURL(n);
+ const [w,h]=M.sizes[n-1];$("#pagewrap").style.aspectRatio=`${w}/${h}`;
+ if(img.src!==u){await new Promise(r=>{img.onload=r;img.onerror=r;img.src=u})}
+ rendered=n;
+ if(n+1<=M.pages)pageURL(n+1).catch(()=>{})}
+function drawHL(st){
+ const wrap=$("#pagewrap");wrap.querySelectorAll(".hl").forEach(e=>e.remove());
+ for(const b of st.boxes){const d=document.createElement("div");d.className="hl";
+  d.style.left=`calc(${b[0]*100}% - 3px)`;d.style.top=`calc(${b[1]*100}% - 3px)`;d.style.width=`calc(${(b[2]-b[0])*100}% + 6px)`;d.style.height=`calc(${(b[3]-b[1])*100}% + 6px)`;wrap.appendChild(d)}
+ const first=wrap.querySelector(".hl");if(first)first.scrollIntoView({behavior:"smooth",block:"center"})}
+const KIND={explain:"شرح",core:"زبدة الإجابة",check:"اختبري نفسك"};
+async function show(i,autoplay=true){
+ idx=Math.max(0,Math.min(i,D.steps.length-1));ls.set("pos:"+D.doc,idx);const st=D.steps[idx];
+ await renderPage(st.page);drawHL(st);
+ $("#kind").textContent=KIND[st.kind]||"شرح";$("#kind").className="kind "+st.kind;
+ $("#where").textContent=`صفحة ${st.page} · خطوة ${idx+1} من ${D.steps.length}`;
+ $("#stitle").textContent=st.title||"";$("#stext").textContent=st.say;
+ $("#ans").hidden=st.kind!=="check";$("#atext").hidden=true;$("#atext").textContent=st.answer||"";
+ $("#pbar").style.width=(100*(idx+1)/D.steps.length)+"%";
+ au.src=`tutor/audio/${D.doc}/${String(idx+1).padStart(3,"0")}.mp3`;au.playbackRate=+$("#rate").value;
+ if(autoplay)play();else setPlay(false)}
+function setPlay(p){playing=p;$("#play").textContent=p?"❚❚":"▶";$("#av").classList.toggle("talk",p)}
+function play(){au.playbackRate=+$("#rate").value;au.play().then(()=>setPlay(true)).catch(()=>setPlay(false))}
+au.addEventListener("ended",()=>{setPlay(false);const st=D.steps[idx];if($("#auto").checked&&st.kind!=="check"&&idx<D.steps.length-1)setTimeout(()=>show(idx+1),700)});
+$("#play").addEventListener("click",()=>{if(playing){au.pause();setPlay(false)}else play()});
+$("#next").addEventListener("click",()=>show(idx+1));
+$("#prev").addEventListener("click",()=>show(idx-1));
+$("#again").addEventListener("click",()=>{au.currentTime=0;play()});
+$("#rate").addEventListener("change",()=>{au.playbackRate=+$("#rate").value;ls.set("rate",$("#rate").value)});
+$("#rate").value=ls.get("rate","1");
+$("#auto").checked=ls.get("auto",true);$("#auto").addEventListener("change",()=>ls.set("auto",$("#auto").checked));
+$("#showans").addEventListener("click",()=>{$("#atext").hidden=false});
+addEventListener("popstate",()=>{au.pause();setPlay(false);$("#player").hidden=true;$("#home").hidden=false;$("#ttl").textContent="المذاكرة مع التيوتر";renderHome()});
+/* one-tap unlock: Nour sends her tutor.html#k=<key> once; the key is saved on her phone and removed from the address bar */
+(()=>{const m=location.hash.match(/k=([^&]+)/);if(m){ls.set("code",decodeURIComponent(m[1]));history.replaceState(null,"",location.pathname)}})();
+(async()=>{await loadAvail();renderHome();const h=location.hash.slice(1);if(h&&avail[h])openDoc(h)})();
+</script>
+</body>
+</html>
