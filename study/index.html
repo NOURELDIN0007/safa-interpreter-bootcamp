@@ -70,7 +70,7 @@ button,input,select{font:inherit;color:inherit}
 .sheet{position:fixed;inset:0;z-index:30;background:rgba(31,26,36,.32);display:flex;align-items:flex-end;animation:fade .2s ease}
 .sheet[hidden]{display:none}
 .sheet-grid{width:100%;max-width:560px;margin:0 auto;background:#fff;border-radius:22px 22px 0 0;padding:10px 12px calc(16px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px -10px rgba(31,26,36,.25);animation:sheetUp .3s var(--ease)}
-.sheet-grid::before{content:"";display:block;width:40px;height:4px;border-radius:4px;background:var(--line-2);margin:4px auto 10px}
+.sheet-grid{max-height:86vh;overflow-y:auto;overscroll-behavior:contain}.sheet-grid .grp{margin:14px 12px 4px;font:700 11.5px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.sheet-grid a.app{display:flex;align-items:center;gap:14px;padding:12px;border-radius:14px;text-decoration:none;color:inherit}.sheet-grid a.app:hover{background:var(--accent-tint)}.sheet-grid a.app b{display:block;font-size:15.5px}.sheet-grid::before{content:"";display:block;width:40px;height:4px;border-radius:4px;background:var(--line-2);margin:4px auto 10px}
 .sheet-grid button{display:flex;align-items:center;gap:14px;width:100%;border:0;background:none;text-align:left;padding:12px;border-radius:14px;cursor:pointer;transition:background .15s}
 .sheet-grid button:hover,.sheet-grid button.on{background:var(--accent-tint)}
 .sheet-grid .ico{flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--tint);color:var(--accent)}
@@ -759,7 +759,7 @@ html[data-style="pin"] .act-app.gym{background:var(--pin-red)}
 
 <div class="wrap">
 <nav class="topbar" aria-label="Sections">
-  <a class="brand" href="#home" data-goto="home"><span class="logo" aria-hidden="true"></span><span>Safa's Corner</span></a>
+  <a class="brand" href="../" title="Back to all apps"><span class="logo" aria-hidden="true"></span><span>Safa's Corner</span></a>
   <div class="tabrow" role="tablist" id="tabrow"></div>
   <span class="topbar-title" id="toptitle"></span>
   <button class="menubtn" id="menubtn" aria-label="More sections" aria-expanded="false"></button>
@@ -772,7 +772,7 @@ html[data-style="pin"] .act-app.gym{background:var(--pin-red)}
 
 
 <!-- HOME / COVER -->
-<section class="panel cover" id="p-home" data-title="Home">
+<section class="panel cover" id="p-home" data-title="Cover page">
   <!-- hero -->
   <div class="cv-hero">
     <div class="cv-hero-text">
@@ -1850,9 +1850,10 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const AR=t=>`<span class="ar" dir="rtl" lang="ar">${esc(t)}</span>`;
 
 /* ---------- tabs ---------- */
+const GROUPS=[["Jobs & interviews",["newjobs","jobs","kalam","multi","mock","answers","confidence"]],["English",["eplan","courses"]],["التعليم · Education",["diploma","tutor"]],["Your progress",["plan","activity","home"]]];
 const panels=[...document.querySelectorAll("section.panel")];
 const row=$("#tabrow");
-panels.forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.tab=id;b.id="tab-"+id;b.setAttribute("aria-controls",p.id);b.onclick=()=>show(id,true);row.appendChild(b)});
+[...panels].sort((a,b)=>{const o=id=>{const f=GROUPS.flatMap(g=>g[1]);const i=f.indexOf(id.slice(2));return i<0?99:i};return o(a.id)-o(b.id)}).forEach(p=>{const id=p.id.slice(2);const b=document.createElement("button");b.role="tab";b.textContent=p.dataset.title;b.dataset.tab=id;b.id="tab-"+id;b.setAttribute("aria-controls",p.id);b.onclick=()=>show(id,true);row.appendChild(b)});
 function show(id,user){if(subs&&subs.some(s=>s.id==="p-"+id)){showSub(id);id="multi"}if(id!=="mock"){try{if(window.__stopAudio)window.__stopAudio();else if(window.speechSynthesis)window.speechSynthesis.cancel()}catch(e){}}panels.forEach(p=>p.hidden=p.id!=="p-"+id);row.querySelectorAll("button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===id));store.set("tab",id);document.body.dataset.tab=id;document.querySelectorAll("[data-sheet]").forEach(x=>x.classList.toggle("on",x.dataset.sheet===id));window.__navSync&&window.__navSync(id);if(user){const b=$("#tab-"+id);b&&b.scrollIntoView({block:"nearest",inline:"center"});window.scrollTo({top:0})}}
 function goTo(spec){
  if(spec.startsWith("url:")){window.open(spec.slice(4),"_blank","noopener");return}
@@ -1866,12 +1867,16 @@ document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if
 /* navigation: bottom bar (phones), More sheet, current title */
 const ICONS={tutor:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/><path d="M17 3l2 2-2 2"/>',diploma:'<path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h8M8 18h5"/>',courses:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',newjobs:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M2 13h20"/>',home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.more}</svg>`;
-const NAVSUB={tutor:"ذاكري الملازم مع شرح بالصوت",diploma:"التكليفات، الجدول، سجل المذاكرة",courses:"Skills and certificates",newjobs:"Best chances, apply this week",home:"Your cover page",plan:"This week's checklist",kalam:"Monday interview prep",eplan:"9 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers",activity:"Her progress log, both apps"};
+const NAVSUB={tutor:"ذاكري الملازم مع شرح بالصوت",diploma:"التكليفات، الجدول، سجل المذاكرة",courses:"Skills and certificates",newjobs:"Best chances, apply this week",home:"Your study cover page",plan:"This week's checklist",kalam:"Monday interview prep",eplan:"9 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers",activity:"Her progress log, both apps"};
 const SHORT={tutor:"الشرح الصوتي",diploma:"الدبلوم",courses:"Courses",newjobs:"New jobs",home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers",activity:"Activity"};
-const PRIMARY=["home","plan","newjobs","kalam","eplan"];
+
+const PRIMARY=["plan","newjobs","eplan","diploma"];
+const APPS=[["../","All apps","Back to the main page",'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>'],["../education/","التعليم","Education: tutor and diploma",'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>'],["../gym/","Gym","Workouts and progress",'<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/>'],["../shop/","My Shop","Coloring books",'<path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/>']];
 const sheet=$("#sheet");
-$("#bnav").innerHTML=PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
-$("#sheetgrid").innerHTML=panels.map(p=>{const id=p.id.slice(2);return `<button data-sheet="${id}"><span class="ico">${svgI(id)}</span><span><b>${esc(p.dataset.title)}</b><small>${esc(NAVSUB[id]||"")}</small></span></button>`}).join("");
+$("#bnav").innerHTML=`<button data-bnav="hub"><span class="ico">${svgI("home")}</span>All apps</button>`+PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
+const sheetBtn=id=>{const p=document.getElementById("p-"+id);return p?`<button data-sheet="${id}"><span class="ico">${svgI(id)}</span><span><b>${esc(p.dataset.title)}</b><small>${esc(NAVSUB[id]||"")}</small></span></button>`:""};
+$("#sheetgrid").innerHTML=GROUPS.map(([g,ids])=>`<div class="grp">${esc(g)}</div>`+ids.map(sheetBtn).join("")).join("")
+ +`<div class="grp">Other apps</div>`+APPS.map(([href,t,sm,ic])=>`<a class="app" href="${href}"><span class="ico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic}</svg></span><span><b>${esc(t)}</b><small>${esc(sm)}</small></span></a>`).join("");
 function closeSheet(){sheet.hidden=true}
 /* Style: Corner (default) or Pinterest. Saved on this device; applied before first paint by the inline script in <body>. */
 function applyStyle(v){if(v==="pin")document.documentElement.dataset.style="pin";else delete document.documentElement.dataset.style;document.querySelectorAll("[data-style-opt]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.styleOpt===v)));const m=document.querySelector('meta[name="theme-color"]');if(m)m.content=v==="pin"?"#ffffff":"#fbf1ef"}
@@ -1892,7 +1897,7 @@ function renderAct(){const el=$("#act-list");if(actRows===null){el.innerHTML='<p
  el.innerHTML=Object.entries(by).map(([k,list])=>`<div class="act-day"><h3>${esc(new Date(k).toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}))}</h3><ul>${list.map(r=>`<li><span class="act-t">${new Date(r.at).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}</span><span class="act-app ${r.app==="gym"?"gym":""}">${r.app==="gym"?"Gym":esc(r.area||"Study")}</span><span class="act-x">${esc(r.text)}${r.who&&r.who!=="Safa"?` <em>— ${esc(r.who)}</em>`:""}</span></li>`).join("")}</ul></div>`).join("")}
 $("#act-filter").addEventListener("click",e=>{const b=e.target.closest("[data-af]");if(!b)return;actF=b.dataset.af;document.querySelectorAll("[data-af]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));renderAct()});
 addEventListener("load",()=>{renderAct();if(window.SafsfCloud&&!(window.claude&&window.claude.use))SafsfCloud.watch("log",r=>{actRows=r;renderAct()},{n:300});else{actRows=[];renderAct()}});
-$("#bnav").addEventListener("click",e=>{const b=e.target.closest("[data-bnav]");if(!b)return;if(b.dataset.bnav==="more"){sheet.hidden=!sheet.hidden;return}closeSheet();show(b.dataset.bnav,true)});
+$("#bnav").addEventListener("click",e=>{const b=e.target.closest("[data-bnav]");if(!b)return;if(b.dataset.bnav==="more"){sheet.hidden=!sheet.hidden;return}if(b.dataset.bnav==="hub"){location.href="../";return}closeSheet();show(b.dataset.bnav,true)});
 sheet.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");if(b)show(b.dataset.sheet,true);if(b||e.target===sheet)closeSheet()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!sheet.hidden)closeSheet()});
 window.__navSync=id=>{document.querySelectorAll("[data-bnav]").forEach(b=>b.setAttribute("aria-current",(b.dataset.bnav===id||(b.dataset.bnav==="more"&&!PRIMARY.includes(id)))?"page":"false"));const p=document.getElementById("p-"+id);const t=$("#toptitle");if(t&&p)t.textContent=p.dataset.title};

@@ -17,7 +17,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Cairo:wght@600;700&display=swap">
 <style>
 :root{
   --blush:#fbf1ef;--blush-2:#f6e3e1;--rose:#c86b85;--rose-deep:#a94f6b;--rose-soft:#f3d9df;--plum:#3b2530;--muted:#7b5f69;
@@ -62,7 +62,7 @@ h1 span{font:400 1.12em/1.05 var(--script);color:var(--rose)}
 .card:hover .go{transform:translateX(3px);background:var(--rose-soft)}
 .body h2{padding-right:44px}
 
-.more{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.more-all{margin-top:30px;display:grid;gap:14px}.more-h{margin:0;font:600 26px/1.1 var(--serif)}.more-all .grp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.more-all .grp>span{flex:0 0 100%;font:700 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:4px 0 2px}.more-all .grp.ar>span{font-family:Cairo,var(--sans);letter-spacing:0;font-size:14px;text-transform:none}.more-all .grp.ar .chip{font-family:Cairo,var(--sans)}.more{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .more span{font:700 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:4px}
 .chip{display:inline-flex;align-items:center;min-height:40px;padding:8px 15px;border-radius:999px;border:1px solid rgba(169,79,107,.22);background:#fff;color:var(--plum);font:600 14px/1.2 var(--sans);text-decoration:none;transition:border-color .2s,background .2s}
 .chip:hover{border-color:var(--rose);background:#fffafb}
@@ -111,20 +111,24 @@ footer{margin-top:44px;text-align:center;font:400 30px/1.2 var(--script);color:v
     </a>
     <a class="card" href="education/">
       <div class="arch"><img src="study/img/vase.jpg" alt="" loading="lazy"></div>
-      <div class="body"><span class="num">05</span><h2>Education</h2><p>Your Public Law diploma: study the notes with the voice tutor.</p><span class="stat">Open the tutor</span></div>
+      <div class="body"><span class="num">05</span><h2>Education</h2><p>Your Public Law diploma in Arabic: the voice tutor, assignments and exam dates.</p><span class="stat">Tutor and diploma</span></div>
       <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
   </main>
 
-  <nav class="more" aria-label="More">
-    <span>Also</span>
-    <a class="chip" href="study/#courses">Courses</a>
-    <a class="chip" href="study/#kalam">Kalam interview</a>
-    <a class="chip" href="study/#confidence">Confidence</a>
-    <a class="chip" href="study/#multi">Multilingual</a>
-    <a class="chip" href="study/#mock">Mock test</a>
-    <a class="chip" href="study/#activity">Activity</a>
-  </nav>
+  <section class="more-all" aria-label="Everything">
+    <h2 class="more-h">Everything, in one place</h2>
+    <div class="grp"><span>Jobs &amp; interviews</span>
+      <a class="chip" href="study/#newjobs">New jobs</a><a class="chip" href="study/#jobs">Other jobs</a><a class="chip" href="study/#kalam">Kalam interview</a><a class="chip" href="study/#multi">Multilingual</a><a class="chip" href="study/#mock">Mock test</a><a class="chip" href="study/#answers">Test answers</a><a class="chip" href="study/#confidence">Confidence</a></div>
+    <div class="grp"><span>English</span>
+      <a class="chip" href="study/#eplan">English Plan</a><a class="chip" href="study/#courses">Courses</a></div>
+    <div class="grp ar"><span>التعليم</span>
+      <a class="chip" href="education/">صفحة التعليم</a><a class="chip" href="study/tutor.html">الشرح الصوتي</a><a class="chip" href="study/#diploma">الدبلوم والتكليفات</a></div>
+    <div class="grp"><span>Gym &amp; shop</span>
+      <a class="chip" href="gym/">Gym</a><a class="chip" href="shop/">My Shop</a></div>
+    <div class="grp"><span>Your progress</span>
+      <a class="chip" href="study/#plan">This week's plan</a><a class="chip" href="study/#activity">Activity</a></div>
+  </section>
 
   <footer>one beautiful step at a time</footer>
 </div>

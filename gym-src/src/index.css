@@ -1340,3 +1340,6 @@ h3{font-family:var(--serif);font-weight:500;font-size:30px;letter-spacing:-.005e
 :root:not([data-theme="light"]) .wchart{background:#1f1f1f}
 .cpin.quote{min-height:0;padding:20px 18px;gap:6px;cursor:default}
 .cpin.quote p{font:600 17px/1.6 var(--arabic);margin:0}
+
+/* way back to Safa's Corner (the main page of all apps) */
+.allapps{display:inline-flex;align-items:center;gap:4px;margin:4px 0 6px;padding:6px 12px;border-radius:999px;background:var(--fill-2,rgba(0,0,0,.05));color:var(--accent,#a94f6b);font-weight:600;font-size:14px;text-decoration:none}

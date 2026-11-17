@@ -66,6 +66,7 @@ function Shell() {
       {/* keyed on the route: a view that throws is contained, and switching tabs
           re-mounts the boundary, so the tab bar is always a way out */}
       <div id="app" className="vfade" key={loc.pathname}>
+        {(!authed || loc.pathname === '/home') && <a className="allapps" href="../">‹ All apps</a>}
         <ErrorBoundary>
           {!authed ? <Login /> : (
             <Routes>
