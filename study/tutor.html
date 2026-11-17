@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fbf1ef">
-<title>Tutor · Safa's Corner</title>
+<title>الشرح الصوتي · ركن صفا</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -71,10 +71,10 @@ label.auto{font-size:13px;display:flex;align-items:center;gap:4px}
 </style>
 </head>
 <body>
-<div class="top"><a class="back" href="./#diploma">→ Safa's Corner</a><h1 id="ttl">المذاكرة مع التيوتر</h1></div>
+<div class="top"><a class="back" href="../education/">→ التعليم</a><h1 id="ttl">المذاكرة بالشرح الصوتي</h1></div>
 <main>
  <section id="home">
-  <p class="intro">اختاري المادة والجزء. هتلاقي الملزمة نفسها قدامك، والتيوتر جنبها بتعلّم على الكلام وتشرحه بالصوت خطوة خطوة.</p>
+  <p class="intro">اختاري المادة والجزء. هتلاقي الملزمة نفسها قدامك، وميس منى جنبها بتعلّم على الكلام وتشرحه بالصوت خطوة خطوة.</p>
   <div class="tabs" id="courses"></div>
   <div class="parts" id="parts"></div>
  </section>
@@ -83,7 +83,7 @@ label.auto{font-size:13px;display:flex;align-items:center;gap:4px}
   <div id="stage" hidden>
    <div class="pagewrap" id="pagewrap"><img id="pg" alt="صفحة من الملزمة"></div>
    <div class="say">
-    <div class="tutor-face"><div class="av" id="av">م</div><div><b>ميس منى</b><small>التيوتر بتاعتك</small></div></div>
+    <div class="tutor-face"><div class="av" id="av">م</div><div><b>ميس منى</b><small>المدرّسة بتاعتك</small></div></div>
     <div class="meta"><span><span class="kind" id="kind"></span> <span id="where"></span></span><label class="auto"><input type="checkbox" id="auto" checked> تشغيل تلقائي</label></div>
     <h2 id="stitle"></h2>
     <p class="txt" id="stext"></p>
@@ -187,7 +187,7 @@ $("#rate").addEventListener("change",()=>{au.playbackRate=+$("#rate").value;ls.s
 $("#rate").value=ls.get("rate","1");
 $("#auto").checked=ls.get("auto",true);$("#auto").addEventListener("change",()=>ls.set("auto",$("#auto").checked));
 $("#showans").addEventListener("click",()=>{$("#atext").hidden=false});
-addEventListener("popstate",()=>{au.pause();setPlay(false);$("#player").hidden=true;$("#home").hidden=false;$("#ttl").textContent="المذاكرة مع التيوتر";renderHome()});
+addEventListener("popstate",()=>{au.pause();setPlay(false);$("#player").hidden=true;$("#home").hidden=false;$("#ttl").textContent="المذاكرة بالشرح الصوتي";renderHome()});
 /* one-tap unlock: Nour sends her tutor.html#k=<key> once; the key is saved on her phone and removed from the address bar */
 (()=>{const m=location.hash.match(/k=([^&]+)/);if(m){ls.set("code",decodeURIComponent(m[1]));history.replaceState(null,"",location.pathname)}})();
 (async()=>{await loadAvail();renderHome();const h=location.hash.slice(1);if(h&&avail[h])openDoc(h)})();

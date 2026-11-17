@@ -740,7 +740,7 @@ html[data-style="pin"] .act-app.gym{background:var(--pin-red)}
 </style>
 <style>
 .dip-tbl td,.dip-tbl th{padding:10px 8px;border-bottom:1px solid var(--line-2);vertical-align:top;text-align:left}
-.dip-tbl .ar{display:block}
+.dip-tbl .ar{display:block}.dip-ar{font-family:var(--f-ar);line-height:1.8}.dip-ar .dip-tbl td,.dip-ar .dip-tbl th{text-align:right}.dip-ar .dip-tbl small{display:block}.dip-ar .callout,.dip-ar .card{text-align:right}.clean-ol{margin:0;padding-inline-start:22px}.dip-ar .dip-note{font-size:14px;opacity:.85;margin:0}
 .dip-topic{border:1px solid var(--line-2);border-radius:var(--r);padding:14px 16px;background:#fff}
 .dip-topic summary{cursor:pointer;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;list-style:none}
 .dip-topic summary::-webkit-details-marker{display:none}
@@ -1687,61 +1687,70 @@ html[data-style="pin"] .act-app.gym{background:var(--pin-red)}
 </section>
 
 <!-- ACTIVITY (shared log of both apps) -->
-<section class="panel" id="p-diploma" data-title="Law Diploma" hidden>
- <div class="stack-lg">
+<section class="panel" id="p-diploma" data-title="الدبلوم" hidden>
+ <div class="stack-lg dip-ar" dir="rtl" lang="ar">
   <div class="stack">
-    <header class="pg-head"><div class="pg-text"><span class="cv-eyebrow">Law diploma <svg class="cv-heart sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></span><h2 class="pg-title">Public Law<span class="pg-script">Diploma</span></h2></div></header>
-    <p class="intro"><span class="ar" dir="rtl" lang="ar">دبلوم القانون العام · كلية الحقوق، جامعة الإسكندرية</span><br>Fall term 2026, started <b>Saturday, Oct 10</b>. Your subjects, your assignments and a log of what you study, all in one place. Ticks and log entries are saved for you.</p>
+    <header class="pg-head"><div class="pg-text"><span class="cv-eyebrow">دبلوم القانون العام</span><h2 class="pg-title">الدبلوم</h2></div></header>
+    <p class="intro">كلية الحقوق، جامعة الإسكندرية · الترم الأول ٢٠٢٦ (بدأ السبت ١٠ أكتوبر). موادك، تكليفاتك، وسجل مذاكرتك في مكان واحد. أي علامة بتحطيها بتتحفظ لوحدها.</p>
     <p class="pill" id="dipcount"></p>
     <div class="progress"><i id="dipbar"></i></div>
   </div>
 
   <div class="stack">
-    <h2>Your week</h2>
-    <div class="card"><table class="dip-tbl"><thead><tr><th>Day</th><th>Subject</th><th>Time · hall</th></tr></thead><tbody>
-      <tr><td>Sunday</td><td><b>Public Freedoms</b> (optional)<span class="ar" dir="rtl" lang="ar">الحريات العامة · د. دينا عابدين</span></td><td>12–3 · hall 9</td></tr>
-      <tr><td>Tuesday</td><td><b>Public International Law</b> (required)<span class="ar" dir="rtl" lang="ar">القانون الدولي العام · أ.د. إبراهيم خليفة</span></td><td>3–6 · halls 1 &amp; 3</td></tr>
-      <tr><td>Wednesday</td><td><b>Research Seminar</b> (required)<span class="ar" dir="rtl" lang="ar">قاعة البحث · أ.د. ميادة عبد القادر</span></td><td>3–6 · halls 1 &amp; 3</td></tr>
-      <tr><td>—</td><td><b>Economic Development</b> (optional)<span class="ar" dir="rtl" lang="ar">التنمية الاقتصادية</span></td><td class="muted">Not on the printed timetable. Ask the faculty for the day and hall.</td></tr>
+    <h2>موادك وجدول الأسبوع</h2>
+    <div class="card"><table class="dip-tbl"><thead><tr><th>اليوم</th><th>المادة</th><th>الميعاد · القاعة</th></tr></thead><tbody>
+      <tr><td>الأحد</td><td><b>الحريات العامة</b> (اختياري)<small class="muted">د. دينا عابدين</small></td><td>١٢–٣ · قاعة ٩ <small class="muted">الدكتورة بتيجي حوالي ٢ وبتشرح ساعة</small></td></tr>
+      <tr><td>الثلاثاء</td><td><b>القانون الدولي العام</b> (إجباري)<small class="muted">أ.د. إبراهيم خليفة</small></td><td>٣–٦ · قاعة ١ و٣</td></tr>
+      <tr><td>الأربعاء</td><td><b>قاعة البحث</b> (إجباري)<small class="muted">أ.د. ميادة عبد القادر · د. سعد عبد الحكيم</small></td><td>٣–٦ · الدور الرابع، قاعة ١ و٣، مبنى الامتحانات</td></tr>
+      <tr><td>؟</td><td><b>التكتلات الاقتصادية الإقليمية</b> (اختياري)<small class="muted">أ.د. محمد صبري · من دبلوم العلوم الاقتصادية والمالية</small></td><td class="muted">مش في جدول القانون العام. اسألي عن اليوم والقاعة والجروب.</td></tr>
     </tbody></table></div>
+    <p class="muted">الحضور مش إجباري. لو محاضرة اتلغت بتنزل على صفحة الكلية الرسمية. التسجيلات بتنزل على جروب التليجرام «قانون عام».</p>
   </div>
 
   <div class="stack">
-    <h2>International Law assignments</h2>
+    <h2>تكليفات القانون الدولي العام</h2>
     <div class="grid2">
-      <div class="callout warn"><strong>The rules</strong>5 topics, about <b>15 pages each</b>, all in <b>one Word file</b>, printed. Due at the <b>end of the term</b>. <b>Every paragraph</b> needs a reference.</div>
-      <div class="callout ok"><strong>Check the list</strong>This list came from Al-Qema center, not from the professor. Ask Dr. Ibrahim Khalifa or your classmates to confirm it is the same list.</div>
+      <div class="callout warn"><strong>الشروط</strong>٥ تكليفات، كل واحد حوالي <b>١٥ صفحة</b>، كلهم في <b>ملف وورد واحد</b> ويتسلموا <b>مطبوعين</b>. <b>كل فقرة</b> لازم يبقى ليها مرجع.</div>
+      <div class="callout ok"><strong>الخطة والتسليم</strong>كل تكليف: مقدمة صغيرة، بعدين تقسيم الموضوع، بعدين عنصر عنصر. التسليم آخر الترم (فيه اللي بيقول قبل الامتحان).</div>
     </div>
     <div class="stack" id="dip-topics"></div>
   </div>
 
   <div class="stack">
-    <h2>Summary reports</h2>
-    <p class="muted">For the optional subjects, the doctor picks pages from his book and you write a report that summarizes them. This is <b>in addition</b> to the 5 International Law topics.</p>
+    <h2>تكليفات المواد التانية</h2>
     <div class="grid2" id="dip-reports"></div>
   </div>
 
+  <div class="stack">
+    <h2>الامتحانات</h2>
+    <div class="grid2">
+      <div class="card stack"><h3>القانون الدولي العام</h3><p>سؤالين مقالي وتجاوبي على واحد. الأسئلة من الـ٤ موضوعات دول:</p><ol class="clean-ol"><li>تطور القانون الدولي العام</li><li>مصادر القانون الدولي</li><li>الرقابة الدولية على تطبيق القانون الدولي الإنساني</li><li>الالتزام الدولي باحترام حقوق الإنسان وحرياته الأساسية</li></ol></div>
+      <div class="card stack"><h3>الحريات العامة</h3><p>٣ أسئلة على الـ٣ موضوعات (الرقابة القضائية، السياسية، الدولية) وتجاوبي على واحد.</p><p><b>ممنوع تجاوبي على سؤال موضوع التكليف بتاعك.</b></p><p class="muted">لو هتذاكري الرقابة السياسية: الفصل التمهيدي مع الرقابة السياسية من أولها.</p></div>
+    </div>
+    <p class="muted">مواعيد الامتحانات لسه ما اتعلنتش.</p>
+  </div>
+
   <div class="stack" id="dip-log-wrap">
-    <h2>Study log</h2>
-    <p class="muted">After each lecture or study session, write one line: what you did and how long.</p>
+    <h2>سجل المذاكرة</h2>
+    <p class="muted">بعد كل محاضرة أو قعدة مذاكرة اكتبي سطر: عملتي إيه وقد إيه.</p>
     <form class="card dip-form" id="dip-form">
-      <label>Date<input type="date" id="dip-date" required></label>
-      <label>Minutes<input type="number" id="dip-min" min="0" step="5" placeholder="60"></label>
-      <label class="full">Subject<select id="dip-subj"></select></label>
-      <label class="full">What did you do?<textarea id="dip-note" required placeholder="Lecture 5: treaties. Read pages 40–55 of the book."></textarea></label>
-      <div class="full"><button class="btn" type="submit">Add to log</button></div>
+      <label>التاريخ<input type="date" id="dip-date" required></label>
+      <label>بالدقايق<input type="number" id="dip-min" min="0" step="5" placeholder="60"></label>
+      <label class="full">المادة<select id="dip-subj"></select></label>
+      <label class="full">عملتي إيه؟<textarea id="dip-note" required placeholder="المحاضرة الخامسة: المعاهدات. قريت من صفحة ٤٠ لـ ٥٥."></textarea></label>
+      <div class="full"><button class="btn" type="submit">ضيفي للسجل</button></div>
     </form>
     <p class="pill" id="dip-total"></p>
     <ul class="clean dip-log" id="dip-log"></ul>
   </div>
  </div>
 </section>
-<section class="panel" id="p-tutor" data-title="Tutor" hidden>
+<section class="panel" id="p-tutor" data-title="الشرح الصوتي" hidden>
  <div dir="rtl" style="font-family:Cairo,system-ui,sans-serif;line-height:1.8">
-  <h2 style="margin-top:0">المذاكرة مع التيوتر</h2>
-  <p>ملازم مركز القمة نفسها قدامك، والتيوتر جنبها: بتعلّم على السطور وتشرحها بالصوت بالمصري، خطوة خطوة، وبعد كل سؤال بتديكي زبدة الإجابة وسؤال تختبري بيه نفسك.</p>
+  <h2 style="margin-top:0">المذاكرة بالشرح الصوتي</h2>
+  <p>ملازم مركز القمة نفسها قدامك، وميس منى جنبها: بتعلّم على السطور وتشرحها بالصوت بالمصري، خطوة خطوة، وبعد كل سؤال بتديكي زبدة الإجابة وسؤال تختبري بيه نفسك.</p>
   <p><b>القانون الدولي العام:</b> الجزء الأول (أول ٨ صفحات جاهزين، والباقي جاي) · الجزء الثاني قريبًا<br><b>الحريات العامة:</b> قريبًا</p>
-  <p><a class="btn" href="tutor.html" style="display:inline-block;padding:10px 18px;border-radius:12px;background:#b5476b;color:#fff;text-decoration:none;font-weight:700">افتحي التيوتر</a></p>
+  <p><a class="btn" href="tutor.html" style="display:inline-block;padding:10px 18px;border-radius:12px;background:#b5476b;color:#fff;text-decoration:none;font-weight:700">افتحي الشرح الصوتي</a></p>
  </div>
 </section>
 <section class="panel" id="p-activity" data-title="Activity" hidden>
@@ -1857,8 +1866,8 @@ document.addEventListener("click",e=>{const a=e.target.closest("[data-goto]");if
 /* navigation: bottom bar (phones), More sheet, current title */
 const ICONS={tutor:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/><path d="M17 3l2 2-2 2"/>',diploma:'<path d="M4 4h12l4 4v12H4z"/><path d="M8 10h8M8 14h8M8 18h5"/>',courses:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/>',newjobs:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M2 13h20"/>',home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',plan:'<path d="M8 2v4M16 2v4M3 10h18"/><rect x="3" y="4" width="18" height="18" rx="2"/>',kalam:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',eplan:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',confidence:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>',multi:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',jobs:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',mock:'<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',answers:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',activity:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',more:'<circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>'};
 const svgI=k=>`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.more}</svg>`;
-const NAVSUB={tutor:"Study the notes with a voice tutor",diploma:"Assignments, timetable, study log",courses:"Skills and certificates",newjobs:"Best chances, apply this week",home:"Your cover page",plan:"This week's checklist",kalam:"Monday interview prep",eplan:"9 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers",activity:"Her progress log, both apps"};
-const SHORT={tutor:"Tutor",diploma:"Diploma",courses:"Courses",newjobs:"New jobs",home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers",activity:"Activity"};
+const NAVSUB={tutor:"ذاكري الملازم مع شرح بالصوت",diploma:"التكليفات، الجدول، سجل المذاكرة",courses:"Skills and certificates",newjobs:"Best chances, apply this week",home:"Your cover page",plan:"This week's checklist",kalam:"Monday interview prep",eplan:"9 weeks, day by day",confidence:"Speak without freezing",multi:"Offer, tests and study material",jobs:"Other jobs to apply for",mock:"Practice the real test",answers:"Predicted questions and answers",activity:"Her progress log, both apps"};
+const SHORT={tutor:"الشرح الصوتي",diploma:"الدبلوم",courses:"Courses",newjobs:"New jobs",home:"Home",plan:"Plan",kalam:"Kalam",eplan:"English",confidence:"Confidence",multi:"Multilingual",jobs:"Jobs",mock:"Mock test",answers:"Answers",activity:"Activity"};
 const PRIMARY=["home","plan","newjobs","kalam","eplan"];
 const sheet=$("#sheet");
 $("#bnav").innerHTML=PRIMARY.map(id=>`<button data-bnav="${id}"><span class="ico">${svgI(id)}</span>${SHORT[id]}</button>`).join("")+`<button data-bnav="more" aria-haspopup="dialog"><span class="ico">${svgI("more")}</span>More</button>`;
@@ -2976,32 +2985,37 @@ $("#epres").innerHTML=RESOURCES.map(g=>`<div class="card stack"><h3>${esc(g[0])}
 
 
 /* ---------- Law diploma: assignments, reports, study log ---------- */
-const DIP_SUBJ=[["intl","Public International Law","القانون الدولي العام"],["research","Research Seminar","قاعة البحث"],["freedoms","Public Freedoms","الحريات العامة"],["econ","Economic Development","التنمية الاقتصادية"]];
+const DIP_SUBJ=[["intl","القانون الدولي العام"],["research","قاعة البحث"],["freedoms","الحريات العامة"],["econ","التكتلات الاقتصادية الإقليمية"]];
 const DIP_TOPICS=["أثر تطبيق حكم المادة 38 من النظام الأساسي لمحكمة العدل الدولية على القواعد الداخلية","مدى فاعلية قواعد القانون الدولي الجنائي في تعويض ضحايا الجريمة","العلاقة بين اختصاصات المحاكم الدولية المختلفة","قواعد التجارة الدولية ومبدأ عدم التدخل في الشؤون الداخلية للدول","أثر وجود القواعد العسكرية على سيادة الدول"];
-const DIP_STEPS=["Plan the sections and collect the sources","Read the sources and take notes","Write the first draft (about 15 pages)","Rewrite it in your own words","Add a reference to every paragraph","Put it in the Word file"];
-const DIP_RSTEPS=["Get the page range from the doctor","Read the pages and take notes","Write the summary","Add references","Print and hand it in"];
-const DIP_FINAL=["Check the whole Word file (fonts, page numbers, table of contents)","Print and hand in all 5 assignments"];
+const DIP_STEPS=["قسّمي الموضوع (الخطة) واجمعي المراجع","اقري المراجع وخدي ملاحظات","اكتبي المسودة الأولى (حوالي ١٥ صفحة)","أعيدي كتابتها بأسلوبك","حطي مرجع لكل فقرة","حطيها في ملف الوورد"];
+const DIP_FINAL=["راجعي ملف الوورد كله (الخط، أرقام الصفحات، الفهرس)","اطبعي وسلّمي الـ٥ تكليفات"];
+const DIP_REP={
+ freedoms:{t:"الحريات العامة",info:"اختاري موضوع واحد: الرقابة القضائية، أو السياسية، أو الدولية. التكليف <b>بخط الإيد</b>، مفيش عدد صفحات محدد (فيه ورقة بتقول ١٠ ورقات على الأقل). التسليم لحد ميعاد الامتحان. من الكتاب: صفحة ٩٧–١٤٢ والفصل التمهيدي ٦–١٥.",steps:["اشتري الكتاب من دار الفتح (٤٠٠ جنيه) وخدي رقمك في الكشف","اختاري موضوع التكليف","اقري الصفحات وخدي ملاحظات","اكتبي التكليف بخط إيدك","اكتبي رقم الكشف على التكليف وسلّميه"],f:[["pages","الموضوع اللي اخترتيه","مثلاً: الرقابة السياسية"],["due","ميعاد التسليم","date"]]},
+ research:{t:"قاعة البحث",info:"الترم ده مطلوب <b>خطة بحث</b> بس، في موضوع من الـ٤: (١) مبدأ شرعية الجرائم والعقوبات (٢) حكم الدستورية العليا في تنظيم إجراءات الطعن على مواد الدستور (٣) التعليق على حكم دائرة توحيد المبادئ بشأن عدم إعادة تصحيح أوراق الإجابات (٤) مدى دستورية التقاضي الجنائي عن بُعد. ينفع لوحدك أو مجموعة لحد ٣. التسليم لآخر الامتحانات.",steps:["اختاري الموضوع (ولوحدك ولا مع مجموعة)","اقري محاضرتين البحث العلمي","اكتبي العنوان والمقدمة والتقسيم","راجعي الخطة مع الدكتور","سلّمي الخطة"],f:[["pages","الموضوع اللي اخترتيه","رقم أو اسم الموضوع"],["due","ميعاد التسليم","date"]]},
+ econ:{t:"التكتلات الاقتصادية الإقليمية",info:"المادة دي من دبلوم العلوم الاقتصادية والمالية (أ.د. محمد صبري). لسه معندناش أي معلومة عن ميعادها ولا تكليفها.",steps:["اعرفي ميعاد المحاضرة والقاعة","ادخلي جروب المادة","اعرفي التكليف المطلوب والكتاب","اكتبي التكليف","سلّميه"],f:[["pages","التكليف المطلوب","اكتبيه هنا لما تعرفيه"],["due","ميعاد التسليم","date"]]}
+};
 const dip=store.get("diploma",{});
 const dipFix=()=>{dip.t=dip.t||{};dip.r=dip.r||{};dip.rp=dip.rp||{};dip.log=Array.isArray(dip.log)?dip.log:(dip.log&&typeof dip.log==="object"?Object.values(dip.log):[])};dipFix();
 SYNC_HOOKS.diploma=()=>{for(const k in dip)delete dip[k];Object.assign(dip,store.get("diploma",{}));dipFix();renderDip()};
 const dipSave=()=>store.set("diploma",dip);
 const dipChk=(key,label,on)=>`<label class="check ${on?"done":""}"><input type="checkbox" data-dip="${key}" ${on?"checked":""}><span>${esc(label)}</span></label>`;
+const arN=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 function renderDip(){
  let total=0,n=0;const cnt=on=>{total++;if(on)n++};
  $("#dip-topics").innerHTML=DIP_TOPICS.map((t,i)=>{const d=DIP_STEPS.filter((x,j)=>dip.t[i+"-"+j]).length;DIP_STEPS.forEach((x,j)=>cnt(dip.t[i+"-"+j]));
-  return `<details class="dip-topic"${d&&d<DIP_STEPS.length?" open":""}><summary><span class="pill${d===DIP_STEPS.length?"":" soft"}">Topic ${i+1} · ${d}/${DIP_STEPS.length}</span><span class="ar" dir="rtl" lang="ar">${esc(t)}</span></summary><div class="stack" style="margin-top:10px">${DIP_STEPS.map((x,j)=>dipChk("t:"+i+"-"+j,x,dip.t[i+"-"+j])).join("")}</div></details>`}).join("")
-  +`<div class="dip-topic"><b>Finish</b><div class="stack" style="margin-top:8px">${DIP_FINAL.map((x,j)=>{cnt(dip.t["f-"+j]);return dipChk("t:f-"+j,x,dip.t["f-"+j])}).join("")}</div></div>`;
- $("#dip-reports").innerHTML=DIP_SUBJ.filter(s=>s[0]==="freedoms"||s[0]==="econ").map(([k,en,ar])=>{const rp=dip.rp[k]||{};
-  return `<div class="card stack"><h3>${esc(en)} <span class="ar" dir="rtl" lang="ar">${esc(ar)}</span></h3>
-  <div class="dip-form"><label>Pages<input data-dipf="${k}:pages" value="${esc(rp.pages||"")}" placeholder="e.g. 120–160"></label><label>Due date<input type="date" data-dipf="${k}:due" value="${esc(rp.due||"")}"></label></div>
-  ${DIP_RSTEPS.map((x,j)=>{cnt(dip.r[k+"-"+j]);return dipChk("r:"+k+"-"+j,x,dip.r[k+"-"+j])}).join("")}</div>`}).join("");
- $("#dipbar").style.width=(100*n/total)+"%";$("#dipcount").textContent=`${n} of ${total} steps done · ${Math.round(100*n/total)}%`;
- const sel=$("#dip-subj");if(!sel.options.length)sel.innerHTML=DIP_SUBJ.map(s=>`<option value="${s[0]}">${esc(s[1])} · ${esc(s[2])}</option>`).join("");
+  return `<details class="dip-topic"${d&&d<DIP_STEPS.length?" open":""}><summary><span class="pill${d===DIP_STEPS.length?"":" soft"}">التكليف ${arN(i+1)} · ${arN(d)}/${arN(DIP_STEPS.length)}</span><span>${esc(t)}</span></summary><div class="stack" style="margin-top:10px">${DIP_STEPS.map((x,j)=>dipChk("t:"+i+"-"+j,x,dip.t[i+"-"+j])).join("")}</div></details>`}).join("")
+  +`<div class="dip-topic"><b>التسليم</b><div class="stack" style="margin-top:8px">${DIP_FINAL.map((x,j)=>{cnt(dip.t["f-"+j]);return dipChk("t:f-"+j,x,dip.t["f-"+j])}).join("")}</div></div>`;
+ $("#dip-reports").innerHTML=["freedoms","research","econ"].map(k=>{const R=DIP_REP[k],rp=dip.rp[k]||{};
+  return `<div class="card stack"><h3>${esc(R.t)}</h3><p class="dip-note">${R.info}</p>
+  <div class="dip-form">${R.f.map(([f,l,ph])=>ph==="date"?`<label>${l}<input type="date" data-dipf="${k}:${f}" value="${esc(rp[f]||"")}"></label>`:`<label>${l}<input data-dipf="${k}:${f}" value="${esc(rp[f]||"")}" placeholder="${ph}"></label>`).join("")}</div>
+  ${R.steps.map((x,j)=>{cnt(dip.r[k+"-"+j]);return dipChk("r:"+k+"-"+j,x,dip.r[k+"-"+j])}).join("")}</div>`}).join("");
+ $("#dipbar").style.width=(100*n/total)+"%";$("#dipcount").textContent=`خلصتي ${arN(n)} من ${arN(total)} خطوة · ${arN(Math.round(100*n/total))}٪`;
+ const sel=$("#dip-subj");if(!sel.options.length)sel.innerHTML=DIP_SUBJ.map(s=>`<option value="${s[0]}">${esc(s[1])}</option>`).join("");
  const L=[...dip.log].sort((a,b)=>(b.d||"").localeCompare(a.d||"")||(b.at||0)-(a.at||0));
  const mins=L.reduce((a,x)=>a+(+x.m||0),0);
- $("#dip-total").textContent=L.length?`${L.length} entries · ${Math.floor(mins/60)} h ${mins%60} min studied`:"Nothing logged yet";
+ $("#dip-total").textContent=L.length?`${arN(L.length)} مرة · ${arN(Math.floor(mins/60))} ساعة و${arN(mins%60)} دقيقة مذاكرة`:"لسه مفيش حاجة في السجل";
  const sname=k=>(DIP_SUBJ.find(s=>s[0]===k)||[0,k])[1];
- $("#dip-log").innerHTML=L.map(x=>`<li><div><b>${esc(new Date(x.d+"T12:00").toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}))}</b> · ${esc(sname(x.s))}${x.m?` · ${esc(x.m)} min`:""}<br><span>${esc(x.n)}</span></div><button class="dip-del" type="button" data-dipdel="${esc(x.at)}" aria-label="Delete this entry">×</button></li>`).join("");
+ $("#dip-log").innerHTML=L.map(x=>`<li><div><b>${esc(new Date(x.d+"T12:00").toLocaleDateString("ar-EG",{weekday:"long",month:"long",day:"numeric"}))}</b> · ${esc(sname(x.s))}${x.m?` · ${arN(esc(x.m))} دقيقة`:""}<br><span>${esc(x.n)}</span></div><button class="dip-del" type="button" data-dipdel="${esc(x.at)}" aria-label="امسحي">×</button></li>`).join("");
 }
 const dipToday=()=>{const t=new Date();return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,"0")}-${String(t.getDate()).padStart(2,"0")}`};
 $("#dip-date").value=dipToday();
@@ -3012,7 +3026,7 @@ $("#dip-form").addEventListener("submit",e=>{e.preventDefault();const n=$("#dip-
  const x={d:$("#dip-date").value||dipToday(),s:$("#dip-subj").value,m:Math.max(0,parseInt($("#dip-min").value,10)||0),n:n.slice(0,500),at:Date.now()};
  dip.log.push(x);dipSave();renderDip();$("#dip-note").value="";$("#dip-min").value="";
  if(window.SafsfCloud)SafsfCloud.log("site","Diploma log: "+n.slice(0,160),{area:"Law Diploma"})});
-$("#dip-log").addEventListener("click",e=>{const b=e.target.closest("[data-dipdel]");if(!b||!confirm("Delete this log entry?"))return;dip.log=dip.log.filter(x=>String(x.at)!==b.dataset.dipdel);dipSave();renderDip()});
+$("#dip-log").addEventListener("click",e=>{const b=e.target.closest("[data-dipdel]");if(!b||!confirm("أمسح السطر ده من السجل؟"))return;dip.log=dip.log.filter(x=>String(x.at)!==b.dataset.dipdel);dipSave();renderDip()});
 renderDip();
 
 /* ---------- Courses tab (data: tools/courses.json → tools/build_courses.py) ---------- */
