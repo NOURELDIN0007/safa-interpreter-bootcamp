@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf1ef">
+<meta name="apple-mobile-web-app-title" content="Safa's Corner">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Education · Safa's Corner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&display=swap">
+<style>
+:root{
+  --blush:#fbf1ef;--blush-2:#f6e3e1;--rose:#c86b85;--rose-deep:#a94f6b;--rose-soft:#f3d9df;--plum:#3b2530;--muted:#7b5f69;
+  --serif:"Cormorant Garamond",Georgia,serif;--script:"Great Vibes","Brush Script MT",cursive;--sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;background:var(--blush);color:var(--plum);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(620px 420px at 100% 0%,rgba(243,217,223,.7),transparent 70%),radial-gradient(520px 420px at 0% 100%,rgba(246,227,225,.85),transparent 70%)}
+a{color:inherit}
+.wrap{max-width:1040px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) 20px calc(40px + env(safe-area-inset-bottom,0px))}
+
+header{display:flex;flex-direction:column;gap:6px;padding:8px 0 26px}
+.hello{display:inline-flex;align-items:center;gap:8px;font:700 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase}
+.heart{width:14px;height:14px;fill:none;stroke:var(--rose);stroke-width:2}
+h1{margin:10px 0 0;font:500 clamp(42px,8vw,64px)/1.02 var(--serif);letter-spacing:-.01em;display:flex;flex-direction:column}
+h1 span{font:400 1.12em/1.05 var(--script);color:var(--rose)}
+.sub{color:#6e5560;max-width:46ch;margin:10px 0 0}
+.today{align-self:flex-start;margin-top:16px;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:#fff;border:1px solid rgba(169,79,107,.16);box-shadow:0 14px 30px -24px rgba(120,50,70,.5);font:600 14px/1.3 var(--sans);text-decoration:none}
+.today b{color:var(--rose-deep)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--rose);flex:0 0 auto;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{position:relative;display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;padding:16px;border-radius:24px;background:#fff;border:1px solid rgba(169,79,107,.13);box-shadow:0 1px 2px rgba(120,50,70,.04),0 18px 36px -28px rgba(120,50,70,.55);text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .3s;animation:up .7s var(--ease) both}
+.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}.card:nth-child(5){animation-delay:.24s}
+.card:hover{transform:translateY(-3px);border-color:var(--rose);box-shadow:0 26px 44px -26px rgba(120,50,70,.6)}
+.card:active{transform:scale(.99)}
+.arch{aspect-ratio:3/4;border-radius:999px 999px 16px 16px;overflow:hidden;background:var(--blush-2);outline:1px solid rgba(169,79,107,.25);outline-offset:4px;margin:4px}
+.arch img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.card:hover .arch img{transform:scale(1.06)}
+.body{display:flex;flex-direction:column;gap:6px;min-width:0}
+.num{font:500 20px/1 var(--serif);color:var(--rose-deep)}
+.body h2{margin:0;font:600 clamp(25px,4vw,30px)/1.1 var(--serif)}
+.body p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.5}
+.stat{align-self:flex-start;margin-top:4px;padding:6px 11px;border-radius:999px;background:var(--rose-soft);color:var(--rose-deep);font:700 12px/1.25 var(--sans)}
+.stat.soft{background:var(--blush);color:var(--muted)}
+.go{position:absolute;right:16px;top:16px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--blush);transition:transform .3s var(--ease),background .3s}
+.go svg{width:18px;height:18px;fill:none;stroke:var(--rose-deep);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card:hover .go{transform:translateX(3px);background:var(--rose-soft)}
+.body h2{padding-right:44px}
+
+.more{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.more span{font:700 11.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.chip{display:inline-flex;align-items:center;min-height:40px;padding:8px 15px;border-radius:999px;border:1px solid rgba(169,79,107,.22);background:#fff;color:var(--plum);font:600 14px/1.2 var(--sans);text-decoration:none;transition:border-color .2s,background .2s}
+.chip:hover{border-color:var(--rose);background:#fffafb}
+footer{margin-top:44px;text-align:center;font:400 30px/1.2 var(--script);color:var(--rose)}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+
+@media (max-width:760px){
+  .wrap{padding-inline:16px}
+  .grid{grid-template-columns:1fr;gap:14px}
+  .card{grid-template-columns:96px 1fr;gap:14px;padding:14px;border-radius:22px}
+  header{padding-bottom:20px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<style>.back{align-self:flex-start;font:600 14px/1 var(--sans);color:var(--rose-deep);text-decoration:none;margin-bottom:6px}.back:hover{text-decoration:underline}</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="../">&larr; Safa's corner</a>
+    <h1>Education<span>study time</span></h1>
+    <p class="sub">Your Public Law diploma, Fall 2026.</p>
+  </header>
+
+  <main class="grid">
+    <a class="card" href="../study/tutor.html">
+      <div class="arch"><img src="../study/img/vase.jpg" alt="" loading="lazy"></div>
+      <div class="body"><span class="num">01</span><h2>Tutor</h2><p dir="rtl" style="text-align:right">الملازم قدامك والتيوتر بيشرحها بالصوت بالمصري، خطوة خطوة.</p><span class="stat">International Law · part 1</span></div>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card" href="../study/#diploma">
+      <div class="arch"><img src="../study/img/petals.jpg" alt="" loading="lazy"></div>
+      <div class="body"><span class="num">02</span><h2>Diploma</h2><p>Courses, assignments and deadlines for the Public Law diploma.</p><span class="stat soft">Assignments and dates</span></div>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </main>
+
+  <footer>one beautiful step at a time</footer>
+</div>
+</body>
+</html>

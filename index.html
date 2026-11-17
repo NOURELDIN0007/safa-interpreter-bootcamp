@@ -45,7 +45,7 @@ h1 span{font:400 1.12em/1.05 var(--script);color:var(--rose)}
 
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
 .card{position:relative;display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;padding:16px;border-radius:24px;background:#fff;border:1px solid rgba(169,79,107,.13);box-shadow:0 1px 2px rgba(120,50,70,.04),0 18px 36px -28px rgba(120,50,70,.55);text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .3s;animation:up .7s var(--ease) both}
-.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}
+.card:nth-child(2){animation-delay:.06s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.18s}.card:nth-child(5){animation-delay:.24s}
 .card:hover{transform:translateY(-3px);border-color:var(--rose);box-shadow:0 26px 44px -26px rgba(120,50,70,.6)}
 .card:active{transform:scale(.99)}
 .arch{aspect-ratio:3/4;border-radius:999px 999px 16px 16px;overflow:hidden;background:var(--blush-2);outline:1px solid rgba(169,79,107,.25);outline-offset:4px;margin:4px}
@@ -107,6 +107,11 @@ footer{margin-top:44px;text-align:center;font:400 30px/1.2 var(--script);color:v
     <a class="card" href="shop/">
       <div class="arch"><img src="study/img/peony.jpg" alt="" loading="lazy"></div>
       <div class="body"><span class="num">04</span><h2>My Shop</h2><p>Coloring books for US buyers: the idea, a real sample book, Udemy courses, the legal setup and the checklist.</p><span class="stat soft">Starting: first book by Nov 5</span></div>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card" href="education/">
+      <div class="arch"><img src="study/img/vase.jpg" alt="" loading="lazy"></div>
+      <div class="body"><span class="num">05</span><h2>Education</h2><p>Your Public Law diploma: study the notes with the voice tutor.</p><span class="stat">Open the tutor</span></div>
       <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </a>
   </main>
