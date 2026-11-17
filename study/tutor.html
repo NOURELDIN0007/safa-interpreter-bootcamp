@@ -174,7 +174,7 @@ async function show(i,autoplay=true){
  $("#stitle").textContent=st.title||"";$("#stext").textContent=st.say;
  $("#ans").hidden=st.kind!=="check";$("#atext").hidden=true;$("#atext").textContent=st.answer||"";
  $("#pbar").style.width=(100*(idx+1)/D.steps.length)+"%";
- au.src=`tutor/audio/${D.doc}/${String(idx+1).padStart(3,"0")}.mp3`;au.playbackRate=+$("#rate").value;
+ au.src=`tutor/audio/${D.doc}/${String(idx+1).padStart(3,"0")}.mp3?v=2`;au.playbackRate=+$("#rate").value;
  if(autoplay)play();else setPlay(false)}
 function setPlay(p){playing=p;$("#play").textContent=p?"❚❚":"▶";$("#av").classList.toggle("talk",p)}
 function play(){au.playbackRate=+$("#rate").value;au.play().then(()=>setPlay(true)).catch(()=>setPlay(false))}
